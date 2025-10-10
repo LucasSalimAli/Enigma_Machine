@@ -1,0 +1,372 @@
+Fazendo uma máquina Enigma
+
+
+O modelo escolhido foi a versão "I", utilizada pelo exército alemão durante a segunda guerra mundial.
+
+
+A enigma modelo I possui cinco rotores, dico de entrada(ETW) e refletor(UTW) cada um com 26 caracteres. Entretanto, a nossa versão possui 28 caracteres, com o Ç e o ESPAÇO sendo contabilizados.
+
+A enygma tipo "I" possui três tipos de refletores e Cinco tipos de Rotores.
+
+Entretanto a nossa versão terá Sete rotores, com 28 caracteres, mesmo que os cinco originais permanessam os mesmos.
+
+-------------------------
+Detalhando
+
+-------------------------
+Disco de Entrada (ETW) -
+
+A -> A   01    
+B -> B   02
+C -> C   03
+D -> D   04
+E -> E   05
+F -> F   06
+G -> G   07
+H -> H   08
+I -> I   09
+J -> J   10
+K -> K   11
+L -> L   12
+M -> M   13
+N -> N   14
+O -> O   15
+P -> P   16
+Q -> Q   17
+R -> R   18
+S -> S   19
+T -> T   20
+U -> U   21
+V -> V   22
+W -> W   23
+X -> X   24
+Y -> Y   25
+Z -> Z   26
+Ç -> Ç   27
+[] -> [] 00
+ 
+-------------------------
+Refletor (UKW) -
+
+=======
+UKW-A
+
+A -> E  05
+B -> J  10
+C -> M  13
+D -> Z  26
+E -> A  01
+F -> L  12
+G -> Y  25
+H -> X  24
+I -> V  22
+J -> B  02
+K -> W  23
+L -> F  06
+M -> C  03
+N -> R  18
+O -> E  05
+P -> U  21
+Q -> O  15
+R -> N  14
+S -> T  20
+T -> S  19
+U -> P  16
+V -> I  09
+W -> K  11
+X -> H  08
+Y -> G  07
+Z -> D  04
+Ç -> [] 00
+[] -> Ç 27
+
+=======
+UKW-B
+
+A -> Y  25
+B -> R  18
+C -> U  21
+D -> H  08
+E -> [] 00
+F -> S  19
+G -> L  12
+H -> D  04
+I -> B  02
+J -> X  24
+K -> N  14
+L -> G  07
+M -> O  15
+N -> K  11
+O -> M  13
+P -> I  09
+Q -> Ç  27
+R -> B  02
+S -> F  06
+T -> Z  26
+U -> C  03
+V -> W  23
+W -> V  22
+X -> J  10
+Y -> A  01
+Z -> T  20
+Ç -> Q  17
+[] -> E 05
+
+=======
+UKW-C
+
+A -> F  06
+B -> [] 00 
+C -> P  16
+D -> J  10
+E -> I  09
+F -> A  01
+G -> O  15
+H -> Y  25
+I -> E  05
+J -> D  04
+K -> R  18
+L -> Z  26
+M -> X  24
+N -> W  23
+O -> G  07
+P -> C  03
+Q -> T  20 
+R -> A  01
+S -> U  21
+T -> Q  17
+U -> S  19
+V -> Ç  27
+W -> N  14
+X -> M  13
+Y -> H  08
+Z -> L  12
+Ç -> V  22
+[] -> B 02
+
+---------------------
+Rotores
+
+=======
+Rotor I 
+
+A -> E  05
+B -> K  11
+C -> M  13
+D -> F  06
+E -> L  12
+F -> G  07
+G -> D  04
+H -> Q  17
+I -> V  22
+J -> Z  26
+K -> N  14
+L -> T  20
+M -> O  15
+N -> W  23
+O -> Y  25
+P -> H  08
+Q -> X  24
+R -> U  21
+S -> S  19
+T -> P  16
+U -> A  01
+V -> I  09
+W -> B  02
+X -> R  18
+Y -> C  03
+Z -> J  10
+Ç -> Ç  27
+[] -> [] 00
+
+=======
+Rotor 2
+
+A -> A  01
+B -> J  10
+C -> D  04
+D -> K  11
+E -> S  19
+F -> I  09
+G -> R  18
+H -> U  21
+I -> X  24
+J -> B  02
+K -> L  12
+L -> H  08
+M -> W  23
+N -> T  20
+O -> M  13
+P -> C  03
+Q -> Q  17
+R -> G  07
+S -> Z  26
+T -> N  14
+U -> P  16
+V -> Y  25
+W -> F  06
+X -> V  22
+Y -> O  15
+Z -> E  05
+Ç -> Ç  27
+[] -> [] 00
+
+=======
+Rotor 3
+
+A -> B  02
+B -> D  04
+C -> F  06
+D -> H  08
+E -> J  10
+F -> L  12
+G -> C  03
+H -> P  16
+I -> R  18
+J -> T  20
+K -> X  24
+L -> V  22
+M -> Z  26
+N -> N  14
+O -> Y  25
+P -> E  05
+Q -> I  09
+R -> W  23
+S -> G  07
+T -> A  01
+U -> K  11
+V -> M  13
+W -> U  21
+X -> S  19
+Y -> Q  17
+Z -> O  15
+Ç -> Ç  27
+[] -> [] 00
+
+=======
+Rotor 4
+
+A -> E  05
+B -> S  19
+C -> O  15
+D -> V  22
+E -> B  02
+F -> Z  26
+G -> J  10 
+H -> A  01
+I -> Y  25
+J -> Q  17
+K -> U  21
+L -> I  09
+M -> R  18
+N -> H  08
+O -> X  24
+P -> L  12
+Q -> N  14
+R -> F  06
+S -> T  20
+T -> G  07
+U -> K  11
+V -> D  04
+W -> C  03
+X -> M  13
+Y -> W  23
+Z -> B  02
+Ç -> Ç  27
+[] -> [] 00 
+
+=======
+Rotor 5
+
+A -> V  22
+B -> Z  26
+C -> B  02
+D -> R  18
+E -> G  07
+F -> I  09
+G -> T  20
+H -> Y  25
+I -> U  21
+J -> P  16
+K -> S  19
+L -> D  04
+M -> N  14
+N -> H  08
+O -> L  12
+P -> X  24
+Q -> A  01
+R -> W  23
+S -> M  13
+T -> J  10
+U -> Q  17
+V -> O  15
+W -> F  06
+X -> E  05
+Y -> C  03
+Z -> K  11
+Ç -> Ç  27
+[] -> [] 00
+
+=======
+Rotor 6
+
+A -> A   01    
+B -> B   02
+C -> C   03
+D -> D   04
+E -> E   05
+F -> F   06
+G -> G   07
+H -> H   08
+I -> I   09
+J -> J   10
+K -> K   11
+L -> L   12
+M -> M   13
+N -> N   14
+O -> O   15
+P -> P   16
+Q -> Q   17
+R -> R   18
+S -> S   19
+T -> T   20
+U -> U   21
+V -> V   22
+W -> W   23
+X -> X   24
+Y -> Y   25
+Z -> Z   26
+Ç -> Ç   27
+[] -> [] 00
+
+=======
+Rotor 7
+
+A -> A   01    
+B -> B   02
+C -> C   03
+D -> D   04
+E -> E   05
+F -> F   06
+G -> G   07
+H -> H   08
+I -> I   09
+J -> J   10
+K -> K   11
+L -> L   12
+M -> M   13
+N -> N   14
+O -> O   15
+P -> P   16
+Q -> Q   17
+R -> R   18
+S -> S   19
+T -> T   20
+U -> U   21
+V -> V   22
+W -> W   23
+X -> X   24
+Y -> Y   25
+Z -> Z   26
+Ç -> Ç   27
+[] -> [] 00
