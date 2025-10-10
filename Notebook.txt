@@ -1,4 +1,4 @@
-Fazendo uma máquina Enigma
+Fazendo uma máquina enigma
 
 
 O modelo escolhido foi a versão "I", utilizada pelo exército alemão durante a segunda guerra mundial.
@@ -9,7 +9,6 @@ A enigma modelo I possui cinco rotores, dico de entrada(ETW) e refletor(UTW) cad
 A enygma tipo "I" possui três tipos de refletores e Cinco tipos de Rotores.
 
 Entretanto a nossa versão terá Sete rotores, com 28 caracteres, mesmo que os cinco originais permanessam os mesmos.
-
 -------------------------
 Detalhando
 
