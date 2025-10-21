@@ -83,7 +83,7 @@ class interface():
         self.enigma_label()
         
 
-        self.bt_teste_a = Button(self.enigma, text="Toggle", command=self.toggle_m)
+        self.bt_teste_a = Button(self.enigma, text="Toggle", command=self.toggle_o)
         self.bt_teste_a.place(x=10, y=10, width=150, height=30) 
         
         self.createlbs()
@@ -243,7 +243,6 @@ class interface():
             self.a_label.place(**self.a_place_args)
             self.a_visivel = True
 
-
     #B -----
     def create_lbl_b(self):
         bimage_path = r"Enigma_Cipher\images\letters\B.jpeg"
@@ -294,8 +293,7 @@ class interface():
        
         self.d_label = Label(self.enigma, image=self.d_photo)
         self.d_place_args = {'relx': 0.321, 'rely': 0.531, 'relwidth': 0.065, 'relheight': 0.058}
-        self.d_label.place(**self.d_place_args)
-
+        
     def toggle_d(self):
         if self.d_visivel:
             self.d_label.place_forget()
@@ -484,9 +482,7 @@ class interface():
             self.m_label.place(**self.m_place_args)
             self.m_visivel = True
 
-
     #N -----
-
     def create_lbl_n(self):
         nimage_path = r"Enigma_Cipher\images\letters\N.jpeg"
         nimg = Image.open(nimage_path)
@@ -495,10 +491,8 @@ class interface():
        
        
         self.n_label = Label(self.enigma, image=self.n_photo)
-        self.n_place_args = {'relx': 0.131, 'rely': 0.53, 'relwidth': 0.065, 'relheight': 0.058}
+        self.n_place_args = {'relx': 0.640, 'rely': 0.602, 'relwidth': 0.065, 'relheight': 0.058}
         self.n_label.place(**self.n_place_args)
-
-
 
     def toggle_n(self):
         if self.n_visivel:
@@ -508,9 +502,7 @@ class interface():
             self.n_label.place(**self.n_place_args)
             self.n_visivel = True
 
-
     #O -----
-
     def create_lbl_o(self):
         oimage_path = r"Enigma_Cipher\images\letters\O.jpeg"
         oimg = Image.open(oimage_path)
@@ -519,7 +511,7 @@ class interface():
        
        
         self.o_label = Label(self.enigma, image=self.o_photo)
-        self.o_place_args = {'relx': 0.131, 'rely': 0.53, 'relwidth': 0.065, 'relheight': 0.058}
+        self.o_place_args = {'relx': 0.872, 'rely': 0.4573, 'relwidth': 0.065, 'relheight': 0.058}
         self.o_label.place(**self.o_place_args)
 
     def toggle_o(self):
@@ -530,9 +522,7 @@ class interface():
             self.o_label.place(**self.o_place_args)
             self.o_visivel = True
 
-
     #P -----
-
     def create_lbl_p(self):
         pimage_path = r"Enigma_Cipher\images\letters\P.jpeg"
         pimg = Image.open(pimage_path)
