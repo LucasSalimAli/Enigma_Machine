@@ -17,6 +17,7 @@ class interface():
         self.images_menu()
         self.labels_menu()
         self.setlbl()
+        self.go_to_settings()
         
     
         tela.mainloop()
@@ -93,12 +94,6 @@ class interface():
         self.setimage = (setimg)
         self.set_image = ImageTk.PhotoImage(self.setimage)
 
-        #Start Button
-        '''startimage_path = "Enigma_Cipher\images\start.jpeg"
-        startimg = Image.open(startimage_path)
-        startimg = startimg.resize((50, 50), Image.LANCZOS)
-        self.startimage = (startimg)
-        self.start_image = ImageTk.PhotoImage(self.startimage)'''
 
     #Background da página da enigma
     def enigma_label(self):
@@ -111,10 +106,6 @@ class interface():
         #Settings Button
         self.start = Button(self.enigma, image=self.set_image, command=self.go_to_settings)
         self.start.place(relx=0.785, rely=0.15, width=50, height=50)
-
-        #Start Machine Button
-        '''self.start = Button(self.enigma, image=self.start_image, command=self.go_to_settings)
-        self.start.place(relx=0.785, rely=0.15, width=50, height=50)'''
 
         #Rotors Labels
         self.txt_r1 = "A"
@@ -399,12 +390,41 @@ class interface():
 
             self.e_z = Entry(self.enigma)
             self.e_z.place(relx= 0.88, rely= 0.86, width=17, height=17)
-            
+
+    #Função para abrir a tela de configurações    
     def go_to_settings(self):
         settings = Toplevel()
         self.settings = settings
         self.settings.title("Settings")
+        self.settings.configure(background="#FFFFFF")
         self.settings.geometry("350x350")
+        self.settings_bg()
+        self.settings_io()
+
+    #Frames da settings
+    def settings_bg(self):
+        self.rotors_frame = Frame(self.settings, bg="#9FA1AD")
+        self.rotors_frame.place(relx= 0.05, rely= 0.05, width= 180, height= 210)
+
+        self.lbl_rotor_title = Label(self.settings, text="Selecione um rotor para cada slot")
+        self.lbl_rotor_title.place(relx= 0.05, rely=0.05, width= 180, height= 20)
+
+        self.ukw_frame = Frame(self.settings, bg="#FD6161")
+        self.ukw_frame.place(relx= 0.6, rely= 0.05, width=120, height= 210 )
+
+        self.volume_frame = Frame(self.settings, bg="#AEF705")
+        self.volume_frame.place(relx = 0.05, rely=0.7, width = 180, heigh= 80)
+
+        self.check_frame = Frame(self.settings, bg="#F179B1")
+        self.check_frame.place(relx=0.6, rely=0.7, width= 120, height= 37 )
+
+        self.save_frame = Frame(self.settings, bg="#7CEE4F")
+        self.save_frame.place(relx= 0.6, rely= 0.82, width=120, height=37)
+
+    def settings_io(self):
+        self.lbl_r1s = Label(self.settings, text="Selecione o rotor")
+        #self.lbl_r1s =
+
 
 
     #Letters
@@ -526,6 +546,7 @@ class interface():
         self.create_lbl_z()
         self.create_lbl_ç()
         self.create_lbl_leer()
+
 
     #A -----
     def create_lbl_a(self):
