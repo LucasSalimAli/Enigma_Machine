@@ -18,9 +18,7 @@ class interface():
         self.labels_menu()
         self.setlbl()
         
-        
-
-        
+    
         tela.mainloop()
 
         
@@ -31,7 +29,6 @@ class interface():
         self.tela.geometry("300x300")
         self.tela.resizable(False, False)
         
-
     #Função para chamar a imagem da Logo
     def images_menu(self):
         image_path = "Enigma_Cipher\images\sign3.jpeg"
@@ -39,7 +36,6 @@ class interface():
         img = img.resize((300, 150), Image.LANCZOS)
         self.image = (img)
         self.title_image = ImageTk.PhotoImage(self.image)
-
 
     #Detalhes em volta da logo e dos botões
     def frames_menu(self):
@@ -54,7 +50,6 @@ class interface():
 
         self.frame_button1.place(relx= 0.05, rely= 0.75, relwidth=0.9, height=50)
 
-
     #Botões
     def buttons_menu(self):
         self.bt_start = Button(self.tela, text="Start", font=("Arial", 20), command= self.go_to_enigma)
@@ -64,41 +59,355 @@ class interface():
         self.bt_exit = Button(self.tela, text="Exit", font=("Arial", 20), command= exit)
         self.bt_exit.place(relx= 0.061, rely=0.763, width=100, height=43)
         
-
     #Imagem da Lobo
     def labels_menu(self):
         self.lb_title = Label(self.frame_title, text= "ENIGMA", image=self.title_image, font=("Arial", 30))
         self.lb_title.place(relx= 0.001, rely= 0.03, relwidth= 1, relheight=0.95)
-
 
     #Função para abrir a janela da Enigma
     def go_to_enigma(self):
         enigma = Toplevel()
         self.enigma = enigma
         self.enigma.geometry("652x756")
+        self.enigma.resizable(False, False)
         self.enigma_image()
         self.enigma_label()
-        
+        self.io()
+        self.jumpers()
         self.createlbs()
         
-    
     #Função para chamar as imagem da tela da Enigma
     def enigma_image(self):
+       
+       #Background Image
         bgimage_path = "Enigma_Cipher\images\protorype enigma.jpeg"
         bgimg = Image.open(bgimage_path)
         bgimg = bgimg.resize((652, 756), Image.LANCZOS)
         self.bgimage = (bgimg)
         self.bg_image = ImageTk.PhotoImage(self.bgimage)
 
+        #Settings Button
+        setimage_path = "Enigma_Cipher\images\settings.jpeg"
+        setimg = Image.open(setimage_path)
+        setimg = setimg.resize((50, 50), Image.LANCZOS)
+        self.setimage = (setimg)
+        self.set_image = ImageTk.PhotoImage(self.setimage)
+
+        #Start Button
+        '''startimage_path = "Enigma_Cipher\images\start.jpeg"
+        startimg = Image.open(startimage_path)
+        startimg = startimg.resize((50, 50), Image.LANCZOS)
+        self.startimage = (startimg)
+        self.start_image = ImageTk.PhotoImage(self.startimage)'''
 
     #Background da página da enigma
     def enigma_label(self):
         self.lb_bg = Label(self.enigma, image=self.bg_image)
         self.lb_bg.place(relwidth= 1, relheight=1)
 
-    
+    #Imput/Output
+    def io(self):
+
+        #Settings Button
+        self.start = Button(self.enigma, image=self.set_image, command=self.go_to_settings)
+        self.start.place(relx=0.785, rely=0.15, width=50, height=50)
+
+        #Start Machine Button
+        '''self.start = Button(self.enigma, image=self.start_image, command=self.go_to_settings)
+        self.start.place(relx=0.785, rely=0.15, width=50, height=50)'''
+
+        #Rotors Labels
+        self.txt_r1 = "A"
+        self.lb_r1 = Label(self.enigma, text=self.txt_r1, font="Arial, 14")
+        self.lb_r1.place(relx=0.165, rely=0.185, width=23, height=23)
+        
+        self.txt_r2 = "B"
+        self.lb_r2 = Label(self.enigma, text=self.txt_r2, font="Arial, 14")
+        self.lb_r2.place(relx=0.2665, rely=0.185, width=23, height=23)
+
+        self.txt_r3 = "C"
+        self.lb_r3 = Label(self.enigma, text=self.txt_r3, font="Arial, 14")
+        self.lb_r3.place(relx=0.368, rely=0.187, width=23, height=23)
+
+        self.txt_r4 = "D"
+        self.lb_r4 = Label(self.enigma, text=self.txt_r4, font="Arial, 14")
+        self.lb_r4.place(relx=0.47, rely=0.187, width=23, height=23)
+
+        self.txt_r5 = "E"
+        self.lb_r5 = Label(self.enigma, text=self.txt_r5, font="Arial, 14")
+        self.lb_r5.place(relx=0.57, rely=0.187, width=23, height=23)
 
 
+        #Rotors Buttons
+        self.bt_up1 = Button(self.enigma, text="+")
+        self.bt_up1.place(relx=0.1678, rely=0.1315, width=20, height=20)
+        self.bt_dn1 = Button(self.enigma, text="-")
+        self.bt_dn1.place(relx=0.1678, rely=0.2436, width=20, height=20)
+        
+        self.bt_up2 = Button(self.enigma, text="+")
+        self.bt_up2.place(relx=0.2695, rely=0.1315, width=20, height=20)
+        self.bt_dn2 = Button(self.enigma, text="-")
+        self.bt_dn2.place(relx=0.2695, rely=0.2436, width=20, height=20)
+
+        self.bt_up3 = Button(self.enigma, text="+")
+        self.bt_up3.place(relx=0.371, rely=0.1315, width=20, height=20)
+        self.bt_dn3 = Button(self.enigma, text="-")
+        self.bt_dn3.place(relx=0.371, rely=0.2436, width=20, height=20)
+
+        self.bt_up4 = Button(self.enigma, text="+")
+        self.bt_up4.place(relx=0.472, rely=0.1315, width=20, height=20)
+        self.bt_dn4 = Button(self.enigma, text="-")
+        self.bt_dn4.place(relx=0.472, rely=0.2436, width=20, height=20)
+
+        self.bt_up5 = Button(self.enigma, text="+")
+        self.bt_up5.place(relx=0.573, rely=0.1315, width=20, height=20)
+        self.bt_dn5 = Button(self.enigma, text="-")
+        self.bt_dn5.place(relx=0.573, rely=0.2436, width=20, height=20)
+
+
+        #Rotors ID
+        self.txt_id_r1 = "1"
+        self.lb_id_r1 = Label(self.enigma, text=self.txt_id_r1)
+        self.lb_id_r1.place(relx=0.1678, rely=0.08, width=20, height=20)
+
+        self.txt_id_r2 = "2"
+        self.lb_id_r2 = Label(self.enigma, text=self.txt_id_r2)
+        self.lb_id_r2.place(relx=0.2695, rely=0.08, width=20, height=20)
+
+        self.txt_id_r3 = "3"
+        self.lb_id_r3 = Label(self.enigma, text=self.txt_id_r3)
+        self.lb_id_r3.place(relx=0.371, rely=0.08, width=20, height=20)
+
+        self.txt_id_r4 = "4"
+        self.lb_id_r4 = Label(self.enigma, text=self.txt_id_r4)
+        self.lb_id_r4.place(relx=0.472, rely=0.08, width=20, height=20)
+
+        self.txt_id_r5 = "5"
+        self.lb_id_r5 = Label(self.enigma, text=self.txt_id_r5)
+        self.lb_id_r5.place(relx=0.573, rely=0.08, width=20, height=20)
+
+
+        #Entrada
+        self.lb_ent = Label(self.enigma, text="Entrada")
+        self.lb_ent.place(relx=0.1, rely= 0.32, width= 50, height = 25)
+        
+        self.ent = Entry(self.enigma)
+        self.ent.place(relx=0.2, rely= 0.32, width= 500, height = 25)
+
+        #Saida
+        self.lb_extt = Label(self.enigma, text="Saida")
+        self.lb_extt.place(relx=0.1, rely= 0.38, width= 50, height = 25)
+
+        self.lb_ext = Label(self.enigma, text="Esperando Criptografia")
+        self.lb_ext.place(relx=0.2, rely= 0.38, width= 500, height = 25)
+
+    #Jumpers Section
+    def jumpers(self):
+
+            #A
+            self.j_a = Label(self.enigma, text="A")
+            self.j_a.place(relx= 0.07, rely= 0.77, width=17, height=17)
+
+            self.e_a = Entry(self.enigma)
+            self.e_a.place(relx= 0.07, rely= 0.86, width=17, height=17)
+
+            #B
+            self.j_b = Label(self.enigma, text="B")
+            self.j_b.place(relx= 0.1, rely= 0.77, width=17, height=17)
+
+            self.e_b = Entry(self.enigma)
+            self.e_b.place(relx= 0.1, rely= 0.86, width=17, height=17)
+
+            #C
+            self.j_c = Label(self.enigma, text= "C")
+            self.j_c.place(relx= 0.13, rely= 0.77, width=17, height=17)
+
+            self.e_c = Entry(self.enigma)
+            self.e_c.place(relx= 0.13, rely= 0.86, width=17, height=17)
+
+            #D
+            self.j_d = Label(self.enigma, text="D")
+            self.j_d.place(relx= 0.16, rely= 0.77, width=17, height=17)
+
+            self.e_d = Entry(self.enigma)
+            self.e_d.place(relx= 0.16, rely= 0.86, width=17, height=17)
+
+            #E
+            self.j_e = Label(self.enigma, text="E")
+            self.j_e.place(relx= 0.19, rely= 0.77, width=17, height=17)
+
+            self.e_e = Entry(self.enigma)
+            self.e_e.place(relx= 0.19, rely= 0.86, width=17, height=17)
+
+            #F
+            self.j_f = Label(self.enigma, text="F")
+            self.j_f.place(relx= 0.22, rely= 0.77, width=17, height=17)
+
+            self.e_f = Entry(self.enigma)
+            self.e_f.place(relx= 0.22, rely= 0.86, width=17, height=17)
+
+            #G
+            self.j_g = Label(self.enigma, text="G")
+            self.j_g.place(relx= 0.25, rely= 0.77, width=17, height=17)
+
+            self.e_g = Entry(self.enigma)
+            self.e_g.place(relx= 0.25, rely= 0.86, width=17, height=17)
+
+            #H
+            self.j_h = Label(self.enigma, text="H")
+            self.j_h.place(relx= 0.28, rely= 0.77, width=17, height=17)
+
+            self.e_h = Entry(self.enigma)
+            self.e_h.place(relx= 0.28, rely= 0.86, width=17, height=17)
+
+            #I
+            self.j_i = Label(self.enigma, text="I")
+            self.j_i.place(relx= 0.31, rely= 0.77, width=17, height=17)
+
+            self.e_i = Entry(self.enigma)
+            self.e_i.place(relx= 0.31, rely= 0.86, width=17, height=17)
+
+            #J
+            self.j_j = Label(self.enigma, text="J")
+            self.j_j.place(relx= 0.34, rely= 0.77, width=17, height=17)
+
+            self.e_j = Entry(self.enigma)
+            self.e_j.place(relx= 0.34, rely= 0.86, width=17, height=17)
+
+            #K
+            self.j_k = Label(self.enigma, text="K")
+            self.j_k.place(relx= 0.37, rely= 0.77, width=17, height=17)
+
+            self.e_k = Entry(self.enigma)
+            self.e_k.place(relx= 0.37, rely= 0.86, width=17, height=17)
+
+            #L
+            self.j_l = Label(self.enigma, text="L")
+            self.j_l.place(relx= 0.40, rely= 0.77, width=17, height=17)
+
+            self.e_l = Entry(self.enigma)
+            self.e_l.place(relx= 0.40, rely= 0.86, width=17, height=17)
+
+            #M
+            self.j_m = Label(self.enigma, text="M")
+            self.j_m.place(relx= 0.43, rely= 0.77, width=17, height=17)
+
+            self.e_m = Entry(self.enigma)
+            self.e_m.place(relx= 0.43, rely= 0.86, width=17, height=17)
+
+            #N
+            self.j_n = Label(self.enigma, text="N")
+            self.j_n.place(relx= 0.46, rely= 0.77, width=17, height=17)
+            
+            self.e_n = Entry(self.enigma)
+            self.e_n.place(relx= 0.46, rely= 0.86, width=17, height=17)
+
+            #O
+            self.j_o = Label(self.enigma, text="O")
+            self.j_o.place(relx= 0.49, rely= 0.77, width=17, height=17)
+            
+            self.e_o = Entry(self.enigma)
+            self.e_o.place(relx= 0.49, rely= 0.86, width=17, height=17)
+            
+            #P
+            self.j_p = Label(self.enigma, text="P")
+            self.j_p.place(relx= 0.52, rely= 0.77, width=17, height=17)
+
+            self.e_p = Entry(self.enigma)
+            self.e_p.place(relx= 0.52, rely= 0.86, width=17, height=17)
+
+            #Q
+            self.j_q = Label(self.enigma, text="Q")
+            self.j_q.place(relx= 0.55, rely= 0.77, width=17, height=17)
+
+            self.e_q = Entry(self.enigma)
+            self.e_q.place(relx= 0.55, rely= 0.86, width=17, height=17)
+
+            #R
+            self.j_r = Label(self.enigma, text="R")
+            self.j_r.place(relx= 0.58, rely= 0.77, width=17, height=17)
+
+            self.e_r = Entry(self.enigma)
+            self.e_r.place(relx= 0.58, rely= 0.86, width=17, height=17)
+
+            #S
+            self.j_s = Label(self.enigma, text="S")
+            self.j_s.place(relx= 0.61, rely= 0.77, width=17, height=17)
+
+            self.e_s = Entry(self.enigma)
+            self.e_s.place(relx= 0.61, rely= 0.86, width=17, height=17)
+            
+            #T
+            self.j_t = Label(self.enigma, text="T")
+            self.j_t.place(relx= 0.64, rely= 0.77, width=17, height=17)
+
+            self.e_t = Entry(self.enigma)
+            self.e_t.place(relx= 0.64, rely= 0.86, width=17, height=17)
+
+            #U
+            self.j_u = Label(self.enigma, text="U")
+            self.j_u.place(relx= 0.67, rely= 0.77, width=17, height=17)
+
+            self.e_u = Entry(self.enigma)
+            self.e_u.place(relx= 0.67, rely= 0.86, width=17, height=17)
+
+            #V
+            self.j_v = Label(self.enigma, text="V")
+            self.j_v.place(relx= 0.70, rely= 0.77, width=17, height=17)
+
+            self.e_v = Entry(self.enigma)
+            self.e_v.place(relx= 0.70, rely= 0.86, width=17, height=17)
+
+            #W
+            self.j_w = Label(self.enigma, text="W")
+            self.j_w.place(relx= 0.73, rely= 0.77, width=17, height=17)
+
+            self.e_w = Entry(self.enigma)
+            self.e_w.place(relx= 0.73, rely= 0.86, width=17, height=17)
+
+            #X
+            self.j_x = Label(self.enigma, text="X")
+            self.j_x.place(relx= 0.76, rely= 0.77, width=17, height=17)
+
+            self.e_x = Entry(self.enigma)
+            self.e_x.place(relx= 0.76, rely= 0.86, width=17, height=17)
+
+            #Y
+            self.j_y = Label(self.enigma, text="Y")
+            self.j_y.place(relx= 0.79, rely= 0.77, width=17, height=17)
+            
+            self.e_y = Entry(self.enigma)
+            self.e_y.place(relx= 0.79, rely= 0.86, width=17, height=17)
+
+            #Z
+            self.j_z = Label(self.enigma, text="Z")
+            self.j_z.place(relx= 0.82, rely= 0.77, width=17, height=17)
+
+            self.e_z = Entry(self.enigma)
+            self.e_z.place(relx= 0.82, rely= 0.86, width=17, height=17)
+
+            #Ç
+            self.j_ç = Label(self.enigma, text="Ç")
+            self.j_ç.place(relx= 0.85, rely= 0.77, width=17, height=17)
+
+            self.e_ç = Entry(self.enigma)
+            self.e_ç.place(relx= 0.85, rely= 0.86, width=17, height=17)
+
+            #leer
+            self.j_z = Label(self.enigma, text="_")
+            self.j_z.place(relx= 0.88, rely= 0.77, width=17, height=17)
+
+            self.e_z = Entry(self.enigma)
+            self.e_z.place(relx= 0.88, rely= 0.86, width=17, height=17)
+            
+    def go_to_settings(self):
+        settings = Toplevel()
+        self.settings = settings
+        self.settings.title("Settings")
+        self.settings.geometry("350x350")
+
+
+    #Letters
 
     #Set Visibillity Letras
     def setlbl(self):
@@ -217,9 +526,6 @@ class interface():
         self.create_lbl_z()
         self.create_lbl_ç()
         self.create_lbl_leer()
-
-
-    #Letters
 
     #A -----
     def create_lbl_a(self):
