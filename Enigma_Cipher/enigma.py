@@ -1,6 +1,6 @@
 from tkinter import *
 from PIL import Image, ImageTk
-
+from pygame import *
 
 
 tela = Tk()
@@ -17,7 +17,7 @@ class interface():
         self.images_menu()
         self.labels_menu()
         self.setlbl()
-
+        
         
 
         
@@ -71,24 +71,16 @@ class interface():
         self.lb_title.place(relx= 0.001, rely= 0.03, relwidth= 1, relheight=0.95)
 
 
-
-
     #Função para abrir a janela da Enigma
     def go_to_enigma(self):
         enigma = Toplevel()
         self.enigma = enigma
-        self.enigma.title("Enigma Simulator")
         self.enigma.geometry("652x756")
         self.enigma_image()
         self.enigma_label()
         
-
-        self.bt_teste_a = Button(self.enigma, text="Toggle", command=self.toggle_o)
-        self.bt_teste_a.place(x=10, y=10, width=150, height=30) 
-        
         self.createlbs()
         
-
     
     #Função para chamar as imagem da tela da Enigma
     def enigma_image(self):
@@ -99,12 +91,16 @@ class interface():
         self.bg_image = ImageTk.PhotoImage(self.bgimage)
 
 
-
     #Background da página da enigma
     def enigma_label(self):
         self.lb_bg = Label(self.enigma, image=self.bg_image)
         self.lb_bg.place(relwidth= 1, relheight=1)
 
+    
+
+
+
+    #Set Visibillity Letras
     def setlbl(self):
 
         self.a_visivel = False
@@ -191,6 +187,7 @@ class interface():
         self.leer_visivel = False
         self.leer_label = None
 
+    #Criação das Letras
     def createlbs(self):
         self.create_lbl_a()
         self.create_lbl_b()
@@ -220,6 +217,7 @@ class interface():
         self.create_lbl_z()
         self.create_lbl_ç()
         self.create_lbl_leer()
+
 
     #Letters
 
@@ -293,6 +291,7 @@ class interface():
        
         self.d_label = Label(self.enigma, image=self.d_photo)
         self.d_place_args = {'relx': 0.321, 'rely': 0.531, 'relwidth': 0.065, 'relheight': 0.058}
+        self.d_label.place(**self.d_place_args)
         
     def toggle_d(self):
         if self.d_visivel:
@@ -531,7 +530,7 @@ class interface():
        
        
         self.p_label = Label(self.enigma, image=self.p_photo)
-        self.p_place_args = {'relx': 0.131, 'rely': 0.53, 'relwidth': 0.065, 'relheight': 0.058}
+        self.p_place_args = {'relx': 0.064, 'rely': 0.603, 'relwidth': 0.065, 'relheight': 0.058}
         self.p_label.place(**self.p_place_args)
 
     def toggle_p(self):
@@ -542,9 +541,7 @@ class interface():
             self.p_label.place(**self.p_place_args)
             self.p_visivel = True
 
-
     #Q -----
-
     def create_lbl_q(self):
         qimage_path = r"Enigma_Cipher\images\letters\Q.jpeg"
         qimg = Image.open(qimage_path)
@@ -553,7 +550,7 @@ class interface():
        
        
         self.q_label = Label(self.enigma, image=self.q_photo)
-        self.q_place_args = {'relx': 0.1, 'rely': 0.4571, 'relwidth': 0.065, 'relheight': 0.058}
+        self.q_place_args = {'relx': 0.1, 'rely': 0.4574, 'relwidth': 0.065, 'relheight': 0.058}
         self.q_label.place(**self.q_place_args)
 
     def toggle_q(self):
@@ -564,9 +561,7 @@ class interface():
             self.q_label.place(**self.q_place_args)
             self.q_visivel = True
 
-
     #R -----
-
     def create_lbl_r(self):
         rimage_path = r"Enigma_Cipher\images\letters\R.jpeg"
         rimg = Image.open(rimage_path)
@@ -575,7 +570,7 @@ class interface():
        
        
         self.r_label = Label(self.enigma, image=self.r_photo)
-        self.r_place_args = {'relx': 0.131, 'rely': 0.53, 'relwidth': 0.065, 'relheight': 0.058}
+        self.r_place_args = {'relx': 0.3889, 'rely': 0.4574, 'relwidth': 0.065, 'relheight': 0.058}
         self.r_label.place(**self.r_place_args)
 
     def toggle_r(self):
@@ -586,9 +581,7 @@ class interface():
             self.r_label.place(**self.r_place_args)
             self.r_visivel = True
 
-
     #S -----
-
     def create_lbl_s(self):
         simage_path = r"Enigma_Cipher\images\letters\S.jpeg"
         simg = Image.open(simage_path)
@@ -597,7 +590,7 @@ class interface():
        
        
         self.s_label = Label(self.enigma, image=self.s_photo)
-        self.s_place_args = {'relx': 0.131, 'rely': 0.53, 'relwidth': 0.065, 'relheight': 0.058}
+        self.s_place_args = {'relx': 0.2249668, 'rely': 0.531, 'relwidth': 0.065, 'relheight': 0.058}
         self.s_label.place(**self.s_place_args)
 
     def toggle_s(self):
@@ -608,9 +601,7 @@ class interface():
             self.s_label.place(**self.s_place_args)
             self.s_visivel = True
 
-
     #T -----
-
     def create_lbl_t(self):
         timage_path = r"Enigma_Cipher\images\letters\T.jpeg"
         timg = Image.open(timage_path)
@@ -619,7 +610,7 @@ class interface():
        
        
         self.t_label = Label(self.enigma, image=self.t_photo)
-        self.t_place_args = {'relx': 0.131, 'rely': 0.53, 'relwidth': 0.065, 'relheight': 0.058}
+        self.t_place_args = {'relx': 0.486, 'rely': 0.4574, 'relwidth': 0.065, 'relheight': 0.058}
         self.t_label.place(**self.t_place_args)
 
     def toggle_t(self):
@@ -630,9 +621,7 @@ class interface():
             self.t_label.place(**self.t_place_args)
             self.t_visivel = True
 
-
     #U -----
-
     def create_lbl_u(self):
         uimage_path = r"Enigma_Cipher\images\letters\U.jpeg"
         uimg = Image.open(uimage_path)
@@ -641,7 +630,7 @@ class interface():
        
        
         self.u_label = Label(self.enigma, image=self.u_photo)
-        self.u_place_args = {'relx': 0.131, 'rely': 0.53, 'relwidth': 0.065, 'relheight': 0.058}
+        self.u_place_args = {'relx': 0.6793, 'rely': 0.4576, 'relwidth': 0.065, 'relheight': 0.058}
         self.u_label.place(**self.u_place_args)
 
     def toggle_u(self):
@@ -652,9 +641,7 @@ class interface():
             self.u_label.place(**self.u_place_args)
             self.u_visivel = True
 
-
     #V -----
-
     def create_lbl_v(self):
         vimage_path = r"Enigma_Cipher\images\letters\V.jpeg"
         vimg = Image.open(vimage_path)
@@ -663,7 +650,7 @@ class interface():
        
        
         self.v_label = Label(self.enigma, image=self.v_photo)
-        self.v_place_args = {'relx': 0.131, 'rely': 0.53, 'relwidth': 0.065, 'relheight': 0.058}
+        self.v_place_args = {'relx': 0.4469, 'rely': 0.602, 'relwidth': 0.065, 'relheight': 0.058}
         self.v_label.place(**self.v_place_args)
 
     def toggle_v(self):
@@ -674,9 +661,7 @@ class interface():
             self.v_label.place(**self.v_place_args)
             self.v_visivel = True
 
-
     #W -----
-
     def create_lbl_w(self):
         wimage_path = r"Enigma_Cipher\images\letters\W.jpeg"
         wimg = Image.open(wimage_path)
@@ -685,7 +670,7 @@ class interface():
        
        
         self.w_label = Label(self.enigma, image=self.w_photo)
-        self.w_place_args = {'relx': 0.131, 'rely': 0.53, 'relwidth': 0.065, 'relheight': 0.058}
+        self.w_place_args = {'relx': 0.197005, 'rely': 0.4576, 'relwidth': 0.065, 'relheight': 0.058}
         self.w_label.place(**self.w_place_args)
 
     def toggle_w(self):
@@ -696,9 +681,7 @@ class interface():
             self.w_label.place(**self.w_place_args)
             self.w_visivel = True
 
-
     #X -----
-
     def create_lbl_x(self):
         ximage_path = r"Enigma_Cipher\images\letters\X.jpeg"
         ximg = Image.open(ximage_path)
@@ -707,7 +690,7 @@ class interface():
        
        
         self.x_label = Label(self.enigma, image=self.x_photo)
-        self.x_place_args = {'relx': 0.131, 'rely': 0.53, 'relwidth': 0.065, 'relheight': 0.058}
+        self.x_place_args = {'relx': 0.254, 'rely': 0.602, 'relwidth': 0.065, 'relheight': 0.058}
         self.x_label.place(**self.x_place_args)
 
     def toggle_x(self):
@@ -718,9 +701,7 @@ class interface():
             self.x_label.place(**self.x_place_args)
             self.x_visivel = True
 
-
     #Y -----
-
     def create_lbl_y(self):
         yimage_path = r"Enigma_Cipher\images\letters\Y.jpeg"
         yimg = Image.open(yimage_path)
@@ -729,7 +710,7 @@ class interface():
        
        
         self.y_label = Label(self.enigma, image=self.y_photo)
-        self.y_place_args = {'relx': 0.131, 'rely': 0.53, 'relwidth': 0.065, 'relheight': 0.058}
+        self.y_place_args = {'relx': 0.159, 'rely': 0.602, 'relwidth': 0.065, 'relheight': 0.058}
         self.y_label.place(**self.y_place_args)
 
     def toggle_y(self):
@@ -740,9 +721,7 @@ class interface():
             self.y_label.place(**self.y_place_args)
             self.y_visivel = True
 
-
     #Z -----
-
     def create_lbl_z(self):
         zimage_path = r"Enigma_Cipher\images\letters\Z.jpeg"
         zimg = Image.open(zimage_path)
@@ -751,7 +730,7 @@ class interface():
        
        
         self.z_label = Label(self.enigma, image=self.z_photo)
-        self.z_place_args = {'relx': 0.131, 'rely': 0.53, 'relwidth': 0.065, 'relheight': 0.058}
+        self.z_place_args = {'relx': 0.583, 'rely': 0.4573, 'relwidth': 0.065, 'relheight': 0.058}
         self.z_label.place(**self.z_place_args)
 
     def toggle_z(self):
@@ -762,9 +741,7 @@ class interface():
             self.z_label.place(**self.z_place_args)
             self.z_visivel = True
 
-
     #Ç -----
-
     def create_lbl_ç(self):
         çimage_path = r"Enigma_Cipher\images\letters\Ç.jpeg"
         çimg = Image.open(çimage_path)
