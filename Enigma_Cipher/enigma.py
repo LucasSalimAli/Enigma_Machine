@@ -7,6 +7,7 @@ tela = Tk()
 
 
 
+
 class interface():
 
     def __init__(self):
@@ -93,7 +94,6 @@ class interface():
         setimg = setimg.resize((50, 50), Image.LANCZOS)
         self.setimage = (setimg)
         self.set_image = ImageTk.PhotoImage(self.setimage)
-
 
     #Background da página da enigma
     def enigma_label(self):
@@ -423,7 +423,7 @@ class interface():
 
     def settings_io(self):
         self.lbl_r1s = Label(self.settings, text="Selecione o rotor")
-        #self.lbl_r1s =
+        self.lbl_r1s.place(relx+)
 
 
 
@@ -1110,4 +1110,7 @@ class interface():
 
         
    
-interface()
+interface() 
+
+
+
