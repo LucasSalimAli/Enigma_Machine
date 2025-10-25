@@ -6,7 +6,6 @@ from pygame import *
 tela = Tk()
 
 
-
 class interface():
 
     def __init__(self):
