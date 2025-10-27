@@ -179,6 +179,16 @@ class interface():
         self.lb_id_r5 = Label(self.enigma, text=self.txt_id_r5)
         self.lb_id_r5.place(relx=0.573, rely=0.08, width=20, height=20)
 
+        #UKW_badge
+        self.txt_ukw_id = "UKW"
+        self.ukw_badge_id = Label(self.enigma, text=self.txt_ukw_id)
+        self.ukw_badge_id.place(relx=0.045, rely=0.08, width=45, height=20)
+
+        self.txt_ukw_badge = "1"
+        self.ukw_badge = Label(self.enigma, text=self.txt_ukw_badge, font="Arial, 14")
+        self.ukw_badge.place(relx=0.059, rely=0.177, width=23, height=23)
+
+
 
         #Entrada
         self.lb_ent = Label(self.enigma, text="Entrada")
