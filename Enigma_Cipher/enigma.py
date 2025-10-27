@@ -48,21 +48,7 @@ class discos:
                 return 1
             else:
                 return 0
-            
-
-    def conf(self,pino):
-
-        buffer2 = pino[self.idex]
-        print(pino)
-        print(buffer2)
-        while self.codex[0] != buffer2:
-
-            buffer = self.codex[0]
-            for x in range(len(self.codex)):
-                if x < len(self.codex)-1:
-                    self.codex[x] = self.codex[x+1]
-
-            self.codex[len(self.codex)-1] = buffer
+        
          
 
 
@@ -127,7 +113,6 @@ etw = discos()
 etw.assem = pinos
 
 
-
 #============================================================================================
 #FUNÇOES PUBLICAS AQUI
 def escolher(lugar,discoinp):
@@ -138,14 +123,7 @@ def escolher(lugar,discoinp):
     disco[lugar].pos = lugar
     disco[lugar].rot = disco[lugar].codex[0]
     print(disco[lugar].codex)
-        
-def config():
-    global disco
-    disco[i].idex = pinos.index(input("Informe o indice de configuraçao do disco {} (A - Z): ".format(i+1)))
-    print(disco[i].codex)
-    disco[i].conf(colecao[disco[i].pos])
-    print(disco[i].codex)     
-
+             
 def refletor(ukwinp):
     global espelhos, ukw
     ukw.mirror = espelhos[ukwinp]
@@ -179,8 +157,6 @@ def cripto(texto):
 
 
 
-
-
 #=============================================================================
 #         CODIGO INTERFACE AQUI
 tela = Tk()
@@ -190,7 +166,7 @@ class interface():
 
     letras = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m","n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "ç", " "]
     letrasBkp = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m","n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "ç", " "]
-    letrasF = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    
 
     def __init__(self):
         self.tela = tela
@@ -687,7 +663,6 @@ class interface():
         self.ukw_b.config(bg=self.ukw_b_og_clr)
         self.ukw_c.config(bg=self.ukw_c_og_clr)
         self.ukw_badge.config(text=pinoIndex[0])
-
         print("UKW:", ukw_selection)
         refletor(0)
 
@@ -736,7 +711,7 @@ class interface():
         self.lb_r2.config(text=pinoIndex[disco[3].idex])
         self.lb_r1.config(text=pinoIndex[disco[4].idex])
 
-    def manualRotor(self, pos, metodo):
+    def manualRotor(self, pos, metodo):             #recebe posiçao de qual rotor o botao foi pressionado, metodo1 para avançar, metodo2 para regredir
 
         if metodo == 1:
 
@@ -786,20 +761,23 @@ class interface():
         self.lb_r2.config(text=pinoIndex[disco[3].idex])
         self.lb_r1.config(text=pinoIndex[disco[4].idex])
 
-    def codigoJumper(self,texto):
+    def codigoJumper(self,texto):                   #codigo de leitura do array letras(que ser configurado nos jumpers)
         
         buffer = []
         buffer2 = ""
 
-        for x in list(texto):
-            buffer.append(self.letras.index(x))
+        for x in list(texto):                       #tratamento para espaços
+            if(x == "-"):
+                buffer.append(self.letras.index(" "))
+            else:
+                buffer.append(self.letras.index(x))
 
-        print(buffer)
+        print(buffer)#depuraçao
 
         for x in buffer:
             buffer2 = buffer2 + self.letrasBkp[x]
 
-        print(buffer2)
+        print(buffer2)#depuraçao
         return buffer2
 
     def jumperConfig(self):
@@ -832,16 +810,16 @@ class interface():
         self.letras[26] = self.e_ç.get()
         self.letras[27] = self.e_leer.get()
 
-        for x in range(0,28):
+        for x in range(0,28):                               #tratamento do input dos jumpers, se input nulo entao nao troca 
             if self.letras[x] == "":
                 self.letras[x] = self.letrasBkp[x]
                 
             
-            if self.letras[x] == "-":
+            if self.letras[x] == "-":                       #tratamento do input dos jumpers, para trocar "-" por " "
                 self.letras[x] = " "
 
         
-        for x in range(0,28):
+        for x in range(0,28):                               #tramento do input jumper para ser reversivel, Se A = B entao B = A
             letra1 = self.letras[x]
             posO = self.letrasBkp.index(letra1)
             self.letras[posO] = self.letrasBkp[x]
@@ -849,8 +827,6 @@ class interface():
         
         print(self.letras)
         
-
-
 
 #====================================================================================================================
     #Letters
@@ -1573,11 +1549,4 @@ toggles = {
     "ç": screen_obj.toggle_ç,
     " ": screen_obj.toggle_leer
 }
-
-
-
-
-   
-
-
 
