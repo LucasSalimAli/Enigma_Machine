@@ -5,6 +5,8 @@ from pygame import *
 
 tela = Tk()
 
+ukw_selection = 1
+md_selection = 1
 
 
 
@@ -406,25 +408,114 @@ class interface():
         self.rotors_frame = Frame(self.settings, bg="#9FA1AD")
         self.rotors_frame.place(relx= 0.05, rely= 0.05, width= 180, height= 210)
 
-        self.lbl_rotor_title = Label(self.settings, text="Selecione um rotor para cada slot")
-        self.lbl_rotor_title.place(relx= 0.05, rely=0.05, width= 180, height= 20)
+        self.lbl_rotor_title = Label(self.rotors_frame, text="Selecione um rotor para cada slot")
+        self.lbl_rotor_title.place(relx= 0, rely=0, width= 180, height= 30)
 
-        self.ukw_frame = Frame(self.settings, bg="#FD6161")
-        self.ukw_frame.place(relx= 0.6, rely= 0.05, width=120, height= 210 )
+        self.volume_frame = Frame(self.settings, bg="#FD6161")
+        self.volume_frame.place(relx= 0.6, rely= 0.05, width=120, height= 210 )
 
-        self.volume_frame = Frame(self.settings, bg="#AEF705")
-        self.volume_frame.place(relx = 0.05, rely=0.7, width = 180, heigh= 80)
+        self.ukw_frame = Frame(self.settings, bg="#AEF705")
+        self.ukw_frame.place(relx = 0.05, rely=0.7, width = 180, height= 80)
 
-        self.check_frame = Frame(self.settings, bg="#F179B1")
-        self.check_frame.place(relx=0.6, rely=0.7, width= 120, height= 37 )
+        self.lbl_ukw_title = Label(self.ukw_frame, text="Selecione o UKW")
+        self.lbl_ukw_title.place(relx=0, rely= 0, width=180, height=20)
 
-        self.save_frame = Frame(self.settings, bg="#7CEE4F")
-        self.save_frame.place(relx= 0.6, rely= 0.82, width=120, height=37)
+        self.modes_frame = Frame(self.settings, bg="#F179B1")
+        self.modes_frame.place(relx=0.6, rely=0.7, width= 120, height= 47 )
+
+        self.modes_title = Label(self.modes_frame, text="Selecione o Modo")
+        self.modes_title.place(relx = 0, rely=0, width= 120, height= 20)
+
+        self.plus_frame = Frame(self.settings, bg="#7CEE4F")
+        self.plus_frame.place(relx= 0.6, rely= 0.86, width=120, height=24)
 
     def settings_io(self):
-        self.lbl_r1s = Label(self.settings, text="Selecione o rotor")
-        self.lbl_r1s.place(relx+)
 
+        #Labels Rotores
+        self.lbl_r1s = Label(self.settings, text="Slot Rotor 01")
+        self.lbl_r1s.place(relx= 0.05, rely = 0.2, width= 100, height=17)
+
+        self.lbl_r2s = Label(self.settings, text="Slot Rotor 02")
+        self.lbl_r2s.place(relx= 0.05, rely = 0.3, width= 100, height=17)
+
+        self.lbl_r3s = Label(self.settings, text="Slot Rotor 03")
+        self.lbl_r3s.place(relx= 0.05, rely = 0.4, width= 100, height=17)
+
+        self.lbl_r4s = Label(self.settings, text="Slot Rotor 04")
+        self.lbl_r4s.place(relx= 0.05, rely = 0.5, width= 100, height=17)
+
+        self.lbl_r5s = Label(self.settings, text="Slot Rotor 05")
+        self.lbl_r5s.place(relx= 0.05, rely = 0.6, width= 100, height=17)
+
+
+        #UKW Selector
+        self.ukw_sel_clr = "#F85B5B"
+
+        self.ukw_a_og_clr = "#3CA1DB"
+        self.ukw_a = Button(self.ukw_frame, text="A", bg=self.ukw_a_og_clr, command=self.ukw_as)
+        self.ukw_a.place(relx= 0.1, rely=0.4, width=30, height=30)
+
+        self.ukw_b_og_clr = "#3ADA2C"
+        self.ukw_b = Button(self.ukw_frame, text="B", bg=self.ukw_b_og_clr, command=self.ukw_bs)
+        self.ukw_b.place(relx= 0.4, rely=0.4, width=30, height=30)
+                         
+        self.ukw_c_og_clr = "#C9B6E7"
+        self.ukw_c = Button(self.ukw_frame, text="C", bg=self.ukw_c_og_clr, command=self.ukw_cs)
+        self.ukw_c.place(relx= 0.7, rely=0.4, width=30, height=30)
+
+
+        #Modes Selection
+        self.mode_sel_clr = "#FFFFFF"
+
+        self.classic_mode_og_clr = "#F8F674"
+        self.classic_mode_btn = Button(self.modes_frame, text="CLASSIC", bg= self.classic_mode_og_clr, command=self.classic_md)
+        self.classic_mode_btn.place(relx = 0.05, rely = 0.47, width=50, height=20)
+
+        self.digital_mode_og_clr = "#958AF8"
+        self.digital_mode_btn = Button(self.modes_frame, text="DIGITAL", bg= self.digital_mode_og_clr, command=self.digital_md)
+        self.digital_mode_btn.place(relx = 0.55, rely = 0.47, width=50, height=20)
+
+
+    
+    #UKW selection
+    def ukw_as(self):
+        ukw_selection = 1
+        self.ukw_a.config(bg=self.ukw_sel_clr)
+        self.ukw_b.config(bg=self.ukw_b_og_clr)
+        self.ukw_c.config(bg=self.ukw_c_og_clr)
+        print("UKW:", ukw_selection)
+
+    def ukw_bs(self):
+        ukw_selection = 2
+        self.ukw_a.config(bg=self.ukw_a_og_clr)
+        self.ukw_b.config(bg=self.ukw_sel_clr)
+        self.ukw_c.config(bg=self.ukw_c_og_clr)
+        print("UKW:", ukw_selection)
+
+    def ukw_cs(self):
+        ukw_selection = 3
+        self.ukw_a.config(bg=self.ukw_a_og_clr)
+        self.ukw_b.config(bg=self.ukw_b_og_clr)
+        self.ukw_c.config(bg=self.ukw_sel_clr)
+        print("UKW:", ukw_selection)
+
+
+    #Modes selection
+
+    def classic_md(self):
+        md_selection = 1
+        self.classic_mode_btn.config(bg=self.mode_sel_clr)
+        self.digital_mode_btn.config(bg=self.digital_mode_og_clr)
+        print("MD:", md_selection)
+
+    def digital_md(self):
+        md_selection = 2
+        self.classic_mode_btn.config(bg=self.classic_mode_og_clr)
+        self.digital_mode_btn.config(bg=self.mode_sel_clr)
+        print("MD:", md_selection)
+
+    
+        
 
 
     #Letters
