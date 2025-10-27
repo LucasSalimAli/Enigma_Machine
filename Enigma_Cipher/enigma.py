@@ -14,7 +14,7 @@ class discos:
     codex = []    # array para o disco importa o padrao de codificaçao
     idex = 0      # indicatico de rotaçao do disco
     pos = 0       # indicativo de pos sequencial na maquina
-    rot = 0
+    rot = 0       # indicativo onde o rotor deve girar o proximo
     
 
     assem = []    #codex exclusivo para o ETW 
@@ -39,7 +39,7 @@ class discos:
 
             self.codex[len(self.codex)-1] = buffer
             
-            if self.idex != 29:
+            if self.idex <= 26:
                 self.idex = self.idex+1
             else:
                 self.idex = 0
@@ -79,6 +79,8 @@ class discos:
         else:
         
             letra = self.assem[inpt]
+            if letra == " ":
+                letra = "-"
 
         return letra
     
@@ -123,16 +125,67 @@ etw = discos()
 etw.assem = pinos
 
 
+
+#============================================================================================
+#FUNÇOES PUBLICAS AQUI
+def escolher(lugar,discoinp):
+    global disco
+    disco[lugar] = discos()
+    disco[lugar].codex = list(colecao[discoinp])
+    disco[lugar].idex = 0
+    disco[lugar].pos = lugar
+    disco[lugar].rot = disco[lugar].codex[0]
+    print(disco[lugar].codex)
+        
+def config():
+    global disco
+    disco[i].idex = pinos.index(input("Informe o indice de configuraçao do disco {} (A - Z): ".format(i+1)))
+    print(disco[i].codex)
+    disco[i].conf(colecao[disco[i].pos])
+    print(disco[i].codex)     
+
+def refletor(ukwinp):
+    global espelhos, ukw
+    ukw.mirror = espelhos[ukwinp]
+
+def cripto(texto):
+    global disco, espelhos, etw
+    saida = ""
+
+    for i in texto:
+        a = etw.traduz(i)
+        a = disco[0].entrada(a)
+        a = disco[1].entrada(a)
+        a = disco[2].entrada(a)
+        a = disco[3].entrada(a)
+        a = disco[4].entrada(a)
+        a = ukw.espelho(a)
+        a = disco[4].retorno(a)
+        a = disco[3].retorno(a)
+        a = disco[2].retorno(a)
+        a = disco[1].retorno(a)
+        a = disco[0].retorno(a)
+        a = etw.traduz(a)
+        disco[4].ford(disco[3].ford(disco[2].ford(disco[1].ford(disco[0].ford(1)))))
+        saida = saida + a
+    
+    return saida
+
+
+#========================================================================================
+#codigo de depuraçao
+
+
+
+
+
 #=============================================================================
 #         CODIGO INTERFACE AQUI
 tela = Tk()
 
-ukw_selection = 1
-md_selection = 1
-
-
 
 class interface():
+
 
     def __init__(self):
         self.tela = tela
@@ -142,7 +195,14 @@ class interface():
         self.images_menu()
         self.labels_menu()
         self.setlbl()
-        self.go_to_settings()
+        #self.go_to_settings()
+        refletor(0)
+        escolher(0,0)
+        escolher(1,1)
+        escolher(2,2)
+        escolher(3,3)
+        escolher(4,4)
+
         
     
         tela.mainloop()
@@ -236,47 +296,47 @@ class interface():
         self.lb_r1 = Label(self.enigma, text=self.txt_r1, font="Arial, 14")
         self.lb_r1.place(relx=0.165, rely=0.185, width=23, height=23)
         
-        self.txt_r2 = "B"
+        self.txt_r2 = "A"
         self.lb_r2 = Label(self.enigma, text=self.txt_r2, font="Arial, 14")
         self.lb_r2.place(relx=0.2665, rely=0.185, width=23, height=23)
 
-        self.txt_r3 = "C"
+        self.txt_r3 = "A"
         self.lb_r3 = Label(self.enigma, text=self.txt_r3, font="Arial, 14")
         self.lb_r3.place(relx=0.368, rely=0.187, width=23, height=23)
 
-        self.txt_r4 = "D"
+        self.txt_r4 = "A"
         self.lb_r4 = Label(self.enigma, text=self.txt_r4, font="Arial, 14")
         self.lb_r4.place(relx=0.47, rely=0.187, width=23, height=23)
 
-        self.txt_r5 = "E"
+        self.txt_r5 = "A"
         self.lb_r5 = Label(self.enigma, text=self.txt_r5, font="Arial, 14")
         self.lb_r5.place(relx=0.57, rely=0.187, width=23, height=23)
 
 
         #Rotors Buttons
-        self.bt_up1 = Button(self.enigma, text="+")
+        self.bt_up1 = Button(self.enigma, text="+", command= lambda: self.manualRotor(4,1))
         self.bt_up1.place(relx=0.1678, rely=0.1315, width=20, height=20)
-        self.bt_dn1 = Button(self.enigma, text="-")
+        self.bt_dn1 = Button(self.enigma, text="-", command= lambda: self.manualRotor(4,2))
         self.bt_dn1.place(relx=0.1678, rely=0.2436, width=20, height=20)
         
-        self.bt_up2 = Button(self.enigma, text="+")
+        self.bt_up2 = Button(self.enigma, text="+", command= lambda: self.manualRotor(3,1))
         self.bt_up2.place(relx=0.2695, rely=0.1315, width=20, height=20)
-        self.bt_dn2 = Button(self.enigma, text="-")
+        self.bt_dn2 = Button(self.enigma, text="-", command= lambda: self.manualRotor(3,2))
         self.bt_dn2.place(relx=0.2695, rely=0.2436, width=20, height=20)
 
-        self.bt_up3 = Button(self.enigma, text="+")
+        self.bt_up3 = Button(self.enigma, text="+", command= lambda: self.manualRotor(2,1))
         self.bt_up3.place(relx=0.371, rely=0.1315, width=20, height=20)
-        self.bt_dn3 = Button(self.enigma, text="-")
+        self.bt_dn3 = Button(self.enigma, text="-", command= lambda: self.manualRotor(2,2))
         self.bt_dn3.place(relx=0.371, rely=0.2436, width=20, height=20)
 
-        self.bt_up4 = Button(self.enigma, text="+")
+        self.bt_up4 = Button(self.enigma, text="+", command= lambda: self.manualRotor(1,1))
         self.bt_up4.place(relx=0.472, rely=0.1315, width=20, height=20)
-        self.bt_dn4 = Button(self.enigma, text="-")
+        self.bt_dn4 = Button(self.enigma, text="-", command= lambda: self.manualRotor(1,2))
         self.bt_dn4.place(relx=0.472, rely=0.2436, width=20, height=20)
 
-        self.bt_up5 = Button(self.enigma, text="+")
+        self.bt_up5 = Button(self.enigma, text="+", command= lambda: self.manualRotor(0,1))
         self.bt_up5.place(relx=0.573, rely=0.1315, width=20, height=20)
-        self.bt_dn5 = Button(self.enigma, text="-")
+        self.bt_dn5 = Button(self.enigma, text="-", command= lambda: self.manualRotor(0,2))
         self.bt_dn5.place(relx=0.573, rely=0.2436, width=20, height=20)
 
 
@@ -306,7 +366,7 @@ class interface():
         self.ukw_badge_id = Label(self.enigma, text=self.txt_ukw_id)
         self.ukw_badge_id.place(relx=0.045, rely=0.08, width=45, height=20)
 
-        self.txt_ukw_badge = "1"
+        self.txt_ukw_badge = "A"
         self.ukw_badge = Label(self.enigma, text=self.txt_ukw_badge, font="Arial, 14")
         self.ukw_badge.place(relx=0.059, rely=0.177, width=23, height=23)
 
@@ -318,7 +378,7 @@ class interface():
         
         self.ent = Entry(self.enigma)
         self.ent.place(relx=0.2, rely= 0.32, width= 500, height = 25)
-        self.ent.bind("<Return>", self.toggle_a)# verifiacor de "/r" precionado para dar input na criptografia
+        self.ent.bind("<Return>", lambda e: self.input_texto())# verifiacor de "/r" precionado para dar input na criptografia
 
         #Saida
         self.lb_extt = Label(self.enigma, text="Saida")
@@ -597,7 +657,7 @@ class interface():
         self.ukw_c.place(relx= 0.7, rely=0.4, width=30, height=30)
 
 
-        #Modes Selection
+        #Modes Selector
         self.mode_sel_clr = "#FFFFFF"
 
         self.classic_mode_og_clr = "#F8F674"
@@ -609,28 +669,34 @@ class interface():
         self.digital_mode_btn.place(relx = 0.55, rely = 0.47, width=50, height=20)
 
 
-    
     #UKW selection
     def ukw_as(self):
-        ukw_selection = 1
+        ukw_selection = 0
         self.ukw_a.config(bg=self.ukw_sel_clr)
         self.ukw_b.config(bg=self.ukw_b_og_clr)
         self.ukw_c.config(bg=self.ukw_c_og_clr)
+        self.ukw_badge.config(text=pinoIndex[0])
+
         print("UKW:", ukw_selection)
+        refletor(0)
 
     def ukw_bs(self):
-        ukw_selection = 2
+        ukw_selection = 1
         self.ukw_a.config(bg=self.ukw_a_og_clr)
         self.ukw_b.config(bg=self.ukw_sel_clr)
         self.ukw_c.config(bg=self.ukw_c_og_clr)
+        self.ukw_badge.config(text=pinoIndex[1])
         print("UKW:", ukw_selection)
+        refletor(1)
 
     def ukw_cs(self):
-        ukw_selection = 3
+        ukw_selection = 2
         self.ukw_a.config(bg=self.ukw_a_og_clr)
         self.ukw_b.config(bg=self.ukw_b_og_clr)
         self.ukw_c.config(bg=self.ukw_sel_clr)
+        self.ukw_badge.config(text=pinoIndex[2])
         print("UKW:", ukw_selection)
+        refletor(2)
 
 
     #Modes selection
@@ -647,10 +713,68 @@ class interface():
         self.digital_mode_btn.config(bg=self.mode_sel_clr)
         print("MD:", md_selection)
 
+    #INTERAÇAO CODIGO CRIPTO
+    def input_texto(self):
+        self.lb_ext.config(text=(cripto(self.ent.get())))
+
+        self.lb_r5.config(text=pinoIndex[disco[0].idex])
+        self.lb_r4.config(text=pinoIndex[disco[1].idex])
+        self.lb_r3.config(text=pinoIndex[disco[2].idex])
+        self.lb_r2.config(text=pinoIndex[disco[3].idex])
+        self.lb_r1.config(text=pinoIndex[disco[4].idex])
+
+    def manualRotor(self, pos, metodo):
+
+
+        if metodo == 1:
+
+            print(disco[pos].idex)
+            print(disco[pos].codex)
+
+            buffer = disco[pos].codex[0]
+
+            for x in range(len(disco[pos].codex)):
+                if x < len(disco[pos].codex)-1:
+                    disco[pos].codex[x] = disco[pos].codex[x+1]
+
+            disco[pos].codex[len(disco[pos].codex)-1] = buffer
+            
+            if disco[pos].idex <= 26:
+                disco[pos].idex = disco[pos].idex+1
+            else:
+                disco[pos].idex = 0
+
+            print(disco[pos].idex)
+            print(disco[pos].codex)
+
+        elif metodo == 2:
+
+            print(disco[pos].idex)
+            print(disco[pos].codex)
+
+            buffer = disco[pos].codex[27]
+
+            for x in range(27,-1,-1):
+                if x > 0:
+                    disco[pos].codex[x] = disco[pos].codex[x-1]
+
+            disco[pos].codex[0] = buffer
+            
+            if disco[pos].idex >= 1:
+                disco[pos].idex = disco[pos].idex-1
+            else:
+                disco[pos].idex = 27
+            
+            print(disco[pos].idex)
+            print(disco[pos].codex)
+
+        self.lb_r5.config(text=pinoIndex[disco[0].idex])
+        self.lb_r4.config(text=pinoIndex[disco[1].idex])
+        self.lb_r3.config(text=pinoIndex[disco[2].idex])
+        self.lb_r2.config(text=pinoIndex[disco[3].idex])
+        self.lb_r1.config(text=pinoIndex[disco[4].idex])
+
     
-        
-
-
     #Letters
 
     #Set Visibillity Letras
@@ -784,7 +908,7 @@ class interface():
         self.a_place_args = {'relx': 0.131, 'rely': 0.531, 'relwidth': 0.065, 'relheight': 0.058}
         self.a_label.place(**self.a_place_args)
 
-    def toggle_a(self):
+    def toggle_a(self,event):
         if self.a_visivel:
             self.a_label.place_forget()
             self.a_visivel = False
@@ -804,7 +928,7 @@ class interface():
         self.b_place_args = {'relx': 0.544, 'rely': 0.602, 'relwidth': 0.065, 'relheight': 0.058}
         self.b_label.place(**self.b_place_args)
 
-    def toggle_b(self):
+    def toggle_b(self,event):
         if self.b_visivel:
             self.b_label.place_forget()
             self.b_visivel = False
@@ -824,7 +948,7 @@ class interface():
         self.c_place_args = {'relx': 0.35, 'rely': 0.602, 'relwidth': 0.065, 'relheight': 0.058}
         self.c_label.place(**self.c_place_args)
 
-    def toggle_c(self):
+    def toggle_c(self,event):
         if self.c_visivel:
             self.c_label.place_forget()
             self.c_visivel = False
@@ -844,7 +968,7 @@ class interface():
         self.d_place_args = {'relx': 0.321, 'rely': 0.531, 'relwidth': 0.065, 'relheight': 0.058}
         self.d_label.place(**self.d_place_args)
         
-    def toggle_d(self):
+    def toggle_d(self,event):
         if self.d_visivel:
             self.d_label.place_forget()
             self.d_visivel = False
@@ -864,7 +988,7 @@ class interface():
         self.e_place_args = {'relx': 0.2930, 'rely': 0.4573, 'relwidth': 0.065, 'relheight': 0.058}
         self.e_label.place(**self.e_place_args)
 
-    def toggle_e(self):
+    def toggle_e(self,event):
         if self.e_visivel:
             self.e_label.place_forget()
             self.e_visivel = False
@@ -884,7 +1008,7 @@ class interface():
         self.f_place_args = {'relx': 0.418, 'rely': 0.53, 'relwidth': 0.065, 'relheight': 0.058}
         self.f_label.place(**self.f_place_args)
 
-    def toggle_f(self):
+    def toggle_f(self,event):
         if self.f_visivel:
             self.f_label.place_forget()
             self.f_visivel = False
@@ -904,7 +1028,7 @@ class interface():
         self.g_place_args = {'relx': 0.515, 'rely': 0.53, 'relwidth': 0.065, 'relheight': 0.058}
         self.g_label.place(**self.g_place_args)
 
-    def toggle_g(self):
+    def toggle_g(self,event):
         if self.g_visivel:
             self.g_label.place_forget()
             self.g_visivel = False
@@ -924,7 +1048,7 @@ class interface():
         self.h_place_args = {'relx': 0.61, 'rely': 0.531, 'relwidth': 0.065, 'relheight': 0.058}
         self.h_label.place(**self.h_place_args)
 
-    def toggle_h(self):
+    def toggle_h(self,event):
         if self.h_visivel:
             self.h_label.place_forget()
             self.h_visivel = False
@@ -944,7 +1068,7 @@ class interface():
         self.i_place_args = {'relx': 0.776, 'rely': 0.4573, 'relwidth': 0.065, 'relheight': 0.058}
         self.i_label.place(**self.i_place_args)
 
-    def toggle_i(self):
+    def toggle_i(self,event):
         if self.i_visivel:
             self.i_label.place_forget()
             self.i_visivel = False
@@ -964,7 +1088,7 @@ class interface():
         self.j_place_args = {'relx': 0.707, 'rely': 0.53, 'relwidth': 0.065, 'relheight': 0.058}
         self.j_label.place(**self.j_place_args)
 
-    def toggle_j(self):
+    def toggle_j(self,event):
         if self.j_visivel:
             self.j_label.place_forget()
             self.j_visivel = False
@@ -984,7 +1108,7 @@ class interface():
         self.k_place_args = {'relx': 0.804, 'rely': 0.53, 'relwidth': 0.065, 'relheight': 0.058}
         self.k_label.place(**self.k_place_args)
 
-    def toggle_k(self):
+    def toggle_k(self,event):
         if self.k_visivel:
             self.k_label.place_forget()
             self.k_visivel = False
@@ -1004,7 +1128,7 @@ class interface():
         self.l_place_args = {'relx': 0.834, 'rely': 0.603, 'relwidth': 0.065, 'relheight': 0.058}
         self.l_label.place(**self.l_place_args)
 
-    def toggle_l(self):
+    def toggle_l(self,event):
         if self.l_visivel:
             self.l_label.place_forget()
             self.l_visivel = False
@@ -1024,7 +1148,7 @@ class interface():
         self.m_place_args = {'relx': 0.7349, 'rely': 0.602, 'relwidth': 0.065, 'relheight': 0.058}
         self.m_label.place(**self.m_place_args)
 
-    def toggle_m(self):
+    def toggle_m(self,event):
         if self.m_visivel:
             self.m_label.place_forget()
             self.m_visivel = False
@@ -1044,7 +1168,7 @@ class interface():
         self.n_place_args = {'relx': 0.640, 'rely': 0.602, 'relwidth': 0.065, 'relheight': 0.058}
         self.n_label.place(**self.n_place_args)
 
-    def toggle_n(self):
+    def toggle_n(self,event):
         if self.n_visivel:
             self.n_label.place_forget()
             self.n_visivel = False
@@ -1064,7 +1188,7 @@ class interface():
         self.o_place_args = {'relx': 0.872, 'rely': 0.4573, 'relwidth': 0.065, 'relheight': 0.058}
         self.o_label.place(**self.o_place_args)
 
-    def toggle_o(self):
+    def toggle_o(self,event):
         if self.o_visivel:
             self.o_label.place_forget()
             self.o_visivel = False
@@ -1084,7 +1208,7 @@ class interface():
         self.p_place_args = {'relx': 0.064, 'rely': 0.603, 'relwidth': 0.065, 'relheight': 0.058}
         self.p_label.place(**self.p_place_args)
 
-    def toggle_p(self):
+    def toggle_p(self,event):
         if self.p_visivel:
             self.p_label.place_forget()
             self.p_visivel = False
@@ -1104,7 +1228,7 @@ class interface():
         self.q_place_args = {'relx': 0.1, 'rely': 0.4574, 'relwidth': 0.065, 'relheight': 0.058}
         self.q_label.place(**self.q_place_args)
 
-    def toggle_q(self):
+    def toggle_q(self,event):
         if self.q_visivel:
             self.q_label.place_forget()
             self.q_visivel = False
@@ -1124,7 +1248,7 @@ class interface():
         self.r_place_args = {'relx': 0.3889, 'rely': 0.4574, 'relwidth': 0.065, 'relheight': 0.058}
         self.r_label.place(**self.r_place_args)
 
-    def toggle_r(self):
+    def toggle_r(self,event):
         if self.r_visivel:
             self.r_label.place_forget()
             self.r_visivel = False
@@ -1144,7 +1268,7 @@ class interface():
         self.s_place_args = {'relx': 0.2249668, 'rely': 0.531, 'relwidth': 0.065, 'relheight': 0.058}
         self.s_label.place(**self.s_place_args)
 
-    def toggle_s(self):
+    def toggle_s(self,event):
         if self.s_visivel:
             self.s_label.place_forget()
             self.s_visivel = False
@@ -1164,7 +1288,7 @@ class interface():
         self.t_place_args = {'relx': 0.486, 'rely': 0.4574, 'relwidth': 0.065, 'relheight': 0.058}
         self.t_label.place(**self.t_place_args)
 
-    def toggle_t(self):
+    def toggle_t(self,event):
         if self.t_visivel:
             self.t_label.place_forget()
             self.t_visivel = False
@@ -1184,7 +1308,7 @@ class interface():
         self.u_place_args = {'relx': 0.6793, 'rely': 0.4576, 'relwidth': 0.065, 'relheight': 0.058}
         self.u_label.place(**self.u_place_args)
 
-    def toggle_u(self):
+    def toggle_u(self,event):
         if self.u_visivel:
             self.u_label.place_forget()
             self.u_visivel = False
@@ -1204,7 +1328,7 @@ class interface():
         self.v_place_args = {'relx': 0.4469, 'rely': 0.602, 'relwidth': 0.065, 'relheight': 0.058}
         self.v_label.place(**self.v_place_args)
 
-    def toggle_v(self):
+    def toggle_v(self,event):
         if self.v_visivel:
             self.v_label.place_forget()
             self.v_visivel = False
@@ -1224,7 +1348,7 @@ class interface():
         self.w_place_args = {'relx': 0.197005, 'rely': 0.4576, 'relwidth': 0.065, 'relheight': 0.058}
         self.w_label.place(**self.w_place_args)
 
-    def toggle_w(self):
+    def toggle_w(self,event):
         if self.w_visivel:
             self.w_label.place_forget()
             self.w_visivel = False
@@ -1244,7 +1368,7 @@ class interface():
         self.x_place_args = {'relx': 0.254, 'rely': 0.602, 'relwidth': 0.065, 'relheight': 0.058}
         self.x_label.place(**self.x_place_args)
 
-    def toggle_x(self):
+    def toggle_x(self,event):
         if self.x_visivel:
             self.x_label.place_forget()
             self.x_visivel = False
@@ -1264,7 +1388,7 @@ class interface():
         self.y_place_args = {'relx': 0.159, 'rely': 0.602, 'relwidth': 0.065, 'relheight': 0.058}
         self.y_label.place(**self.y_place_args)
 
-    def toggle_y(self):
+    def toggle_y(self,event):
         if self.y_visivel:
             self.y_label.place_forget()
             self.y_visivel = False
@@ -1284,7 +1408,7 @@ class interface():
         self.z_place_args = {'relx': 0.583, 'rely': 0.4573, 'relwidth': 0.065, 'relheight': 0.058}
         self.z_label.place(**self.z_place_args)
 
-    def toggle_z(self):
+    def toggle_z(self,event):
         if self.z_visivel:
             self.z_label.place_forget()
             self.z_visivel = False
@@ -1304,7 +1428,7 @@ class interface():
         self.ç_place_args = {'relx': 0.9, 'rely': 0.53, 'relwidth': 0.065, 'relheight': 0.058}
         self.ç_label.place(**self.ç_place_args)
 
-    def toggle_ç(self):
+    def toggle_ç(self,event):
         if self.ç_visivel:
             self.ç_label.place_forget()
             self.ç_visivel = False
@@ -1324,13 +1448,15 @@ class interface():
         self.leer_place_args = {'relx': 0.192, 'rely': 0.674, 'width': 345, 'height': 44}
         self.leer_label.place(**self.leer_place_args)
 
-    def toggle_leer(self):
+    def toggle_leer(self,event):
         if self.leer_visivel:
             self.leer_label.place_forget()
             self.leer_visivel = False
         else:
             self.leer_label.place(**self.leer_place_args)
             self.leer_visivel = True
+
+
 
 screen_obj = interface()
 
@@ -1371,67 +1497,9 @@ toggles = {
 }
 
 
-#============================================================================================
-#FUNÇOES PUBLICAS AQUI
-def escolher():
-    global disco
-    for i in range(5):
-        disco[i] = discos()
-        disco[i].codex = list(colecao[int(input("Informe o disco para posiçao {}: ".format(i+1)))-1])
-        disco[i].idex = 0
-        disco[i].pos = i
-        disco[i].rot = disco[i].codex[0]
-        print(disco[i].codex)
 
-def config():
-    global disco
-    for i in range(5):
-        disco[i].idex = pinos.index(input("Informe o indice de configuraçao do disco {} (A - Z): ".format(i+1)))
-        print(disco[i].codex)
-        disco[i].conf(colecao[disco[i].pos])
-        print(disco[i].codex)     
 
-def refletor():
-    global espelhos, ukw
-    ukw.mirror = espelhos[(int(input("Informe o refletor que desejas adicionar: ")))-1]
-
-def cripto():
-    global disco, espelhos, etw
-
-    texto = input()
-    
-
-    if(texto == "/get"):
-            print(disco[0].codex)
-            print(disco[1].codex)
-            print(disco[2].codex)
-            print(disco[3].codex)
-            print(disco[4].codex)
-
-    else:
-            texto = list(texto)
-
-            for i in texto:
-                a = etw.traduz(i)
-                a = disco[0].entrada(a)
-                a = disco[1].entrada(a)
-                a = disco[2].entrada(a)
-                a = disco[3].entrada(a)
-                a = disco[4].entrada(a)
-                a = ukw.espelho(a)
-                a = disco[4].retorno(a)
-                a = disco[3].retorno(a)
-                a = disco[2].retorno(a)
-                a = disco[1].retorno(a)
-                a = disco[0].retorno(a)
-                a = etw.traduz(a)
-                disco[4].ford(disco[3].ford(disco[2].ford(disco[1].ford(disco[0].ford(1)))))
-                print(a,end="")
-            
-            print("\n")
-    
    
-interface() 
 
 
 
