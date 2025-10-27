@@ -82,6 +82,8 @@ class discos:
             if letra == " ":
                 letra = "-"
 
+        
+
         return letra
     
     def espelho(self, inpt):
@@ -173,7 +175,7 @@ def cripto(texto):
 
 
 #========================================================================================
-#codigo de depuraçao
+#codigo de depuraçao (TESTAR AQUI)
 
 
 
@@ -186,6 +188,9 @@ tela = Tk()
 
 class interface():
 
+    letras = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m","n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "ç", " "]
+    letrasBkp = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m","n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "ç", " "]
+    letrasF = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
     def __init__(self):
         self.tela = tela
@@ -196,6 +201,8 @@ class interface():
         self.labels_menu()
         self.setlbl()
         #self.go_to_settings()
+        
+
         refletor(0)
         escolher(0,0)
         escolher(1,1)
@@ -203,8 +210,6 @@ class interface():
         escolher(3,3)
         escolher(4,4)
 
-        
-    
         tela.mainloop()
 
     
@@ -260,6 +265,7 @@ class interface():
         self.enigma_label()
         self.io()
         self.jumpers()
+        self.jumperConfig()
         self.createlbs()
         
     #Função para chamar as imagem da tela da Enigma
@@ -384,7 +390,8 @@ class interface():
         self.lb_extt = Label(self.enigma, text="Saida")
         self.lb_extt.place(relx=0.1, rely= 0.38, width= 50, height = 25)
 
-        self.lb_ext = Label(self.enigma, text="Esperando Criptografia")
+        self.lb_ext = Entry(self.enigma)
+        self.lb_ext.insert(0,"Esperando Criptografia")
         self.lb_ext.place(relx=0.2, rely= 0.38, width= 500, height = 25)
 
     #Jumpers Section
@@ -580,12 +587,16 @@ class interface():
             self.e_ç.place(relx= 0.85, rely= 0.86, width=17, height=17)
 
             #leer
-            self.j_z = Label(self.enigma, text="_")
-            self.j_z.place(relx= 0.88, rely= 0.77, width=17, height=17)
+            self.j_leer = Label(self.enigma, text="-")
+            self.j_leer.place(relx= 0.88, rely= 0.77, width=17, height=17)
 
-            self.e_z = Entry(self.enigma)
-            self.e_z.place(relx= 0.88, rely= 0.86, width=17, height=17)
+            self.e_leer = Entry(self.enigma)
+            self.e_leer.place(relx= 0.88, rely= 0.86, width=17, height=17)
 
+            #botao para calibrar os jumpers
+            self.apply = Button(self.enigma, text="PUSH", command= lambda: self.jumperConfig())
+            self.apply.place(relx= 0.94, rely= 0.86, width=36, height=17)
+            
     #Função para abrir a tela de configurações    
     def go_to_settings(self):
         settings = Toplevel()
@@ -713,9 +724,11 @@ class interface():
         self.digital_mode_btn.config(bg=self.mode_sel_clr)
         print("MD:", md_selection)
 
+#=========================================================================AREA DE CONTEÇÃO==========================
     #INTERAÇAO CODIGO CRIPTO
     def input_texto(self):
-        self.lb_ext.config(text=(cripto(self.ent.get())))
+        self.lb_ext.delete(0, "end")
+        self.lb_ext.insert(0,self.codigoJumper(cripto(self.codigoJumper(self.ent.get()))))
 
         self.lb_r5.config(text=pinoIndex[disco[0].idex])
         self.lb_r4.config(text=pinoIndex[disco[1].idex])
@@ -724,7 +737,6 @@ class interface():
         self.lb_r1.config(text=pinoIndex[disco[4].idex])
 
     def manualRotor(self, pos, metodo):
-
 
         if metodo == 1:
 
@@ -774,7 +786,73 @@ class interface():
         self.lb_r2.config(text=pinoIndex[disco[3].idex])
         self.lb_r1.config(text=pinoIndex[disco[4].idex])
 
-    
+    def codigoJumper(self,texto):
+        
+        buffer = []
+        buffer2 = ""
+
+        for x in list(texto):
+            buffer.append(self.letras.index(x))
+
+        print(buffer)
+
+        for x in buffer:
+            buffer2 = buffer2 + self.letrasBkp[x]
+
+        print(buffer2)
+        return buffer2
+
+    def jumperConfig(self):
+        self.letras[0] = self.e_a.get()
+        self.letras[1] = self.e_b.get()
+        self.letras[2] = self.e_c.get()
+        self.letras[3] = self.e_d.get()
+        self.letras[4] = self.e_e.get()
+        self.letras[5] = self.e_f.get()
+        self.letras[6] = self.e_g.get()
+        self.letras[7] = self.e_h.get()
+        self.letras[8] = self.e_i.get()
+        self.letras[9] = self.e_j.get()
+        self.letras[10] = self.e_k.get()
+        self.letras[11] = self.e_l.get()
+        self.letras[12] = self.e_m.get()
+        self.letras[13] = self.e_n.get()
+        self.letras[14] = self.e_o.get()
+        self.letras[15] = self.e_p.get()
+        self.letras[16] = self.e_q.get()
+        self.letras[17] = self.e_r.get()
+        self.letras[18] = self.e_s.get()
+        self.letras[19] = self.e_t.get()
+        self.letras[20] = self.e_u.get()
+        self.letras[21] = self.e_v.get()
+        self.letras[22] = self.e_w.get()
+        self.letras[23] = self.e_x.get()
+        self.letras[24] = self.e_y.get()
+        self.letras[25] = self.e_z.get()
+        self.letras[26] = self.e_ç.get()
+        self.letras[27] = self.e_leer.get()
+
+        for x in range(0,28):
+            if self.letras[x] == "":
+                self.letras[x] = self.letrasBkp[x]
+                
+            
+            if self.letras[x] == "-":
+                self.letras[x] = " "
+
+        
+        for x in range(0,28):
+            letra1 = self.letras[x]
+            posO = self.letrasBkp.index(letra1)
+            self.letras[posO] = self.letrasBkp[x]
+
+        
+        print(self.letras)
+        
+
+
+
+#====================================================================================================================
     #Letters
 
     #Set Visibillity Letras
