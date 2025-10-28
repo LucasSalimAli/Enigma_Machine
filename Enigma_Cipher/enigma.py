@@ -196,6 +196,7 @@ class interface():
         self.labels_menu()
         self.setlbl()
         #self.go_to_settings()
+
         refletor(0)
         escolher(0,0)
         escolher(1,1)
@@ -341,25 +342,22 @@ class interface():
 
 
         #Rotors ID
-        self.txt_id_r1 = "1"
-        self.lb_id_r1 = Label(self.enigma, text=self.txt_id_r1)
+        
+        self.lb_id_r1 = Label(self.enigma, text="1")
         self.lb_id_r1.place(relx=0.1678, rely=0.08, width=20, height=20)
 
-        self.txt_id_r2 = "2"
-        self.lb_id_r2 = Label(self.enigma, text=self.txt_id_r2)
+        self.lb_id_r2 = Label(self.enigma, text="2")
         self.lb_id_r2.place(relx=0.2695, rely=0.08, width=20, height=20)
 
-        self.txt_id_r3 = "3"
-        self.lb_id_r3 = Label(self.enigma, text=self.txt_id_r3)
+        self.lb_id_r3 = Label(self.enigma, text="3")
         self.lb_id_r3.place(relx=0.371, rely=0.08, width=20, height=20)
 
-        self.txt_id_r4 = "4"
-        self.lb_id_r4 = Label(self.enigma, text=self.txt_id_r4)
+        self.lb_id_r4 = Label(self.enigma, text="4")
         self.lb_id_r4.place(relx=0.472, rely=0.08, width=20, height=20)
 
-        self.txt_id_r5 = "5"
-        self.lb_id_r5 = Label(self.enigma, text=self.txt_id_r5)
+        self.lb_id_r5 = Label(self.enigma, text="5")
         self.lb_id_r5.place(relx=0.573, rely=0.08, width=20, height=20)
+
 
         #UKW_badge
         self.txt_ukw_id = "UKW"
@@ -592,53 +590,216 @@ class interface():
         self.settings = settings
         self.settings.title("Settings")
         self.settings.configure(background="#FFFFFF")
-        self.settings.geometry("350x350")
+        self.settings.geometry("365x365")
         self.settings_bg()
         self.settings_io()
 
     #Frames da settings
     def settings_bg(self):
         self.rotors_frame = Frame(self.settings, bg="#9FA1AD")
-        self.rotors_frame.place(relx= 0.05, rely= 0.05, width= 180, height= 210)
+        self.rotors_frame.place(relx= 0.04, rely= 0.05, width= 205, height= 220)
 
         self.lbl_rotor_title = Label(self.rotors_frame, text="Selecione um rotor para cada slot")
-        self.lbl_rotor_title.place(relx= 0, rely=0, width= 180, height= 30)
+        self.lbl_rotor_title.place(relx= 0, rely=0, width= 205, height= 30)
 
         self.volume_frame = Frame(self.settings, bg="#FD6161")
-        self.volume_frame.place(relx= 0.6, rely= 0.05, width=120, height= 210 )
+        self.volume_frame.place(relx= 0.64, rely= 0.05, width=120, height= 220 )
 
         self.ukw_frame = Frame(self.settings, bg="#AEF705")
-        self.ukw_frame.place(relx = 0.05, rely=0.7, width = 180, height= 80)
+        self.ukw_frame.place(relx = 0.04, rely=0.7, width = 205, height= 80)
 
         self.lbl_ukw_title = Label(self.ukw_frame, text="Selecione o UKW")
-        self.lbl_ukw_title.place(relx=0, rely= 0, width=180, height=20)
+        self.lbl_ukw_title.place(relx=0, rely= 0, width=205, height=20)
 
         self.modes_frame = Frame(self.settings, bg="#F179B1")
-        self.modes_frame.place(relx=0.6, rely=0.7, width= 120, height= 47 )
+        self.modes_frame.place(relx=0.64, rely=0.7, width= 120, height= 47 )
 
         self.modes_title = Label(self.modes_frame, text="Selecione o Modo")
         self.modes_title.place(relx = 0, rely=0, width= 120, height= 20)
 
         self.plus_frame = Frame(self.settings, bg="#7CEE4F")
-        self.plus_frame.place(relx= 0.6, rely= 0.86, width=120, height=24)
+        self.plus_frame.place(relx= 0.64, rely= 0.85, width=120, height=24)
 
     def settings_io(self):
 
         #Labels Rotores
-        self.lbl_r1s = Label(self.settings, text="Slot Rotor 01")
-        self.lbl_r1s.place(relx= 0.05, rely = 0.2, width= 100, height=17)
+        self.lbl_r1s = Label(self.rotors_frame, text="Slot Rotor 01")
+        self.lbl_r1s.place(relx= 0, rely = 0.25, width= 70, height=17)
 
-        self.lbl_r2s = Label(self.settings, text="Slot Rotor 02")
-        self.lbl_r2s.place(relx= 0.05, rely = 0.3, width= 100, height=17)
+        self.lbl_r2s = Label(self.rotors_frame, text="Slot Rotor 02")
+        self.lbl_r2s.place(relx= 0, rely = 0.40, width= 70, height=17)
 
-        self.lbl_r3s = Label(self.settings, text="Slot Rotor 03")
-        self.lbl_r3s.place(relx= 0.05, rely = 0.4, width= 100, height=17)
+        self.lbl_r3s = Label(self.rotors_frame, text="Slot Rotor 03")
+        self.lbl_r3s.place(relx= 0, rely = 0.55, width= 70, height=17)
 
-        self.lbl_r4s = Label(self.settings, text="Slot Rotor 04")
-        self.lbl_r4s.place(relx= 0.05, rely = 0.5, width= 100, height=17)
+        self.lbl_r4s = Label(self.rotors_frame, text="Slot Rotor 04")
+        self.lbl_r4s.place(relx= 0, rely = 0.70, width= 70, height=17)
 
-        self.lbl_r5s = Label(self.settings, text="Slot Rotor 05")
-        self.lbl_r5s.place(relx= 0.05, rely = 0.6, width= 100, height=17)
+        self.lbl_r5s = Label(self.rotors_frame, text="Slot Rotor 05")
+        self.lbl_r5s.place(relx= 0, rely = 0.85, width= 70, height=17)
+
+        
+
+        
+        #Rotors Select Buttons
+
+        self.slot1_sel_clr = "#E21F1F"
+        self.slot2_sel_clr = "#CEE21F"
+        self.slot3_sel_clr = "#00A84C"
+        self.slot4_sel_clr = "#3C1FE2"
+        self.slot5_sel_clr = "#A10030"
+
+        self.slot1_og_clr = "#f08b8b"
+        self.slot2_og_clr = "#b8f08b"
+        self.slot3_og_clr = "#6f9fa5"
+        self.slot4_og_clr = "#9d8bf0"
+        self.slot5_og_clr = "#f08bce"
+
+
+    
+        
+        alt = 15
+        
+
+
+        #Slot 1
+        self.slt1_1 = Button(self.rotors_frame, text="1", bg= self.slot1_og_clr, command=lambda: self.slot_rotor(1,1))
+        self.slt1_1.place(relx= 0.37, rely= 0.25, width= alt, height= alt)
+
+        self.slt1_2 = Button(self.rotors_frame, text="2", bg= self.slot1_og_clr, command=lambda: self.slot_rotor(1,2))
+        self.slt1_2.place(relx= 0.46, rely= 0.25, width= alt, height= alt)
+
+        self.slt1_3 = Button(self.rotors_frame, text="3", bg= self.slot1_og_clr, command=lambda: self.slot_rotor(1,3))
+        self.slt1_3.place(relx= 0.55, rely= 0.25, width= alt, height= alt)
+
+        self.slt1_4 = Button(self.rotors_frame, text="4", bg= self.slot1_og_clr, command=lambda: self.slot_rotor(1,4))
+        self.slt1_4.place(relx= 0.64, rely= 0.25, width= alt, height= alt)
+
+        self.slt1_5 = Button(self.rotors_frame, text="5", bg= self.slot1_og_clr, command=lambda: self.slot_rotor(1,5))
+        self.slt1_5.place(relx= 0.73, rely= 0.25, width= alt, height= alt)
+
+        self.slt1_6 = Button(self.rotors_frame, text="6", bg= self.slot1_og_clr, command=lambda: self.slot_rotor(1,6))
+        self.slt1_6.place(relx= 0.82, rely= 0.25, width= alt, height= alt)
+
+        self.slt1_7 = Button(self.rotors_frame, text="7", bg= self.slot1_og_clr, command=lambda: self.slot_rotor(1,7))
+        self.slt1_7.place(relx= 0.91, rely= 0.25, width= alt, height= alt)
+
+
+        #Slot 2
+        self.slt2_1 = Button(self.rotors_frame, text="1", bg= self.slot2_og_clr, command=lambda: self.slot_rotor(2,1))
+        self.slt2_1.place(relx= 0.37, rely= 0.40, width= alt, height= alt)
+
+        self.slt2_2 = Button(self.rotors_frame, text="2", bg= self.slot2_og_clr, command=lambda: self.slot_rotor(2,2))
+        self.slt2_2.place(relx= 0.46, rely= 0.40, width= alt, height= alt)
+
+        self.slt2_3 = Button(self.rotors_frame, text="3", bg= self.slot2_og_clr, command=lambda: self.slot_rotor(2,3))
+        self.slt2_3.place(relx= 0.55, rely= 0.40, width= alt, height= alt)
+
+        self.slt2_4 = Button(self.rotors_frame, text="4", bg= self.slot2_og_clr, command=lambda: self.slot_rotor(2,4))
+        self.slt2_4.place(relx= 0.64, rely= 0.40, width= alt, height= alt)
+
+        self.slt2_5 = Button(self.rotors_frame, text="5", bg= self.slot2_og_clr, command=lambda: self.slot_rotor(2,5))
+        self.slt2_5.place(relx= 0.73, rely= 0.40, width= alt, height= alt)
+
+        self.slt2_6 = Button(self.rotors_frame, text="6", bg= self.slot2_og_clr, command=lambda: self.slot_rotor(2,6))
+        self.slt2_6.place(relx= 0.82, rely= 0.40, width= alt, height= alt)
+
+        self.slt2_7 = Button(self.rotors_frame, text="7", bg= self.slot2_og_clr, command=lambda: self.slot_rotor(2,7))
+        self.slt2_7.place(relx= 0.91, rely= 0.40, width= alt, height= alt)
+
+
+        #Slot 3
+        self.slt3_1 = Button(self.rotors_frame, text="1", bg= self.slot3_og_clr, command=lambda: self.slot_rotor(3,1))
+        self.slt3_1.place(relx= 0.37, rely= 0.55, width= alt, height= alt)
+
+        self.slt3_2 = Button(self.rotors_frame, text="2", bg= self.slot3_og_clr, command=lambda: self.slot_rotor(3,2))
+        self.slt3_2.place(relx= 0.46, rely= 0.55, width= alt, height= alt)
+
+        self.slt3_3 = Button(self.rotors_frame, text="3", bg= self.slot3_og_clr, command=lambda: self.slot_rotor(3,3))
+        self.slt3_3.place(relx= 0.55, rely= 0.55, width= alt, height= alt)
+
+        self.slt3_4 = Button(self.rotors_frame, text="4", bg= self.slot3_og_clr, command=lambda: self.slot_rotor(3,4))
+        self.slt3_4.place(relx= 0.64, rely= 0.55, width= alt, height= alt)
+
+        self.slt3_5 = Button(self.rotors_frame, text="5", bg= self.slot3_og_clr, command=lambda: self.slot_rotor(3,5))
+        self.slt3_5.place(relx= 0.73, rely= 0.55, width= alt, height= alt)
+
+        self.slt3_6 = Button(self.rotors_frame, text="6", bg= self.slot3_og_clr, command=lambda: self.slot_rotor(3,6))
+        self.slt3_6.place(relx= 0.82, rely= 0.55, width= alt, height= alt)
+
+        self.slt3_7 = Button(self.rotors_frame, text="7", bg= self.slot3_og_clr, command=lambda: self.slot_rotor(3,7))
+        self.slt3_7.place(relx= 0.91, rely= 0.55, width= alt, height= alt)
+
+
+        #Slot 4
+        self.slt4_1 = Button(self.rotors_frame, text="1", bg= self.slot4_og_clr, command=lambda: self.slot_rotor(4,1))
+        self.slt4_1.place(relx= 0.37, rely= 0.7, width= alt, height= alt)
+
+        self.slt4_2 = Button(self.rotors_frame, text="2", bg= self.slot4_og_clr, command=lambda: self.slot_rotor(4,2))
+        self.slt4_2.place(relx= 0.46, rely= 0.7, width= alt, height= alt)
+
+        self.slt4_3 = Button(self.rotors_frame, text="3", bg= self.slot4_og_clr, command=lambda: self.slot_rotor(4,3))
+        self.slt4_3.place(relx= 0.55, rely= 0.7, width= alt, height= alt)
+
+        self.slt4_4 = Button(self.rotors_frame, text="4", bg= self.slot4_og_clr, command=lambda: self.slot_rotor(4,4))
+        self.slt4_4.place(relx= 0.64, rely= 0.7, width= alt, height= alt)
+
+        self.slt4_5 = Button(self.rotors_frame, text="5", bg= self.slot4_og_clr, command=lambda: self.slot_rotor(4,5))
+        self.slt4_5.place(relx= 0.73, rely= 0.7, width= alt, height= alt)
+
+        self.slt4_6 = Button(self.rotors_frame, text="6", bg= self.slot4_og_clr, command=lambda: self.slot_rotor(4,6))
+        self.slt4_6.place(relx= 0.82, rely= 0.7, width= alt, height= alt)
+
+        self.slt4_7 = Button(self.rotors_frame, text="7", bg= self.slot4_og_clr, command=lambda: self.slot_rotor(4,7))
+        self.slt4_7.place(relx= 0.91, rely= 0.7, width= alt, height= alt)
+
+
+        #Slot 5
+        self.slt5_1 = Button(self.rotors_frame, text="1", bg= self.slot5_og_clr, command=lambda: self.slot_rotor(5,1))
+        self.slt5_1.place(relx= 0.37, rely= 0.85, width= alt, height= alt)
+
+        self.slt5_2 = Button(self.rotors_frame, text="2", bg= self.slot5_og_clr, command=lambda: self.slot_rotor(5,2))
+        self.slt5_2.place(relx= 0.46, rely= 0.85, width= alt, height= alt)
+
+        self.slt5_3 = Button(self.rotors_frame, text="3", bg= self.slot5_og_clr, command=lambda: self.slot_rotor(5,3))
+        self.slt5_3.place(relx= 0.55, rely= 0.85, width= alt, height= alt)
+
+        self.slt5_4 = Button(self.rotors_frame, text="4", bg= self.slot5_og_clr, command=lambda: self.slot_rotor(5,4))
+        self.slt5_4.place(relx= 0.64, rely= 0.85, width= alt, height= alt)
+
+        self.slt5_5 = Button(self.rotors_frame, text="5", bg= self.slot5_og_clr, command=lambda: self.slot_rotor(5,5))
+        self.slt5_5.place(relx= 0.73, rely= 0.85, width= alt, height= alt)
+
+        self.slt5_6 = Button(self.rotors_frame, text="6", bg= self.slot5_og_clr, command=lambda: self.slot_rotor(5,6))
+        self.slt5_6.place(relx= 0.82, rely= 0.85, width= alt, height= alt)
+
+        self.slt5_7 = Button(self.rotors_frame, text="7", bg= self.slot5_og_clr, command=lambda: self.slot_rotor(5,7))
+        self.slt5_7.place(relx= 0.91, rely= 0.85, width= alt, height= alt)
+
+
+        # Criação do sistema de seleção
+
+        self.rotor_state = {r: 0 for r in range(1, 8)}
+        self.slot_state = {s: 0 for s in range(1, 6)}
+
+
+
+        self.slot_sel_clrs = [None, self.slot1_sel_clr, self.slot2_sel_clr, self.slot3_sel_clr, self.slot4_sel_clr, self.slot5_sel_clr]
+
+        self.slot_og_clrs = [None, self.slot1_og_clr, self.slot2_og_clr, self.slot3_og_clr, self.slot4_og_clr, self.slot5_og_clr]
+
+        self.all_slt_buttons = [
+            None,  # Placeholder para Slot 0
+            [None, self.slt1_1, self.slt1_2, self.slt1_3, self.slt1_4, self.slt1_5, self.slt1_6, self.slt1_7], # Slot 1 
+            [None, self.slt2_1, self.slt2_2, self.slt2_3, self.slt2_4, self.slt2_5, self.slt2_6, self.slt2_7], # Slot 2
+            [None, self.slt3_1, self.slt3_2, self.slt3_3, self.slt3_4, self.slt3_5, self.slt3_6, self.slt3_7], # Slot 3
+            [None, self.slt4_1, self.slt4_2, self.slt4_3, self.slt4_4, self.slt4_5, self.slt4_6, self.slt4_7], # Slot 4
+            [None, self.slt5_1, self.slt5_2, self.slt5_3, self.slt5_4, self.slt5_5, self.slt5_6, self.slt5_7]  # Slot 5
+            ]
+        
+        
+
+
 
 
         #UKW Selector
@@ -667,6 +828,13 @@ class interface():
         self.digital_mode_og_clr = "#958AF8"
         self.digital_mode_btn = Button(self.modes_frame, text="DIGITAL", bg= self.digital_mode_og_clr, command=self.digital_md)
         self.digital_mode_btn.place(relx = 0.55, rely = 0.47, width=50, height=20)
+
+
+        self.slot1 = 0
+        self.slot2 = 0
+        self.slot3 = 0
+        self.slot4 = 0
+        self.slot5 = 0
 
 
     #UKW selection
@@ -723,6 +891,7 @@ class interface():
         self.lb_r2.config(text=pinoIndex[disco[3].idex])
         self.lb_r1.config(text=pinoIndex[disco[4].idex])
 
+
     def manualRotor(self, pos, metodo):
 
 
@@ -774,7 +943,203 @@ class interface():
         self.lb_r2.config(text=pinoIndex[disco[3].idex])
         self.lb_r1.config(text=pinoIndex[disco[4].idex])
 
+    # Cor do Selection do Rotor
+    def slot_rotor(self, slot, rotor):
+        
+        rotor_anterior = self.slot_state[slot]
+        new_rotor_sel = self.rotor_state[rotor]
+        
+
+        if slot == 1 and rotor == 1:
+            self.slot1 = 0
+            self.lb_id_r1.config(text="1")
+
+        if slot == 1 and rotor == 2:
+            self.slot1 = 1
+            self.lb_id_r1.config(text="2")
+
+        if slot == 1 and rotor == 3:
+            self.slot1 = 2
+            self.lb_id_r1.config(text="3")
+
+        if slot == 1 and rotor == 4:
+            self.slot1 = 3
+            self.lb_id_r1.config(text="4")
+
+        if slot == 1 and rotor == 5:
+            self.slot1 = 4
+            self.lb_id_r1.config(text="5")
+        
+        if slot == 1 and rotor == 6:
+            self.slot1 = 5
+            self.lb_id_r1.config(text="6")
+        
+        if slot ==1 and rotor == 7:
+            self.slot1 = 6
+            self.lb_id_r1.config(text="7")
+        
+        if slot == 2 and rotor == 1:
+            self.slot2 = 0
+            self.lb_id_r2.config(text="1")
+
+        if slot == 2 and rotor == 2:
+            self.slot2 = 1
+            self.lb_id_r2.config(text="2")
+
+        if slot == 2 and rotor == 3:
+            self.slot2 = 2
+            self.lb_id_r2.config(text="3")
+
+        if slot == 2 and rotor == 4:
+            self.slot2 = 3
+            self.lb_id_r2.config(text="4")
+
+        if slot == 2 and rotor == 5:
+            self.slot2 = 4
+            self.lb_id_r2.config(text="5")
+        
+        if slot == 2 and rotor == 6:
+            self.slot2 = 5
+            self.lb_id_r2.config(text="6")
+        
+        if slot ==2 and rotor == 7:
+            self.slot2 = 6
+            self.lb_id_r2.config(text="7")
+
+        if slot == 3 and rotor == 1:
+            self.slot3 = 0
+            self.lb_id_r3.config(text="1")
+
+        if slot == 3 and rotor == 2:
+            self.slot3 = 1
+            self.lb_id_r3.config(text="2")
+
+        if slot == 3 and rotor == 3:
+            self.slot3 = 2
+            self.lb_id_r3.config(text="3")
+
+        if slot == 3 and rotor == 4:
+            self.slot3 = 3
+            self.lb_id_r3.config(text="4")
+
+        if slot == 3 and rotor == 5:
+            self.slot3 = 4
+            self.lb_id_r3.config(text="5")
+        
+        if slot == 3 and rotor == 6:
+            self.slot3 = 5
+            self.lb_id_r3.config(text="6")
+        
+        if slot == 3 and rotor == 7:
+            self.slot3 = 6
+            self.lb_id_r3.config(text="7")
+
+        if slot == 4 and rotor == 1:
+            self.slot4 = 0
+            self.lb_id_r4.config(text="1")
+
+        if slot == 4 and rotor == 2:
+            self.slot4 = 1
+            self.lb_id_r4.config(text="2")
+
+        if slot == 4 and rotor == 3:
+            self.slot4 = 2
+            self.lb_id_r4.config(text="3")
+
+        if slot == 4 and rotor == 4:
+            self.slot4 = 3
+            self.lb_id_r4.config(text="4")
+
+        if slot == 4 and rotor == 5:
+            self.slot4 = 4
+            self.lb_id_r4.config(text="5")
+        
+        if slot == 4 and rotor == 6:
+            self.slot4 = 5
+            self.lb_id_r4.config(text="6")
+        
+        if slot == 4 and rotor == 7:
+            self.slot4 = 6
+            self.lb_id_r4.config(text="7")
+
+        if slot == 5 and rotor == 1:
+            self.slot5 = 0
+            self.lb_id_r5.config(text="1")
+
+        if slot == 5 and rotor == 2:
+            self.slot5 = 1
+            self.lb_id_r5.config(text="2")
+
+        if slot == 5 and rotor == 3:
+            self.slot5 = 2
+            self.lb_id_r5.config(text="3")
+
+        if slot == 5 and rotor == 4:
+            self.slot5 = 3
+            self.lb_id_r5.config(text="4")
+
+        if slot == 5 and rotor == 5:
+            self.slot5 = 4
+            self.lb_id_r5.config(text="5")
+        
+        if slot == 5 and rotor == 6:
+            self.slot5 = 5
+            self.lb_id_r5.config(text="6")
+        
+        if slot == 5 and rotor == 7:
+            self.slot5 = 6
+            self.lb_id_r5.config(text="7")
+
     
+        print("Slot1: {}".format(self.slot1))
+        print("Slot2: {}".format(self.slot2))
+        print("Slot3: {}".format(self.slot3))
+        print("Slot4: {}".format(self.slot4))
+        print("Slot5: {}\n".format(self.slot5))
+        
+        
+        
+        if new_rotor_sel == slot:
+            self.rotor_state[rotor] = 0
+            self.slot_state[slot] = 0
+            
+        
+        else:
+            
+            if rotor_anterior != 0:
+                
+                self.rotor_state[rotor_anterior] = 0
+    
+           
+            if new_rotor_sel != 0:
+                
+                self.slot_state[new_rotor_sel] = 0
+            
+            self.rotor_state[rotor] = slot  
+            self.slot_state[slot] = rotor  
+
+
+        for s in range(1, 6):
+            cor_original_do_slot = self.slot_og_clrs[s]
+            
+            for r in range(1, 8):
+                button = self.all_slt_buttons[s][r]
+                
+                slot_novo = self.rotor_state[r]
+                
+                if slot_novo != 0:
+                    
+                    cor_realce = self.slot_sel_clrs[slot_novo]
+                    button.config(bg=cor_realce) 
+                
+                else:
+                   
+                    button.config(bg=cor_original_do_slot)
+
+    
+    
+
+
     #Letters
 
     #Set Visibillity Letras
