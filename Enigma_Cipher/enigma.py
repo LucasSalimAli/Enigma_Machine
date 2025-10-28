@@ -182,6 +182,7 @@ def cripto(texto):
 #=============================================================================
 #         CODIGO INTERFACE AQUI
 tela = Tk()
+mixer.init()
 
 
 class interface():
@@ -189,13 +190,15 @@ class interface():
 
     def __init__(self):
         self.tela = tela
+        self.audio()
         self.menu()
-        self.frames_menu()
-        self.buttons_menu()
         self.images_menu()
         self.labels_menu()
-        self.setlbl()
-        #self.go_to_settings()
+        self.buttons_menu()
+        self.setlbl()        
+        self.go_to_settings()
+        
+        
 
         refletor(0)
         escolher(0,0)
@@ -212,44 +215,43 @@ class interface():
     #Menu Inicial
     def menu(self):
         self.tela.title("Digital Enigma Machine")
-        self.tela.configure(background= "#2CAA2C")
         self.tela.geometry("300x300")
         self.tela.resizable(False, False)
+        #self.startup_sound.play()
         
     #Função para chamar a imagem da Logo
     def images_menu(self):
-        image_path = "Enigma_Cipher\images\sign3.jpeg"
+        image_path = "Enigma_Cipher\images\menu_bg.png"
         img = Image.open(image_path)
-        img = img.resize((300, 150), Image.LANCZOS)
+        img = img.resize((400, 300), Image.LANCZOS)
         self.image = (img)
         self.title_image = ImageTk.PhotoImage(self.image)
 
-    #Detalhes em volta da logo e dos botões
-    def frames_menu(self):
+        st_image_path = "Enigma_Cipher\images\start.jpeg"
+        st_img = Image.open(st_image_path)
+        st_img = st_img.resize((120, 47), Image.LANCZOS)
+        self.st_image = (st_img)
+        self.start_image = ImageTk.PhotoImage(self.st_image)
 
-        #frame title
-        self.frame_title = Frame(self.tela, bg="#7015BB", bd = 4, highlightbackground= '#ffffff', highlightthickness=2)  
-
-        self.frame_title.place(relx= 0.05, rely= 0.13, relwidth= 0.9, relheight=0.5)
-
-        #frame btns
-        self.frame_button1 = Frame(self.tela, bg="#227900", bd = 4, highlightbackground= '#ffffff', highlightthickness=2)
-
-        self.frame_button1.place(relx= 0.05, rely= 0.75, relwidth=0.9, height=50)
+        ex_image_path = "Enigma_Cipher\images\exit.jpeg"
+        ex_img = Image.open(ex_image_path)
+        ex_img = ex_img.resize((117, 47), Image.LANCZOS)
+        self.ex_image = (ex_img)
+        self.exit_image = ImageTk.PhotoImage(self.ex_image)
 
     #Botões
     def buttons_menu(self):
-        self.bt_start = Button(self.tela, text="Start", font=("Arial", 20), command= self.go_to_enigma)
-        self.bt_start.place(relx= 0.61, rely=0.763, width=100, height=43)
+        self.bt_start = Button(self.tela, image=self.start_image, borderwidth=0, command= self.go_to_enigma)
+        self.bt_start.place(relx= 0.3, rely=0.55, width=117, height=47)
         
-
-        self.bt_exit = Button(self.tela, text="Exit", font=("Arial", 20), command= exit)
-        self.bt_exit.place(relx= 0.061, rely=0.763, width=100, height=43)
+        self.bt_exit = Button(self.tela, image=self.exit_image, borderwidth=0, command= exit)
+        self.bt_exit.place(relx= 0.3, rely=0.77, width=117, height=47)
         
-    #Imagem da Lobo
+    #Imagem da bg
     def labels_menu(self):
-        self.lb_title = Label(self.frame_title, text= "ENIGMA", image=self.title_image, font=("Arial", 30))
-        self.lb_title.place(relx= 0.001, rely= 0.03, relwidth= 1, relheight=0.95)
+        self.lb_title = Label(self.tela, image=self.title_image)
+        self.lb_title.place(relx= 0, rely= 0, relwidth= 1, relheight=1)
+
 
     #Função para abrir a janela da Enigma
     def go_to_enigma(self):
@@ -262,6 +264,7 @@ class interface():
         self.io()
         self.jumpers()
         self.createlbs()
+        self.enigma_op.play()
         
     #Função para chamar as imagem da tela da Enigma
     def enigma_image(self):
@@ -591,8 +594,10 @@ class interface():
         self.settings.title("Settings")
         self.settings.configure(background="#FFFFFF")
         self.settings.geometry("365x365")
+        self.settings.configure(background= "#2E462E")
         self.settings_bg()
         self.settings_io()
+        self.settings_sound.play()
 
     #Frames da settings
     def settings_bg(self):
@@ -605,6 +610,9 @@ class interface():
         self.volume_frame = Frame(self.settings, bg="#FD6161")
         self.volume_frame.place(relx= 0.64, rely= 0.05, width=120, height= 220 )
 
+        self.lbl_volume_tittle = Label(self.volume_frame, text= "Configuração de Sons")
+        self.lbl_volume_tittle.place(relx= 0, rely= 0, width= 120, height= 30)
+
         self.ukw_frame = Frame(self.settings, bg="#AEF705")
         self.ukw_frame.place(relx = 0.04, rely=0.7, width = 205, height= 80)
 
@@ -616,9 +624,7 @@ class interface():
 
         self.modes_title = Label(self.modes_frame, text="Selecione o Modo")
         self.modes_title.place(relx = 0, rely=0, width= 120, height= 20)
-
-        self.plus_frame = Frame(self.settings, bg="#7CEE4F")
-        self.plus_frame.place(relx= 0.64, rely= 0.85, width=120, height=24)
+        
 
     def settings_io(self):
 
@@ -639,10 +645,7 @@ class interface():
         self.lbl_r5s.place(relx= 0, rely = 0.85, width= 70, height=17)
 
         
-
-        
         #Rotors Select Buttons
-
         self.slot1_sel_clr = "#E21F1F"
         self.slot2_sel_clr = "#CEE21F"
         self.slot3_sel_clr = "#00A84C"
@@ -654,13 +657,8 @@ class interface():
         self.slot3_og_clr = "#6f9fa5"
         self.slot4_og_clr = "#9d8bf0"
         self.slot5_og_clr = "#f08bce"
-
-
-    
         
         alt = 15
-        
-
 
         #Slot 1
         self.slt1_1 = Button(self.rotors_frame, text="1", bg= self.slot1_og_clr, command=lambda: self.slot_rotor(1,1))
@@ -782,8 +780,6 @@ class interface():
         self.rotor_state = {r: 0 for r in range(1, 8)}
         self.slot_state = {s: 0 for s in range(1, 6)}
 
-
-
         self.slot_sel_clrs = [None, self.slot1_sel_clr, self.slot2_sel_clr, self.slot3_sel_clr, self.slot4_sel_clr, self.slot5_sel_clr]
 
         self.slot_og_clrs = [None, self.slot1_og_clr, self.slot2_og_clr, self.slot3_og_clr, self.slot4_og_clr, self.slot5_og_clr]
@@ -796,10 +792,6 @@ class interface():
             [None, self.slt4_1, self.slt4_2, self.slt4_3, self.slt4_4, self.slt4_5, self.slt4_6, self.slt4_7], # Slot 4
             [None, self.slt5_1, self.slt5_2, self.slt5_3, self.slt5_4, self.slt5_5, self.slt5_6, self.slt5_7]  # Slot 5
             ]
-        
-        
-
-
 
 
         #UKW Selector
@@ -818,6 +810,32 @@ class interface():
         self.ukw_c.place(relx= 0.7, rely=0.4, width=30, height=30)
 
 
+        #Sound System
+        self.on_clr = "#07c700"
+        self.off_clr = "#9C2323"
+        vlmsize = 23
+
+        self.startup_lbl = Label(self.volume_frame, text="Startup Sound")
+        self.startup_lbl.place(relx=0.08, rely= 0.2, width = 100, height=20)
+        self.startup_on = Button(self.volume_frame, text= "On ", bg= self.on_clr, command=lambda: self.audio_control(1,1))
+        self.startup_on.place(relx = 0.2, rely = 0.31, width = vlmsize, height = vlmsize)
+        self.startup_off = Button(self.volume_frame, text= "Off ", bg=self.off_clr, command=lambda: self.audio_control(1,0))
+        self.startup_off.place(relx = 0.6, rely = 0.31, width = vlmsize, height = vlmsize)
+
+        self.btns_lbl = Label(self.volume_frame, text= "Buttons/Typing")
+        self.btns_lbl.place(relx= 0.08, rely= 0.45, width=100, heigh= 20)
+        self.btns_on = Button(self.volume_frame, text= "On ", bg= self.on_clr, command=lambda: self.audio_control(2,1))
+        self.btns_on.place(relx = 0.2, rely = 0.56, width = vlmsize, height = vlmsize)
+        self.btns_off = Button(self.volume_frame, text= "Off ", bg= self.off_clr, command=lambda: self.audio_control(2,0))
+        self.btns_off.place(relx = 0.6, rely = 0.56, width = vlmsize, height = vlmsize)
+
+        self.setm_lbl = Label(self.volume_frame, text= "Buttons/Typing")
+        self.setm_lbl.place(relx= 0.08, rely= 0.7, width=100, heigh= 20)
+        self.setm_on = Button(self.volume_frame, text= "On ", bg= self.off_clr)
+        self.setm_on.place(relx = 0.2, rely = 0.81, width = vlmsize, height = vlmsize)
+        self.setm_off = Button(self.volume_frame, text= "Off ", bg=self.on_clr)
+        self.setm_off.place(relx = 0.6, rely = 0.81, width = vlmsize, height = vlmsize)
+
         #Modes Selector
         self.mode_sel_clr = "#FFFFFF"
 
@@ -830,11 +848,21 @@ class interface():
         self.digital_mode_btn.place(relx = 0.55, rely = 0.47, width=50, height=20)
 
 
+        #Close Button
+        self.close_btn = Button(self.settings, text = "Fechar", font="15", bg="#7CEE4F", command=self.back_from_settings)
+        self.close_btn.place(relx= 0.64, rely= 0.85, width=120, height=24)
+
+
+
         self.slot1 = 0
         self.slot2 = 0
         self.slot3 = 0
         self.slot4 = 0
         self.slot5 = 0
+
+    def back_from_settings(self):
+        self.back_from_sound.play()
+        self.settings.destroy()
 
 
     #UKW selection
@@ -1136,7 +1164,65 @@ class interface():
                    
                     button.config(bg=cor_original_do_slot)
 
-    
+     #Audio Menu
+
+
+    #Audio
+
+    def audio(self):
+
+        #Startup
+        self.startup_sound = mixer.Sound("Enigma_Cipher\sounds\Ps1 startup sound(MP3_320K).mp3")
+
+        #Enigma Opening
+        self.enigma_op = mixer.Sound("Enigma_Cipher\sounds\Jingle.mp3")
+
+        #Typing
+        self.tiping = mixer.Sound("Enigma_Cipher\sounds\Typewriter.mp3")
+
+        #Changing Rotor Position
+        self.rotot_change = mixer.Sound("Enigma_Cipher\sounds\Ding.mp3")
+
+        #Settings Button
+        self.settings_sound = mixer.Sound("Enigma_Cipher\sounds\Piston Out.mp3")
+
+        #Settings Out
+        self.back_from_sound = mixer.Sound("Enigma_Cipher\sounds\Piston In.mp3")
+
+
+    def audio_control(self,btn,state):
+        
+        if btn == 1 and state == 1:
+            self.startup_sound.set_volume(1)
+            self.enigma_op.set_volume(1)
+            self.startup_on.config(bg=self.on_clr)
+            self.startup_off.config(bg=self.off_clr)
+            print(state)
+        if btn == 1 and state == 0:
+            self.startup_sound.set_volume(0)
+            self.enigma_op.set_volume(0)
+            self.startup_on.config(bg=self.off_clr)
+            self.startup_off.config(bg=self.on_clr)
+            print(state)
+        if btn == 2 and state == 1:
+            self.tiping.set_volume(1)
+            self.settings_sound.set_volume(1)
+            self.back_from_sound.set_volume(1)
+            print(state)
+        if btn == 2 and state == 0:
+            self.tiping.set_volume(0)
+            self.settings_sound.set_volume(0)
+            self.back_from_settings_sound.set_volume(0)
+            print(state)
+        if btn == 3 and state == 1:
+            self.startup_sound.set_volume(1)
+            
+            print(state)
+        if btn == 3 and state == 0:
+            self.startup_sound.set_volume(0)
+            
+            print(state)
+
     
 
 
@@ -1268,11 +1354,9 @@ class interface():
         aimg = aimg.resize((44, 44), Image.LANCZOS)
         self.a_photo = ImageTk.PhotoImage(aimg) 
        
-       
         self.a_label = Label(self.enigma, image=self.a_photo)
         self.a_place_args = {'relx': 0.131, 'rely': 0.531, 'relwidth': 0.065, 'relheight': 0.058}
-        self.a_label.place(**self.a_place_args)
-
+        
     def toggle_a(self,event):
         if self.a_visivel:
             self.a_label.place_forget()
@@ -1280,6 +1364,7 @@ class interface():
         else:
             self.a_label.place(**self.a_place_args)
             self.a_visivel = True
+            self.tiping.play()
 
     #B -----
     def create_lbl_b(self):
@@ -1287,12 +1372,10 @@ class interface():
         bimg = Image.open(bimage_path)
         bimg = bimg.resize((44, 44), Image.LANCZOS)
         self.b_photo = ImageTk.PhotoImage(bimg) 
-       
-       
+    
         self.b_label = Label(self.enigma, image=self.b_photo)
         self.b_place_args = {'relx': 0.544, 'rely': 0.602, 'relwidth': 0.065, 'relheight': 0.058}
-        self.b_label.place(**self.b_place_args)
-
+        
     def toggle_b(self,event):
         if self.b_visivel:
             self.b_label.place_forget()
@@ -1300,6 +1383,7 @@ class interface():
         else:
             self.b_label.place(**self.b_place_args)
             self.b_visivel = True
+            self.tiping.play()
 
     #C -----
     def create_lbl_c(self):
@@ -1308,11 +1392,9 @@ class interface():
         cimg = cimg.resize((44, 44), Image.LANCZOS)
         self.c_photo = ImageTk.PhotoImage(cimg) 
        
-       
         self.c_label = Label(self.enigma, image=self.c_photo)
         self.c_place_args = {'relx': 0.35, 'rely': 0.602, 'relwidth': 0.065, 'relheight': 0.058}
-        self.c_label.place(**self.c_place_args)
-
+        
     def toggle_c(self,event):
         if self.c_visivel:
             self.c_label.place_forget()
@@ -1320,6 +1402,7 @@ class interface():
         else:
             self.c_label.place(**self.c_place_args)
             self.c_visivel = True
+            self.tiping.play()
 
     #D -----
     def create_lbl_d(self):
@@ -1328,10 +1411,8 @@ class interface():
         dimg = dimg.resize((44, 44), Image.LANCZOS)
         self.d_photo = ImageTk.PhotoImage(dimg) 
        
-       
         self.d_label = Label(self.enigma, image=self.d_photo)
         self.d_place_args = {'relx': 0.321, 'rely': 0.531, 'relwidth': 0.065, 'relheight': 0.058}
-        self.d_label.place(**self.d_place_args)
         
     def toggle_d(self,event):
         if self.d_visivel:
@@ -1340,6 +1421,7 @@ class interface():
         else:
             self.d_label.place(**self.d_place_args)
             self.d_visivel = True
+            self.tiping.play()
 
     #E -----
     def create_lbl_e(self):
@@ -1347,7 +1429,6 @@ class interface():
         eimg = Image.open(eimage_path)
         eimg = eimg.resize((44, 44), Image.LANCZOS)
         self.e_photo = ImageTk.PhotoImage(eimg) 
-       
        
         self.e_label = Label(self.enigma, image=self.e_photo)
         self.e_place_args = {'relx': 0.2930, 'rely': 0.4573, 'relwidth': 0.065, 'relheight': 0.058}
@@ -1357,10 +1438,12 @@ class interface():
         if self.e_visivel:
             self.e_label.place_forget()
             self.e_visivel = False
+            self.tiping.play()
         else:
             self.e_label.place(**self.e_place_args)
             self.e_visivel = True
-
+            
+            
     #F -----
     def create_lbl_f(self):
         fimage_path = r"Enigma_Cipher\images\letters\F.jpeg"
@@ -1368,10 +1451,8 @@ class interface():
         fimg = fimg.resize((44, 44), Image.LANCZOS)
         self.f_photo = ImageTk.PhotoImage(fimg) 
        
-       
         self.f_label = Label(self.enigma, image=self.f_photo)
         self.f_place_args = {'relx': 0.418, 'rely': 0.53, 'relwidth': 0.065, 'relheight': 0.058}
-        self.f_label.place(**self.f_place_args)
 
     def toggle_f(self,event):
         if self.f_visivel:
@@ -1380,6 +1461,7 @@ class interface():
         else:
             self.f_label.place(**self.f_place_args)
             self.f_visivel = True
+            self.tiping.play()
 
     #G -----
     def create_lbl_g(self):
@@ -1388,10 +1470,8 @@ class interface():
         gimg = gimg.resize((44, 44), Image.LANCZOS)
         self.g_photo = ImageTk.PhotoImage(gimg) 
        
-       
         self.g_label = Label(self.enigma, image=self.g_photo)
         self.g_place_args = {'relx': 0.515, 'rely': 0.53, 'relwidth': 0.065, 'relheight': 0.058}
-        self.g_label.place(**self.g_place_args)
 
     def toggle_g(self,event):
         if self.g_visivel:
@@ -1400,6 +1480,7 @@ class interface():
         else:
             self.g_label.place(**self.g_place_args)
             self.g_visivel = True
+            self.tiping.play()
 
     #H -----
     def create_lbl_h(self):
@@ -1408,10 +1489,8 @@ class interface():
         himg = himg.resize((44, 44), Image.LANCZOS)
         self.h_photo = ImageTk.PhotoImage(himg) 
        
-       
         self.h_label = Label(self.enigma, image=self.h_photo)
         self.h_place_args = {'relx': 0.61, 'rely': 0.531, 'relwidth': 0.065, 'relheight': 0.058}
-        self.h_label.place(**self.h_place_args)
 
     def toggle_h(self,event):
         if self.h_visivel:
@@ -1420,6 +1499,7 @@ class interface():
         else:
             self.h_label.place(**self.h_place_args)
             self.h_visivel = True
+            self.tiping.play()
 
     #I -----
     def create_lbl_i(self):
@@ -1431,7 +1511,6 @@ class interface():
        
         self.i_label = Label(self.enigma, image=self.i_photo)
         self.i_place_args = {'relx': 0.776, 'rely': 0.4573, 'relwidth': 0.065, 'relheight': 0.058}
-        self.i_label.place(**self.i_place_args)
 
     def toggle_i(self,event):
         if self.i_visivel:
@@ -1440,6 +1519,7 @@ class interface():
         else:
             self.i_label.place(**self.i_place_args)
             self.i_visivel = True
+            self.tiping.play()
 
     #J -----
     def create_lbl_j(self):
@@ -1448,10 +1528,8 @@ class interface():
         jimg = jimg.resize((44, 44), Image.LANCZOS)
         self.j_photo = ImageTk.PhotoImage(jimg) 
        
-       
         self.j_label = Label(self.enigma, image=self.j_photo)
         self.j_place_args = {'relx': 0.707, 'rely': 0.53, 'relwidth': 0.065, 'relheight': 0.058}
-        self.j_label.place(**self.j_place_args)
 
     def toggle_j(self,event):
         if self.j_visivel:
@@ -1460,6 +1538,7 @@ class interface():
         else:
             self.j_label.place(**self.j_place_args)
             self.j_visivel = True
+            self.tiping.play()
 
     #K -----
     def create_lbl_k(self):
@@ -1468,10 +1547,8 @@ class interface():
         kimg = kimg.resize((44, 44), Image.LANCZOS)
         self.k_photo = ImageTk.PhotoImage(kimg) 
        
-       
         self.k_label = Label(self.enigma, image=self.k_photo)
         self.k_place_args = {'relx': 0.804, 'rely': 0.53, 'relwidth': 0.065, 'relheight': 0.058}
-        self.k_label.place(**self.k_place_args)
 
     def toggle_k(self,event):
         if self.k_visivel:
@@ -1480,6 +1557,7 @@ class interface():
         else:
             self.k_label.place(**self.k_place_args)
             self.k_visivel = True
+            self.tiping.play()
 
     #L -----
     def create_lbl_l(self):
@@ -1488,10 +1566,8 @@ class interface():
         limg = limg.resize((44, 44), Image.LANCZOS)
         self.l_photo = ImageTk.PhotoImage(limg) 
        
-       
         self.l_label = Label(self.enigma, image=self.l_photo)
         self.l_place_args = {'relx': 0.834, 'rely': 0.603, 'relwidth': 0.065, 'relheight': 0.058}
-        self.l_label.place(**self.l_place_args)
 
     def toggle_l(self,event):
         if self.l_visivel:
@@ -1500,6 +1576,7 @@ class interface():
         else:
             self.l_label.place(**self.l_place_args)
             self.l_visivel = True
+            self.tiping.play()
 
     #M -----
     def create_lbl_m(self):
@@ -1508,10 +1585,8 @@ class interface():
         mimg = mimg.resize((44, 44), Image.LANCZOS)
         self.m_photo = ImageTk.PhotoImage(mimg) 
        
-       
         self.m_label = Label(self.enigma, image=self.m_photo)
         self.m_place_args = {'relx': 0.7349, 'rely': 0.602, 'relwidth': 0.065, 'relheight': 0.058}
-        self.m_label.place(**self.m_place_args)
 
     def toggle_m(self,event):
         if self.m_visivel:
@@ -1520,6 +1595,7 @@ class interface():
         else:
             self.m_label.place(**self.m_place_args)
             self.m_visivel = True
+            self.tiping.play()
 
     #N -----
     def create_lbl_n(self):
@@ -1528,10 +1604,8 @@ class interface():
         nimg = nimg.resize((44, 44), Image.LANCZOS)
         self.n_photo = ImageTk.PhotoImage(nimg) 
        
-       
         self.n_label = Label(self.enigma, image=self.n_photo)
         self.n_place_args = {'relx': 0.640, 'rely': 0.602, 'relwidth': 0.065, 'relheight': 0.058}
-        self.n_label.place(**self.n_place_args)
 
     def toggle_n(self,event):
         if self.n_visivel:
@@ -1540,6 +1614,7 @@ class interface():
         else:
             self.n_label.place(**self.n_place_args)
             self.n_visivel = True
+            self.tiping.play()
 
     #O -----
     def create_lbl_o(self):
@@ -1548,10 +1623,8 @@ class interface():
         oimg = oimg.resize((44, 44), Image.LANCZOS)
         self.o_photo = ImageTk.PhotoImage(oimg) 
        
-       
         self.o_label = Label(self.enigma, image=self.o_photo)
         self.o_place_args = {'relx': 0.872, 'rely': 0.4573, 'relwidth': 0.065, 'relheight': 0.058}
-        self.o_label.place(**self.o_place_args)
 
     def toggle_o(self,event):
         if self.o_visivel:
@@ -1560,6 +1633,7 @@ class interface():
         else:
             self.o_label.place(**self.o_place_args)
             self.o_visivel = True
+            self.tiping.play()
 
     #P -----
     def create_lbl_p(self):
@@ -1568,10 +1642,8 @@ class interface():
         pimg = pimg.resize((44, 44), Image.LANCZOS)
         self.p_photo = ImageTk.PhotoImage(pimg) 
        
-       
         self.p_label = Label(self.enigma, image=self.p_photo)
         self.p_place_args = {'relx': 0.064, 'rely': 0.603, 'relwidth': 0.065, 'relheight': 0.058}
-        self.p_label.place(**self.p_place_args)
 
     def toggle_p(self,event):
         if self.p_visivel:
@@ -1580,6 +1652,7 @@ class interface():
         else:
             self.p_label.place(**self.p_place_args)
             self.p_visivel = True
+            self.tiping.play()
 
     #Q -----
     def create_lbl_q(self):
@@ -1588,10 +1661,8 @@ class interface():
         qimg = qimg.resize((44, 44), Image.LANCZOS)
         self.q_photo = ImageTk.PhotoImage(qimg) 
        
-       
         self.q_label = Label(self.enigma, image=self.q_photo)
         self.q_place_args = {'relx': 0.1, 'rely': 0.4574, 'relwidth': 0.065, 'relheight': 0.058}
-        self.q_label.place(**self.q_place_args)
 
     def toggle_q(self,event):
         if self.q_visivel:
@@ -1600,6 +1671,7 @@ class interface():
         else:
             self.q_label.place(**self.q_place_args)
             self.q_visivel = True
+            self.tiping.play()
 
     #R -----
     def create_lbl_r(self):
@@ -1608,10 +1680,8 @@ class interface():
         rimg = rimg.resize((44, 44), Image.LANCZOS)
         self.r_photo = ImageTk.PhotoImage(rimg) 
        
-       
         self.r_label = Label(self.enigma, image=self.r_photo)
         self.r_place_args = {'relx': 0.3889, 'rely': 0.4574, 'relwidth': 0.065, 'relheight': 0.058}
-        self.r_label.place(**self.r_place_args)
 
     def toggle_r(self,event):
         if self.r_visivel:
@@ -1620,6 +1690,7 @@ class interface():
         else:
             self.r_label.place(**self.r_place_args)
             self.r_visivel = True
+            self.tiping.play()
 
     #S -----
     def create_lbl_s(self):
@@ -1628,10 +1699,8 @@ class interface():
         simg = simg.resize((44, 44), Image.LANCZOS)
         self.s_photo = ImageTk.PhotoImage(simg) 
        
-       
         self.s_label = Label(self.enigma, image=self.s_photo)
         self.s_place_args = {'relx': 0.2249668, 'rely': 0.531, 'relwidth': 0.065, 'relheight': 0.058}
-        self.s_label.place(**self.s_place_args)
 
     def toggle_s(self,event):
         if self.s_visivel:
@@ -1640,6 +1709,7 @@ class interface():
         else:
             self.s_label.place(**self.s_place_args)
             self.s_visivel = True
+            self.tiping.play()
 
     #T -----
     def create_lbl_t(self):
@@ -1647,11 +1717,9 @@ class interface():
         timg = Image.open(timage_path)
         timg = timg.resize((44, 44), Image.LANCZOS)
         self.t_photo = ImageTk.PhotoImage(timg) 
-       
-       
+
         self.t_label = Label(self.enigma, image=self.t_photo)
         self.t_place_args = {'relx': 0.486, 'rely': 0.4574, 'relwidth': 0.065, 'relheight': 0.058}
-        self.t_label.place(**self.t_place_args)
 
     def toggle_t(self,event):
         if self.t_visivel:
@@ -1660,6 +1728,7 @@ class interface():
         else:
             self.t_label.place(**self.t_place_args)
             self.t_visivel = True
+            self.tiping.play()
 
     #U -----
     def create_lbl_u(self):
@@ -1667,11 +1736,9 @@ class interface():
         uimg = Image.open(uimage_path)
         uimg = uimg.resize((44, 44), Image.LANCZOS)
         self.u_photo = ImageTk.PhotoImage(uimg) 
-       
-       
+    
         self.u_label = Label(self.enigma, image=self.u_photo)
         self.u_place_args = {'relx': 0.6793, 'rely': 0.4576, 'relwidth': 0.065, 'relheight': 0.058}
-        self.u_label.place(**self.u_place_args)
 
     def toggle_u(self,event):
         if self.u_visivel:
@@ -1680,6 +1747,7 @@ class interface():
         else:
             self.u_label.place(**self.u_place_args)
             self.u_visivel = True
+            self.tiping.play()
 
     #V -----
     def create_lbl_v(self):
@@ -1688,10 +1756,8 @@ class interface():
         vimg = vimg.resize((44, 44), Image.LANCZOS)
         self.v_photo = ImageTk.PhotoImage(vimg) 
        
-       
         self.v_label = Label(self.enigma, image=self.v_photo)
         self.v_place_args = {'relx': 0.4469, 'rely': 0.602, 'relwidth': 0.065, 'relheight': 0.058}
-        self.v_label.place(**self.v_place_args)
 
     def toggle_v(self,event):
         if self.v_visivel:
@@ -1700,6 +1766,7 @@ class interface():
         else:
             self.v_label.place(**self.v_place_args)
             self.v_visivel = True
+            self.tiping.play()
 
     #W -----
     def create_lbl_w(self):
@@ -1708,10 +1775,8 @@ class interface():
         wimg = wimg.resize((44, 44), Image.LANCZOS)
         self.w_photo = ImageTk.PhotoImage(wimg) 
        
-       
         self.w_label = Label(self.enigma, image=self.w_photo)
         self.w_place_args = {'relx': 0.197005, 'rely': 0.4576, 'relwidth': 0.065, 'relheight': 0.058}
-        self.w_label.place(**self.w_place_args)
 
     def toggle_w(self,event):
         if self.w_visivel:
@@ -1720,6 +1785,7 @@ class interface():
         else:
             self.w_label.place(**self.w_place_args)
             self.w_visivel = True
+            self.tiping.play()
 
     #X -----
     def create_lbl_x(self):
@@ -1728,10 +1794,8 @@ class interface():
         ximg = ximg.resize((44, 44), Image.LANCZOS)
         self.x_photo = ImageTk.PhotoImage(ximg) 
        
-       
         self.x_label = Label(self.enigma, image=self.x_photo)
         self.x_place_args = {'relx': 0.254, 'rely': 0.602, 'relwidth': 0.065, 'relheight': 0.058}
-        self.x_label.place(**self.x_place_args)
 
     def toggle_x(self,event):
         if self.x_visivel:
@@ -1740,6 +1804,7 @@ class interface():
         else:
             self.x_label.place(**self.x_place_args)
             self.x_visivel = True
+            self.tiping.play()
 
     #Y -----
     def create_lbl_y(self):
@@ -1748,10 +1813,8 @@ class interface():
         yimg = yimg.resize((44, 44), Image.LANCZOS)
         self.y_photo = ImageTk.PhotoImage(yimg) 
        
-       
         self.y_label = Label(self.enigma, image=self.y_photo)
         self.y_place_args = {'relx': 0.159, 'rely': 0.602, 'relwidth': 0.065, 'relheight': 0.058}
-        self.y_label.place(**self.y_place_args)
 
     def toggle_y(self,event):
         if self.y_visivel:
@@ -1760,6 +1823,7 @@ class interface():
         else:
             self.y_label.place(**self.y_place_args)
             self.y_visivel = True
+            self.tiping.play()
 
     #Z -----
     def create_lbl_z(self):
@@ -1768,10 +1832,8 @@ class interface():
         zimg = zimg.resize((44, 44), Image.LANCZOS)
         self.z_photo = ImageTk.PhotoImage(zimg) 
        
-       
         self.z_label = Label(self.enigma, image=self.z_photo)
         self.z_place_args = {'relx': 0.583, 'rely': 0.4573, 'relwidth': 0.065, 'relheight': 0.058}
-        self.z_label.place(**self.z_place_args)
 
     def toggle_z(self,event):
         if self.z_visivel:
@@ -1780,6 +1842,7 @@ class interface():
         else:
             self.z_label.place(**self.z_place_args)
             self.z_visivel = True
+            self.tiping.play()
 
     #Ç -----
     def create_lbl_ç(self):
@@ -1788,10 +1851,8 @@ class interface():
         çimg = çimg.resize((44, 44), Image.LANCZOS)
         self.ç_photo = ImageTk.PhotoImage(çimg) 
        
-       
         self.ç_label = Label(self.enigma, image=self.ç_photo)
         self.ç_place_args = {'relx': 0.9, 'rely': 0.53, 'relwidth': 0.065, 'relheight': 0.058}
-        self.ç_label.place(**self.ç_place_args)
 
     def toggle_ç(self,event):
         if self.ç_visivel:
@@ -1800,6 +1861,7 @@ class interface():
         else:
             self.ç_label.place(**self.ç_place_args)
             self.ç_visivel = True
+            self.tiping.play()
 
     #Leertarste -----
     def create_lbl_leer(self):
@@ -1808,10 +1870,8 @@ class interface():
         leerimg = leerimg.resize((345, 44), Image.LANCZOS)
         self.leer_photo = ImageTk.PhotoImage(leerimg) 
        
-       
         self.leer_label = Label(self.enigma, image=self.leer_photo)
         self.leer_place_args = {'relx': 0.192, 'rely': 0.674, 'width': 345, 'height': 44}
-        self.leer_label.place(**self.leer_place_args)
 
     def toggle_leer(self,event):
         if self.leer_visivel:
@@ -1820,6 +1880,7 @@ class interface():
         else:
             self.leer_label.place(**self.leer_place_args)
             self.leer_visivel = True
+            self.tiping.play()
 
 
 
