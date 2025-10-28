@@ -196,7 +196,7 @@ class interface():
         self.labels_menu()
         self.buttons_menu()
         self.setlbl()        
-        self.go_to_settings()
+        # self.go_to_settings()
         
         
 
@@ -217,7 +217,7 @@ class interface():
         self.tela.title("Digital Enigma Machine")
         self.tela.geometry("300x300")
         self.tela.resizable(False, False)
-        #self.startup_sound.play()
+        self.startup_sound.play()
         
     #Função para chamar a imagem da Logo
     def images_menu(self):
@@ -244,7 +244,7 @@ class interface():
         self.bt_start = Button(self.tela, image=self.start_image, borderwidth=0, command= self.go_to_enigma)
         self.bt_start.place(relx= 0.3, rely=0.55, width=117, height=47)
         
-        self.bt_exit = Button(self.tela, image=self.exit_image, borderwidth=0, command= exit)
+        self.bt_exit = Button(self.tela, image=self.exit_image, borderwidth=0, command= self.toggle_a)
         self.bt_exit.place(relx= 0.3, rely=0.77, width=117, height=47)
         
     #Imagem da bg
@@ -829,11 +829,11 @@ class interface():
         self.btns_off = Button(self.volume_frame, text= "Off ", bg= self.off_clr, command=lambda: self.audio_control(2,0))
         self.btns_off.place(relx = 0.6, rely = 0.56, width = vlmsize, height = vlmsize)
 
-        self.setm_lbl = Label(self.volume_frame, text= "Buttons/Typing")
+        self.setm_lbl = Label(self.volume_frame, text= "Music")
         self.setm_lbl.place(relx= 0.08, rely= 0.7, width=100, heigh= 20)
-        self.setm_on = Button(self.volume_frame, text= "On ", bg= self.off_clr)
+        self.setm_on = Button(self.volume_frame, text= "On ", bg= self.off_clr, command=lambda: self.audio_control(3,1))
         self.setm_on.place(relx = 0.2, rely = 0.81, width = vlmsize, height = vlmsize)
-        self.setm_off = Button(self.volume_frame, text= "Off ", bg=self.on_clr)
+        self.setm_off = Button(self.volume_frame, text= "Off ", bg=self.on_clr, command=lambda: self.audio_control(3,0))
         self.setm_off.place(relx = 0.6, rely = 0.81, width = vlmsize, height = vlmsize)
 
         #Modes Selector
@@ -1204,22 +1204,33 @@ class interface():
             self.startup_on.config(bg=self.off_clr)
             self.startup_off.config(bg=self.on_clr)
             print(state)
+
         if btn == 2 and state == 1:
             self.tiping.set_volume(1)
             self.settings_sound.set_volume(1)
             self.back_from_sound.set_volume(1)
+            self.btns_on.config(bg=self.on_clr)
+            self.btns_off.config(bg=self.off_clr)
             print(state)
+
         if btn == 2 and state == 0:
             self.tiping.set_volume(0)
             self.settings_sound.set_volume(0)
-            self.back_from_settings_sound.set_volume(0)
+            self.back_from_sound.set_volume(0)
+            self.btns_on.config(bg=self.off_clr)
+            self.btns_off.config(bg=self.on_clr)
             print(state)
+
         if btn == 3 and state == 1:
-            self.startup_sound.set_volume(1)
+            self.settings_sound.set_volume(1)
+            self.btns_on.config(bg=self.on_clr)
+            self.btns_off.config(bg=self.off_clr)
             
             print(state)
         if btn == 3 and state == 0:
-            self.startup_sound.set_volume(0)
+            self.settings_sound.set_volume(0)
+            self.btns_on.config(bg=self.off_clr)
+            self.btns_off.config(bg=self.on_clr)
             
             print(state)
 
@@ -1357,7 +1368,7 @@ class interface():
         self.a_label = Label(self.enigma, image=self.a_photo)
         self.a_place_args = {'relx': 0.131, 'rely': 0.531, 'relwidth': 0.065, 'relheight': 0.058}
         
-    def toggle_a(self,event):
+    def toggle_a(self):
         if self.a_visivel:
             self.a_label.place_forget()
             self.a_visivel = False
