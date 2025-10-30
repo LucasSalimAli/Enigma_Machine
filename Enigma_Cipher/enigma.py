@@ -1,11 +1,11 @@
 from tkinter import *
 from PIL import Image, ImageTk
 from pygame import *
-
+from time import *
 
 
 #=================================================================================================================================================================
-#CODIGO DE CRIPTOGRAFIA AQUI
+#Finalizado 30/10/2025 04:54 made by:Lucas, Vicenzo
 #===================================================================================================================================================================
 
 #==================================================================================================================
@@ -17,7 +17,6 @@ class discos:
     pos = 0       # indicativo de pos sequencial na maquina
     rot = 0       # indicativo onde o rotor deve girar o proximo
     
-
     assem = []    #codex exclusivo para o ETW 
     mirror = []   #codex exclusivo para o UKW importar
 
@@ -51,8 +50,6 @@ class discos:
                 return 0
         
          
-
-
 #====================================================================================
 #talvez isso seja uma pessima ideia mas vamor ver se funciona
 #classe discos ficou um pouco generica sem metodo __init__  afim de poder integrar o ETW e UKW e nao ter que criar outra classe e etc etc etc
@@ -78,7 +75,6 @@ class discos:
          saida = self.mirror[inpt]
          
          return saida
-
 
 #=============================================================================================================================================================
 #CODGIO FORA DA CLASSE AQUI V
@@ -112,7 +108,6 @@ disco = {} #dict para vincular um index int com obj disco
 ukw = discos()
 etw = discos()
 etw.assem = pinos
-
 
 #============================================================================================
 #FUNÇOES PUBLICAS AQUI
@@ -153,11 +148,6 @@ def cripto(texto):
     return saida
 
 
-#========================================================================================
-#codigo de depuraçao (TESTAR AQUI)
-
-
-
 #=============================================================================
 #         CODIGO INTERFACE AQUI
 tela = Tk()
@@ -169,7 +159,6 @@ class interface():
     letras = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m","n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "ç", " "]
     letrasBkp = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m","n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "ç", " "]
     
-
     #Inicia os parâmetros base da Interface
     def __init__(self):
         self.tela = tela
@@ -179,7 +168,42 @@ class interface():
         self.labels_menu()
         self.buttons_menu()
         self.setlbl()
-        
+        self.ukw_selection = 0
+        self.md_selection = 1
+        self.sttp_m = 1
+        self.btns_sound = 1
+        self.settings_music_m = 0
+
+        self.togg = {
+            "a": self.toggle_a,
+            "b": self.toggle_b,
+            "c": self.toggle_c,
+            "d": self.toggle_d,
+            "e": self.toggle_e,
+            "f": self.toggle_f,
+            "g": self.toggle_g,
+            "h": self.toggle_h,
+            "i": self.toggle_i,
+            "j": self.toggle_j,
+            "k": self.toggle_k,
+            "l": self.toggle_l,
+            "m": self.toggle_m,
+            "n": self.toggle_n,
+            "o": self.toggle_o,
+            "p": self.toggle_p,
+            "q": self.toggle_q,
+            "r": self.toggle_r,
+            "s": self.toggle_s,
+            "t": self.toggle_t,
+            "u": self.toggle_u,
+            "v": self.toggle_v,
+            "w": self.toggle_w,
+            "x": self.toggle_x,
+            "y": self.toggle_y,
+            "z": self.toggle_z,
+            "ç": self.toggle_ç,
+            " ": self.toggle_leer
+        }
 
         refletor(0)
         escolher(0,0)
@@ -229,7 +253,6 @@ class interface():
     def labels_menu(self):
         self.lb_title = Label(self.tela, image=self.title_image)
         self.lb_title.place(relx= 0, rely= 0, relwidth= 1, relheight=1)
-
 
     #Função para abrir a janela da Enigma
     def go_to_enigma(self):
@@ -368,9 +391,7 @@ class interface():
         self.bt_dn5 = Button(self.enigma, text="-", command= lambda: self.manualRotor(0,2))
         self.bt_dn5.place(relx=0.573, rely=0.247, width=20, height=20)
 
-
         #Rotors ID
-        
         self.lb_id_r1 = Label(self.enigma, text="1")
         self.lb_id_r1.place(relx=0.1678, rely=0.08, width=20, height=20)
 
@@ -385,7 +406,6 @@ class interface():
 
         self.lb_id_r5 = Label(self.enigma, text="5")
         self.lb_id_r5.place(relx=0.573, rely=0.08, width=20, height=20)
-
 
         #UKW_badge
         self.txt_ukw_id = "UKW"
@@ -402,30 +422,29 @@ class interface():
         
         self.ent = Entry(self.enigma)
         self.ent.place(relx=0.2, rely= 0.32, width= 500, height = 25)
-        self.ent.bind("<Return>", lambda e: self.input_texto())# verifiacor de "/r" precionado para dar input na criptografia
+        self.ent.bind("<Key>", self.teclas)# verifiacor de "/r" precionado para dar input na criptografia
 
         #Saida
         self.lb_extt = Label(self.enigma, text="Saida")
         self.lb_extt.place(relx=0.1, rely= 0.38, width= 50, height = 25)
 
-        self.lb_ext = Entry(self.enigma)
-        self.lb_ext.insert(0,"Esperando Criptografia")
+        self.lb_ext = Label(self.enigma, text="Esperando Criptografia")
         self.lb_ext.place(relx=0.2, rely= 0.38, width= 500, height = 25)
 
         #Push Button
-        self.p_btn = Button(self.enigma, image=self.poff_image, border=0)
+        self.p_btn = Button(self.enigma, image=self.poff_image, border=0, command= lambda: self.jumperConfig())
         self.p_btn.place(relx = 0.4, rely = 0.796, width = 100, height= 44)
         self.p_btn.bind("<Button-1>", lambda event: self.btns_press(event,self.p_btn,self.pon_image,1))
         self.p_btn.bind("<ButtonRelease-1>", lambda event: self.btns_press(event, self.p_btn, self.poff_image,2))
 
         #Copy 
-        self.copy_btn = Button(self.enigma, image=self.coff_image,  border=0, highlightthickness=0)
+        self.copy_btn = Button(self.enigma, image=self.coff_image,  border=0, highlightthickness=0, command=self.copiometro)
         self.copy_btn.place(relx = 0.02, rely= 0.38, width = 40, height = 25)
         self.copy_btn.bind("<Button-1>", lambda event: self.btns_press(event,self.copy_btn,self.con_image,1))
         self.copy_btn.bind("<ButtonRelease-1>", lambda event: self.btns_press(event, self.copy_btn, self.coff_image,2))
 
         #Replay
-        self.replay_btn = Button(self.enigma, image=self.roff_image, relief="flat", border=0, highlightthickness=0)
+        self.replay_btn = Button(self.enigma, image=self.roff_image, relief="flat", border=0, highlightthickness=0, command=self.lapnspadas)
         self.replay_btn.place(relx = 0.02, rely= 0.32, width = 40, height = 25)
         self.replay_btn.bind("<Button-1>", lambda event: self.btns_press(event,self.replay_btn,self.ron_image,1))
         self.replay_btn.bind("<ButtonRelease-1>", lambda event: self.btns_press(event, self.replay_btn, self.roff_image,2))
@@ -627,18 +646,13 @@ class interface():
             self.j_leer.place(relx= 0.88, rely= 0.77, width=17, height=17)
 
             self.e_leer = Entry(self.enigma)
-            self.e_leer.place(relx= 0.88, rely= 0.86, width=17, height=17)
-
-            #botao para calibrar os jumpers
-            self.apply = Button(self.enigma, text="PUSH", command= lambda: self.jumperConfig())
-            self.apply.place(relx= 0.94, rely= 0.86, width=36, height=17)
+            self.e_leer.place(relx= 0.88, rely= 0.86, width=17, height=17)  
             
     #Função para abrir a tela de configurações    
     def go_to_settings(self):
         settings = Toplevel()
         self.settings = settings
         self.settings.title("Settings")
-        self.settings.configure(background="#FFFFFF")
         self.settings.geometry("365x365")
         self.settings.configure(background= "#2E462E")
         self.settings_bg()
@@ -956,11 +970,44 @@ class interface():
             print("MD:", self.md_selection)
 
 #=========================================================================AREA DE CONTEÇÃO==========================
-    #INTERAÇAO CODIGO CRIPTO
-    def input_texto(self):
-        self.lb_ext.delete(0, "end")
-        self.lb_ext.insert(0,self.codigoJumper(cripto(self.codigoJumper(self.ent.get()))))
+    #REPOSITORIO DE CODIGO COELHO DELTA
+    
+    def teclas(self,event):
+        if event.keysym == "Return" and self.md_selection == 2:
+            self.input_texto()
 
+        if event.keysym != "Return" and self.md_selection == 1 and event.keysym != "BackSpace":
+            
+
+            if event.keysym == "ccedilla":
+                buffer = (self.codigoJumper(cripto(self.codigoJumper("ç"))))
+            
+            elif event.keysym == "space":
+                buffer = (self.codigoJumper(cripto(self.codigoJumper(" "))))
+            
+            else:
+                buffer = (self.codigoJumper(cripto(self.codigoJumper(event.keysym))))           
+                          
+            print(buffer)
+
+            self.lb_r5.config(text=pinoIndex[disco[0].idex])
+            self.lb_r4.config(text=pinoIndex[disco[1].idex])
+            self.lb_r3.config(text=pinoIndex[disco[2].idex])
+            self.lb_r2.config(text=pinoIndex[disco[3].idex])
+            self.lb_r1.config(text=pinoIndex[disco[4].idex])
+
+            self.togg[str(buffer)]()
+            self.enigma.update()
+            sleep(1.35)
+            self.togg[str(buffer)]()
+            self.enigma.update()
+
+    
+    def input_texto(self):
+        self.lb_ext.config(text=(self.codigoJumper(cripto(self.codigoJumper(self.ent.get())))))
+        self.lapnspadas()
+        self.enigma.update_idletasks()
+    
         self.lb_r5.config(text=pinoIndex[disco[0].idex])
         self.lb_r4.config(text=pinoIndex[disco[1].idex])
         self.lb_r3.config(text=pinoIndex[disco[2].idex])
@@ -1085,15 +1132,33 @@ class interface():
 
         
         print(self.letras)
-        
 
+    def copiometro(self):
+        self.enigma.update_idletasks()
+        buffer = self.lb_ext.cget("text")
+        print(buffer)
+        self.enigma.clipboard_clear()
+        self.enigma.clipboard_append(buffer)
+        self.enigma.update()
+
+    def lapnspadas(self):
+        buffer = self.lb_ext.cget("text")
+        for x in buffer:
+            print(x)
+            self.togg[str(x)]()
+            self.enigma.update()
+            sleep(0.155)
+            self.togg[str(x)]()
+            self.enigma.update()
+            
 #====================================================================================================================
     # Cor do Selection do Rotor
     def slot_rotor(self, slot, rotor):
         
+        escolher(slot-1,rotor-1)
+
         rotor_anterior = self.slot_state[slot]
         new_rotor_sel = self.rotor_state[rotor]
-        
 
         if slot == 1 and rotor == 1:
             self.slot1 = 0
@@ -1241,8 +1306,7 @@ class interface():
         print("Slot3: {}".format(self.slot3))
         print("Slot4: {}".format(self.slot4))
         print("Slot5: {}\n".format(self.slot5))
-        
-        
+
         
         if new_rotor_sel == slot:
             self.rotor_state[rotor] = 0
@@ -1280,8 +1344,10 @@ class interface():
                    
                     button.config(bg=cor_original_do_slot)
 
-#Faz com que os menus continuem acesos caso entre e saia da settings
+    #Faz com que os menus continuem acesos caso entre e saia da settings
     def menu_still(self):
+
+        
         if self.ukw_selection == 0:
             self.ukw_a.config(bg=self.ukw_sel_clr)
             self.ukw_b.config(bg=self.ukw_b_og_clr)
@@ -1294,24 +1360,28 @@ class interface():
             self.ukw_a.config(bg=self.ukw_a_og_clr)
             self.ukw_b.config(bg=self.ukw_b_og_clr)
             self.ukw_c.config(bg=self.ukw_sel_clr)
+
         if self.md_selection == 1:
             self.classic_mode_btn.config(bg=self.mode_sel_clr)
             self.digital_mode_btn.config(bg=self.digital_mode_og_clr)
         if self.md_selection == 2:
             self.classic_mode_btn.config(bg=self.classic_mode_og_clr)
             self.digital_mode_btn.config(bg=self.mode_sel_clr)
+
         if self.sttp_m == 1:
             self.startup_on.config(bg=self.on_clr)
             self.startup_off.config(bg=self.off_clr)
         if self.sttp_m == 0:
             self.startup_on.config(bg=self.off_clr)
             self.startup_off.config(bg=self.on_clr)
+
         if self.btns_sound == 1:
             self.btns_sound_on.config(bg=self.on_clr)
             self.btns_sound_off.config(bg=self.off_clr)
         if self.btns_sound == 0:
             self.btns_sound_on.config(bg=self.off_clr)
             self.btns_sound_off.config(bg=self.on_clr)
+            
         if self.settings_music_m == 1:
             self.setm_on.config(bg=self.on_clr)
             self.setm_off.config(bg=self.off_clr)
@@ -1399,7 +1469,6 @@ class interface():
             
             print(state)
         
-
     #Letters
 
     #Set Visibillity Letras
@@ -1520,7 +1589,6 @@ class interface():
         self.create_lbl_ç()
         self.create_lbl_leer()
 
-
     #A -----
     def create_lbl_a(self):
         aimage_path = r"Enigma_Cipher\images\letters\A.jpeg"
@@ -1531,7 +1599,7 @@ class interface():
         self.a_label = Label(self.enigma, image=self.a_photo)
         self.a_place_args = {'relx': 0.131, 'rely': 0.531, 'relwidth': 0.065, 'relheight': 0.058}
         
-    def toggle_a(self,event):
+    def toggle_a(self):
         if self.a_visivel:
             self.a_label.place_forget()
             self.a_visivel = False
@@ -1550,7 +1618,7 @@ class interface():
         self.b_label = Label(self.enigma, image=self.b_photo)
         self.b_place_args = {'relx': 0.544, 'rely': 0.602, 'relwidth': 0.065, 'relheight': 0.058}
         
-    def toggle_b(self,event):
+    def toggle_b(self):
         if self.b_visivel:
             self.b_label.place_forget()
             self.b_visivel = False
@@ -1569,7 +1637,7 @@ class interface():
         self.c_label = Label(self.enigma, image=self.c_photo)
         self.c_place_args = {'relx': 0.35, 'rely': 0.602, 'relwidth': 0.065, 'relheight': 0.058}
         
-    def toggle_c(self,event):
+    def toggle_c(self):
         if self.c_visivel:
             self.c_label.place_forget()
             self.c_visivel = False
@@ -1588,7 +1656,7 @@ class interface():
         self.d_label = Label(self.enigma, image=self.d_photo)
         self.d_place_args = {'relx': 0.321, 'rely': 0.531, 'relwidth': 0.065, 'relheight': 0.058}
         
-    def toggle_d(self,event):
+    def toggle_d(self):
         if self.d_visivel:
             self.d_label.place_forget()
             self.d_visivel = False
@@ -1608,7 +1676,7 @@ class interface():
         self.e_place_args = {'relx': 0.2930, 'rely': 0.4573, 'relwidth': 0.065, 'relheight': 0.058}
         self.e_label.place(**self.e_place_args)
 
-    def toggle_e(self,event):
+    def toggle_e(self):
         if self.e_visivel:
             self.e_label.place_forget()
             self.e_visivel = False
@@ -1628,7 +1696,7 @@ class interface():
         self.f_label = Label(self.enigma, image=self.f_photo)
         self.f_place_args = {'relx': 0.418, 'rely': 0.53, 'relwidth': 0.065, 'relheight': 0.058}
 
-    def toggle_f(self,event):
+    def toggle_f(self):
         if self.f_visivel:
             self.f_label.place_forget()
             self.f_visivel = False
@@ -1647,7 +1715,7 @@ class interface():
         self.g_label = Label(self.enigma, image=self.g_photo)
         self.g_place_args = {'relx': 0.515, 'rely': 0.53, 'relwidth': 0.065, 'relheight': 0.058}
 
-    def toggle_g(self,event):
+    def toggle_g(self):
         if self.g_visivel:
             self.g_label.place_forget()
             self.g_visivel = False
@@ -1666,7 +1734,7 @@ class interface():
         self.h_label = Label(self.enigma, image=self.h_photo)
         self.h_place_args = {'relx': 0.61, 'rely': 0.531, 'relwidth': 0.065, 'relheight': 0.058}
 
-    def toggle_h(self,event):
+    def toggle_h(self):
         if self.h_visivel:
             self.h_label.place_forget()
             self.h_visivel = False
@@ -1686,7 +1754,7 @@ class interface():
         self.i_label = Label(self.enigma, image=self.i_photo)
         self.i_place_args = {'relx': 0.776, 'rely': 0.4573, 'relwidth': 0.065, 'relheight': 0.058}
 
-    def toggle_i(self,event):
+    def toggle_i(self):
         if self.i_visivel:
             self.i_label.place_forget()
             self.i_visivel = False
@@ -1705,7 +1773,7 @@ class interface():
         self.j_label = Label(self.enigma, image=self.j_photo)
         self.j_place_args = {'relx': 0.707, 'rely': 0.53, 'relwidth': 0.065, 'relheight': 0.058}
 
-    def toggle_j(self,event):
+    def toggle_j(self):
         if self.j_visivel:
             self.j_label.place_forget()
             self.j_visivel = False
@@ -1724,7 +1792,7 @@ class interface():
         self.k_label = Label(self.enigma, image=self.k_photo)
         self.k_place_args = {'relx': 0.804, 'rely': 0.53, 'relwidth': 0.065, 'relheight': 0.058}
 
-    def toggle_k(self,event):
+    def toggle_k(self):
         if self.k_visivel:
             self.k_label.place_forget()
             self.k_visivel = False
@@ -1743,7 +1811,7 @@ class interface():
         self.l_label = Label(self.enigma, image=self.l_photo)
         self.l_place_args = {'relx': 0.834, 'rely': 0.603, 'relwidth': 0.065, 'relheight': 0.058}
 
-    def toggle_l(self,event):
+    def toggle_l(self):
         if self.l_visivel:
             self.l_label.place_forget()
             self.l_visivel = False
@@ -1762,7 +1830,7 @@ class interface():
         self.m_label = Label(self.enigma, image=self.m_photo)
         self.m_place_args = {'relx': 0.7349, 'rely': 0.602, 'relwidth': 0.065, 'relheight': 0.058}
 
-    def toggle_m(self,event):
+    def toggle_m(self):
         if self.m_visivel:
             self.m_label.place_forget()
             self.m_visivel = False
@@ -1781,7 +1849,7 @@ class interface():
         self.n_label = Label(self.enigma, image=self.n_photo)
         self.n_place_args = {'relx': 0.640, 'rely': 0.602, 'relwidth': 0.065, 'relheight': 0.058}
 
-    def toggle_n(self,event):
+    def toggle_n(self):
         if self.n_visivel:
             self.n_label.place_forget()
             self.n_visivel = False
@@ -1800,7 +1868,7 @@ class interface():
         self.o_label = Label(self.enigma, image=self.o_photo)
         self.o_place_args = {'relx': 0.872, 'rely': 0.4573, 'relwidth': 0.065, 'relheight': 0.058}
 
-    def toggle_o(self,event):
+    def toggle_o(self):
         if self.o_visivel:
             self.o_label.place_forget()
             self.o_visivel = False
@@ -1819,7 +1887,7 @@ class interface():
         self.p_label = Label(self.enigma, image=self.p_photo)
         self.p_place_args = {'relx': 0.064, 'rely': 0.603, 'relwidth': 0.065, 'relheight': 0.058}
 
-    def toggle_p(self,event):
+    def toggle_p(self):
         if self.p_visivel:
             self.p_label.place_forget()
             self.p_visivel = False
@@ -1838,7 +1906,7 @@ class interface():
         self.q_label = Label(self.enigma, image=self.q_photo)
         self.q_place_args = {'relx': 0.1, 'rely': 0.4574, 'relwidth': 0.065, 'relheight': 0.058}
 
-    def toggle_q(self,event):
+    def toggle_q(self):
         if self.q_visivel:
             self.q_label.place_forget()
             self.q_visivel = False
@@ -1857,7 +1925,7 @@ class interface():
         self.r_label = Label(self.enigma, image=self.r_photo)
         self.r_place_args = {'relx': 0.3889, 'rely': 0.4574, 'relwidth': 0.065, 'relheight': 0.058}
 
-    def toggle_r(self,event):
+    def toggle_r(self):
         if self.r_visivel:
             self.r_label.place_forget()
             self.r_visivel = False
@@ -1876,7 +1944,7 @@ class interface():
         self.s_label = Label(self.enigma, image=self.s_photo)
         self.s_place_args = {'relx': 0.2249668, 'rely': 0.531, 'relwidth': 0.065, 'relheight': 0.058}
 
-    def toggle_s(self,event):
+    def toggle_s(self):
         if self.s_visivel:
             self.s_label.place_forget()
             self.s_visivel = False
@@ -1895,7 +1963,7 @@ class interface():
         self.t_label = Label(self.enigma, image=self.t_photo)
         self.t_place_args = {'relx': 0.486, 'rely': 0.4574, 'relwidth': 0.065, 'relheight': 0.058}
 
-    def toggle_t(self,event):
+    def toggle_t(self):
         if self.t_visivel:
             self.t_label.place_forget()
             self.t_visivel = False
@@ -1914,7 +1982,7 @@ class interface():
         self.u_label = Label(self.enigma, image=self.u_photo)
         self.u_place_args = {'relx': 0.6793, 'rely': 0.4576, 'relwidth': 0.065, 'relheight': 0.058}
 
-    def toggle_u(self,event):
+    def toggle_u(self):
         if self.u_visivel:
             self.u_label.place_forget()
             self.u_visivel = False
@@ -1933,7 +2001,7 @@ class interface():
         self.v_label = Label(self.enigma, image=self.v_photo)
         self.v_place_args = {'relx': 0.4469, 'rely': 0.602, 'relwidth': 0.065, 'relheight': 0.058}
 
-    def toggle_v(self,event):
+    def toggle_v(self):
         if self.v_visivel:
             self.v_label.place_forget()
             self.v_visivel = False
@@ -1952,7 +2020,7 @@ class interface():
         self.w_label = Label(self.enigma, image=self.w_photo)
         self.w_place_args = {'relx': 0.197005, 'rely': 0.4576, 'relwidth': 0.065, 'relheight': 0.058}
 
-    def toggle_w(self,event):
+    def toggle_w(self):
         if self.w_visivel:
             self.w_label.place_forget()
             self.w_visivel = False
@@ -1971,7 +2039,7 @@ class interface():
         self.x_label = Label(self.enigma, image=self.x_photo)
         self.x_place_args = {'relx': 0.254, 'rely': 0.602, 'relwidth': 0.065, 'relheight': 0.058}
 
-    def toggle_x(self,event):
+    def toggle_x(self):
         if self.x_visivel:
             self.x_label.place_forget()
             self.x_visivel = False
@@ -1990,7 +2058,7 @@ class interface():
         self.y_label = Label(self.enigma, image=self.y_photo)
         self.y_place_args = {'relx': 0.159, 'rely': 0.602, 'relwidth': 0.065, 'relheight': 0.058}
 
-    def toggle_y(self,event):
+    def toggle_y(self):
         if self.y_visivel:
             self.y_label.place_forget()
             self.y_visivel = False
@@ -2009,7 +2077,7 @@ class interface():
         self.z_label = Label(self.enigma, image=self.z_photo)
         self.z_place_args = {'relx': 0.583, 'rely': 0.4573, 'relwidth': 0.065, 'relheight': 0.058}
 
-    def toggle_z(self,event):
+    def toggle_z(self):
         if self.z_visivel:
             self.z_label.place_forget()
             self.z_visivel = False
@@ -2028,7 +2096,7 @@ class interface():
         self.ç_label = Label(self.enigma, image=self.ç_photo)
         self.ç_place_args = {'relx': 0.9, 'rely': 0.53, 'relwidth': 0.065, 'relheight': 0.058}
 
-    def toggle_ç(self,event):
+    def toggle_ç(self):
         if self.ç_visivel:
             self.ç_label.place_forget()
             self.ç_visivel = False
@@ -2047,7 +2115,7 @@ class interface():
         self.leer_label = Label(self.enigma, image=self.leer_photo)
         self.leer_place_args = {'relx': 0.192, 'rely': 0.674, 'width': 345, 'height': 44}
 
-    def toggle_leer(self,event):
+    def toggle_leer(self):
         if self.leer_visivel:
             self.leer_label.place_forget()
             self.leer_visivel = False
@@ -2057,42 +2125,4 @@ class interface():
             self.tiping.play()
 
 
-
 screen_obj = interface()
-
-#=============================================================================================================================================================
-#CODGIO FORA DA INTERFACE 
-
-
-#dict para vincular funcoes toggles com chars
-toggles = {
-    "a": screen_obj.toggle_a,
-    "b": screen_obj.toggle_b,
-    "c": screen_obj.toggle_c,
-    "d": screen_obj.toggle_d,
-    "e": screen_obj.toggle_e,
-    "f": screen_obj.toggle_f,
-    "g": screen_obj.toggle_g,
-    "h": screen_obj.toggle_h,
-    "i": screen_obj.toggle_i,
-    "j": screen_obj.toggle_j,
-    "k": screen_obj.toggle_k,
-    "l": screen_obj.toggle_l,
-    "m": screen_obj.toggle_m,
-    "n": screen_obj.toggle_n,
-    "o": screen_obj.toggle_o,
-    "p": screen_obj.toggle_p,
-    "q": screen_obj.toggle_q,
-    "r": screen_obj.toggle_r,
-    "s": screen_obj.toggle_s,
-    "t": screen_obj.toggle_t,
-    "u": screen_obj.toggle_u,
-    "v": screen_obj.toggle_v,
-    "w": screen_obj.toggle_w,
-    "x": screen_obj.toggle_x,
-    "y": screen_obj.toggle_y,
-    "z": screen_obj.toggle_z,
-    "ç": screen_obj.toggle_ç,
-    " ": screen_obj.toggle_leer
-}
-
