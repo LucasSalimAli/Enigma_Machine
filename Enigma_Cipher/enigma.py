@@ -3,6 +3,7 @@ from PIL import Image, ImageTk
 from pygame import *
 
 
+
 #=================================================================================================================================================================
 #CODIGO DE CRIPTOGRAFIA AQUI
 #===================================================================================================================================================================
@@ -187,7 +188,7 @@ mixer.init()
 
 class interface():
 
-
+    #Inicia os parâmetros base da Interface
     def __init__(self):
         self.tela = tela
         self.audio()
@@ -195,9 +196,7 @@ class interface():
         self.images_menu()
         self.labels_menu()
         self.buttons_menu()
-        self.setlbl()        
-        # self.go_to_settings()
-        
+        self.setlbl()
         
 
         refletor(0)
@@ -206,12 +205,9 @@ class interface():
         escolher(2,2)
         escolher(3,3)
         escolher(4,4)
-
         
-    
         tela.mainloop()
 
-    
     #Menu Inicial
     def menu(self):
         self.tela.title("Digital Enigma Machine")
@@ -244,7 +240,7 @@ class interface():
         self.bt_start = Button(self.tela, image=self.start_image, borderwidth=0, command= self.go_to_enigma)
         self.bt_start.place(relx= 0.3, rely=0.55, width=117, height=47)
         
-        self.bt_exit = Button(self.tela, image=self.exit_image, borderwidth=0, command= self.toggle_a)
+        self.bt_exit = Button(self.tela, image=self.exit_image, borderwidth=0, command= exit)
         self.bt_exit.place(relx= 0.3, rely=0.77, width=117, height=47)
         
     #Imagem da bg
@@ -283,10 +279,56 @@ class interface():
         self.setimage = (setimg)
         self.set_image = ImageTk.PhotoImage(self.setimage)
 
+        #Push Button
+        poffimage_path = "Enigma_Cipher\images\PushOff.jpeg"
+        poffimg = Image.open(poffimage_path)
+        poffimg = poffimg.resize((100, 44), Image.LANCZOS)
+        self.poffimage = (poffimg)
+        self.poff_image = ImageTk.PhotoImage(self.poffimage)
+
+        ponimage_path = "Enigma_Cipher\images\PushOn.jpeg"
+        ponimg = Image.open(ponimage_path)
+        ponimg = ponimg.resize((100, 44), Image.LANCZOS)
+        self.ponimage = (ponimg)
+        self.pon_image = ImageTk.PhotoImage(self.ponimage)
+
+        #Copy Button
+        coffimage_path = "Enigma_Cipher\images\CopyOff.jpeg"
+        coffimg = Image.open(coffimage_path)
+        coffimg = coffimg.resize((40, 25), Image.LANCZOS)
+        self.coffimage = (coffimg)
+        self.coff_image = ImageTk.PhotoImage(self.coffimage)
+
+        conimage_path = "Enigma_Cipher\images\CopyOn.jpeg"
+        conimg = Image.open(conimage_path)
+        conimg = conimg.resize((40, 25), Image.LANCZOS)
+        self.conimage = (conimg)
+        self.con_image = ImageTk.PhotoImage(self.conimage)
+
+        #Replay Buton
+        roffimage_path = "Enigma_Cipher\images\ReplayOff.jpeg"
+        roffimg = Image.open(roffimage_path)
+        roffimg = roffimg.resize((40, 25), Image.LANCZOS)
+        self.roffimage = (roffimg)
+        self.roff_image = ImageTk.PhotoImage(self.roffimage)
+
+        ronimage_path = "Enigma_Cipher\images\ReplayOn.jpeg"
+        ronimg = Image.open(ronimage_path)
+        ronimg = ronimg.resize((40, 25), Image.LANCZOS)
+        self.ronimage = (ronimg)
+        self.ron_image = ImageTk.PhotoImage(self.ronimage)
+
     #Background da página da enigma
     def enigma_label(self):
         self.lb_bg = Label(self.enigma, image=self.bg_image)
         self.lb_bg.place(relwidth= 1, relheight=1)
+
+    #Buttons change image
+    def btns_press(self,event,btn,img,state):
+        if state == 1:
+            btn.config(image = img )
+        if state == 2:
+             btn.config(image = img )
 
     #Imput/Output
     def io(self):
@@ -319,29 +361,29 @@ class interface():
 
         #Rotors Buttons
         self.bt_up1 = Button(self.enigma, text="+", command= lambda: self.manualRotor(4,1))
-        self.bt_up1.place(relx=0.1678, rely=0.1315, width=20, height=20)
+        self.bt_up1.place(relx=0.1678, rely=0.135, width=20, height=20)
         self.bt_dn1 = Button(self.enigma, text="-", command= lambda: self.manualRotor(4,2))
-        self.bt_dn1.place(relx=0.1678, rely=0.2436, width=20, height=20)
+        self.bt_dn1.place(relx=0.1678, rely=0.247, width=20, height=20)
         
         self.bt_up2 = Button(self.enigma, text="+", command= lambda: self.manualRotor(3,1))
-        self.bt_up2.place(relx=0.2695, rely=0.1315, width=20, height=20)
+        self.bt_up2.place(relx=0.2695, rely=0.135, width=20, height=20)
         self.bt_dn2 = Button(self.enigma, text="-", command= lambda: self.manualRotor(3,2))
-        self.bt_dn2.place(relx=0.2695, rely=0.2436, width=20, height=20)
+        self.bt_dn2.place(relx=0.2695, rely=0.247, width=20, height=20)
 
         self.bt_up3 = Button(self.enigma, text="+", command= lambda: self.manualRotor(2,1))
-        self.bt_up3.place(relx=0.371, rely=0.1315, width=20, height=20)
+        self.bt_up3.place(relx=0.371, rely=0.135, width=20, height=20)
         self.bt_dn3 = Button(self.enigma, text="-", command= lambda: self.manualRotor(2,2))
-        self.bt_dn3.place(relx=0.371, rely=0.2436, width=20, height=20)
+        self.bt_dn3.place(relx=0.371, rely=0.247, width=20, height=20)
 
         self.bt_up4 = Button(self.enigma, text="+", command= lambda: self.manualRotor(1,1))
-        self.bt_up4.place(relx=0.472, rely=0.1315, width=20, height=20)
+        self.bt_up4.place(relx=0.472, rely=0.135, width=20, height=20)
         self.bt_dn4 = Button(self.enigma, text="-", command= lambda: self.manualRotor(1,2))
-        self.bt_dn4.place(relx=0.472, rely=0.2436, width=20, height=20)
+        self.bt_dn4.place(relx=0.472, rely=0.247, width=20, height=20)
 
         self.bt_up5 = Button(self.enigma, text="+", command= lambda: self.manualRotor(0,1))
-        self.bt_up5.place(relx=0.573, rely=0.1315, width=20, height=20)
+        self.bt_up5.place(relx=0.573, rely=0.135, width=20, height=20)
         self.bt_dn5 = Button(self.enigma, text="-", command= lambda: self.manualRotor(0,2))
-        self.bt_dn5.place(relx=0.573, rely=0.2436, width=20, height=20)
+        self.bt_dn5.place(relx=0.573, rely=0.247, width=20, height=20)
 
 
         #Rotors ID
@@ -371,8 +413,6 @@ class interface():
         self.ukw_badge = Label(self.enigma, text=self.txt_ukw_badge, font="Arial, 14")
         self.ukw_badge.place(relx=0.059, rely=0.177, width=23, height=23)
 
-
-
         #Entrada
         self.lb_ent = Label(self.enigma, text="Entrada")
         self.lb_ent.place(relx=0.1, rely= 0.32, width= 50, height = 25)
@@ -387,6 +427,24 @@ class interface():
 
         self.lb_ext = Label(self.enigma, text="Esperando Criptografia")
         self.lb_ext.place(relx=0.2, rely= 0.38, width= 500, height = 25)
+
+        #Push Button
+        self.p_btn = Button(self.enigma, image=self.poff_image, border=0)
+        self.p_btn.place(relx = 0.4, rely = 0.796, width = 100, height= 44)
+        self.p_btn.bind("<Button-1>", lambda event: self.btns_press(event,self.p_btn,self.pon_image,1))
+        self.p_btn.bind("<ButtonRelease-1>", lambda event: self.btns_press(event, self.p_btn, self.poff_image,2))
+
+        #Copy 
+        self.copy_btn = Button(self.enigma, image=self.coff_image,  border=0, highlightthickness=0)
+        self.copy_btn.place(relx = 0.02, rely= 0.38, width = 40, height = 25)
+        self.copy_btn.bind("<Button-1>", lambda event: self.btns_press(event,self.copy_btn,self.con_image,1))
+        self.copy_btn.bind("<ButtonRelease-1>", lambda event: self.btns_press(event, self.copy_btn, self.coff_image,2))
+
+        #Replay
+        self.replay_btn = Button(self.enigma, image=self.roff_image, relief="flat", border=0, highlightthickness=0)
+        self.replay_btn.place(relx = 0.02, rely= 0.32, width = 40, height = 25)
+        self.replay_btn.bind("<Button-1>", lambda event: self.btns_press(event,self.replay_btn,self.ron_image,1))
+        self.replay_btn.bind("<ButtonRelease-1>", lambda event: self.btns_press(event, self.replay_btn, self.roff_image,2))
 
     #Jumpers Section
     def jumpers(self):
@@ -598,9 +656,11 @@ class interface():
         self.settings_bg()
         self.settings_io()
         self.settings_sound.play()
-
+        self.menu_still()
+        
     #Frames da settings
     def settings_bg(self):
+
         self.rotors_frame = Frame(self.settings, bg="#9FA1AD")
         self.rotors_frame.place(relx= 0.04, rely= 0.05, width= 205, height= 220)
 
@@ -625,7 +685,6 @@ class interface():
         self.modes_title = Label(self.modes_frame, text="Selecione o Modo")
         self.modes_title.place(relx = 0, rely=0, width= 120, height= 20)
         
-
     def settings_io(self):
 
         #Labels Rotores
@@ -661,19 +720,19 @@ class interface():
         alt = 15
 
         #Slot 1
-        self.slt1_1 = Button(self.rotors_frame, text="1", bg= self.slot1_og_clr, command=lambda: self.slot_rotor(1,1))
+        self.slt1_1 = Button(self.rotors_frame, text="1", bg= self.slot1_sel_clr, command=lambda: self.slot_rotor(1,1))
         self.slt1_1.place(relx= 0.37, rely= 0.25, width= alt, height= alt)
 
-        self.slt1_2 = Button(self.rotors_frame, text="2", bg= self.slot1_og_clr, command=lambda: self.slot_rotor(1,2))
+        self.slt1_2 = Button(self.rotors_frame, text="2", bg= self.slot2_sel_clr, command=lambda: self.slot_rotor(1,2))
         self.slt1_2.place(relx= 0.46, rely= 0.25, width= alt, height= alt)
 
-        self.slt1_3 = Button(self.rotors_frame, text="3", bg= self.slot1_og_clr, command=lambda: self.slot_rotor(1,3))
+        self.slt1_3 = Button(self.rotors_frame, text="3", bg= self.slot3_sel_clr, command=lambda: self.slot_rotor(1,3))
         self.slt1_3.place(relx= 0.55, rely= 0.25, width= alt, height= alt)
 
-        self.slt1_4 = Button(self.rotors_frame, text="4", bg= self.slot1_og_clr, command=lambda: self.slot_rotor(1,4))
+        self.slt1_4 = Button(self.rotors_frame, text="4", bg= self.slot4_sel_clr, command=lambda: self.slot_rotor(1,4))
         self.slt1_4.place(relx= 0.64, rely= 0.25, width= alt, height= alt)
 
-        self.slt1_5 = Button(self.rotors_frame, text="5", bg= self.slot1_og_clr, command=lambda: self.slot_rotor(1,5))
+        self.slt1_5 = Button(self.rotors_frame, text="5", bg= self.slot5_sel_clr, command=lambda: self.slot_rotor(1,5))
         self.slt1_5.place(relx= 0.73, rely= 0.25, width= alt, height= alt)
 
         self.slt1_6 = Button(self.rotors_frame, text="6", bg= self.slot1_og_clr, command=lambda: self.slot_rotor(1,6))
@@ -684,19 +743,19 @@ class interface():
 
 
         #Slot 2
-        self.slt2_1 = Button(self.rotors_frame, text="1", bg= self.slot2_og_clr, command=lambda: self.slot_rotor(2,1))
+        self.slt2_1 = Button(self.rotors_frame, text="1", bg= self.slot1_sel_clr, command=lambda: self.slot_rotor(2,1))
         self.slt2_1.place(relx= 0.37, rely= 0.40, width= alt, height= alt)
 
-        self.slt2_2 = Button(self.rotors_frame, text="2", bg= self.slot2_og_clr, command=lambda: self.slot_rotor(2,2))
+        self.slt2_2 = Button(self.rotors_frame, text="2", bg= self.slot2_sel_clr, command=lambda: self.slot_rotor(2,2))
         self.slt2_2.place(relx= 0.46, rely= 0.40, width= alt, height= alt)
 
-        self.slt2_3 = Button(self.rotors_frame, text="3", bg= self.slot2_og_clr, command=lambda: self.slot_rotor(2,3))
+        self.slt2_3 = Button(self.rotors_frame, text="3", bg= self.slot3_sel_clr, command=lambda: self.slot_rotor(2,3))
         self.slt2_3.place(relx= 0.55, rely= 0.40, width= alt, height= alt)
 
-        self.slt2_4 = Button(self.rotors_frame, text="4", bg= self.slot2_og_clr, command=lambda: self.slot_rotor(2,4))
+        self.slt2_4 = Button(self.rotors_frame, text="4", bg= self.slot4_sel_clr, command=lambda: self.slot_rotor(2,4))
         self.slt2_4.place(relx= 0.64, rely= 0.40, width= alt, height= alt)
 
-        self.slt2_5 = Button(self.rotors_frame, text="5", bg= self.slot2_og_clr, command=lambda: self.slot_rotor(2,5))
+        self.slt2_5 = Button(self.rotors_frame, text="5", bg= self.slot5_sel_clr, command=lambda: self.slot_rotor(2,5))
         self.slt2_5.place(relx= 0.73, rely= 0.40, width= alt, height= alt)
 
         self.slt2_6 = Button(self.rotors_frame, text="6", bg= self.slot2_og_clr, command=lambda: self.slot_rotor(2,6))
@@ -707,19 +766,19 @@ class interface():
 
 
         #Slot 3
-        self.slt3_1 = Button(self.rotors_frame, text="1", bg= self.slot3_og_clr, command=lambda: self.slot_rotor(3,1))
+        self.slt3_1 = Button(self.rotors_frame, text="1", bg= self.slot1_sel_clr, command=lambda: self.slot_rotor(3,1))
         self.slt3_1.place(relx= 0.37, rely= 0.55, width= alt, height= alt)
 
-        self.slt3_2 = Button(self.rotors_frame, text="2", bg= self.slot3_og_clr, command=lambda: self.slot_rotor(3,2))
+        self.slt3_2 = Button(self.rotors_frame, text="2", bg= self.slot2_sel_clr, command=lambda: self.slot_rotor(3,2))
         self.slt3_2.place(relx= 0.46, rely= 0.55, width= alt, height= alt)
 
-        self.slt3_3 = Button(self.rotors_frame, text="3", bg= self.slot3_og_clr, command=lambda: self.slot_rotor(3,3))
+        self.slt3_3 = Button(self.rotors_frame, text="3", bg= self.slot3_sel_clr, command=lambda: self.slot_rotor(3,3))
         self.slt3_3.place(relx= 0.55, rely= 0.55, width= alt, height= alt)
 
-        self.slt3_4 = Button(self.rotors_frame, text="4", bg= self.slot3_og_clr, command=lambda: self.slot_rotor(3,4))
+        self.slt3_4 = Button(self.rotors_frame, text="4", bg= self.slot4_sel_clr, command=lambda: self.slot_rotor(3,4))
         self.slt3_4.place(relx= 0.64, rely= 0.55, width= alt, height= alt)
 
-        self.slt3_5 = Button(self.rotors_frame, text="5", bg= self.slot3_og_clr, command=lambda: self.slot_rotor(3,5))
+        self.slt3_5 = Button(self.rotors_frame, text="5", bg= self.slot5_sel_clr, command=lambda: self.slot_rotor(3,5))
         self.slt3_5.place(relx= 0.73, rely= 0.55, width= alt, height= alt)
 
         self.slt3_6 = Button(self.rotors_frame, text="6", bg= self.slot3_og_clr, command=lambda: self.slot_rotor(3,6))
@@ -730,19 +789,19 @@ class interface():
 
 
         #Slot 4
-        self.slt4_1 = Button(self.rotors_frame, text="1", bg= self.slot4_og_clr, command=lambda: self.slot_rotor(4,1))
+        self.slt4_1 = Button(self.rotors_frame, text="1", bg= self.slot1_sel_clr, command=lambda: self.slot_rotor(4,1))
         self.slt4_1.place(relx= 0.37, rely= 0.7, width= alt, height= alt)
 
-        self.slt4_2 = Button(self.rotors_frame, text="2", bg= self.slot4_og_clr, command=lambda: self.slot_rotor(4,2))
+        self.slt4_2 = Button(self.rotors_frame, text="2", bg= self.slot2_sel_clr, command=lambda: self.slot_rotor(4,2))
         self.slt4_2.place(relx= 0.46, rely= 0.7, width= alt, height= alt)
 
-        self.slt4_3 = Button(self.rotors_frame, text="3", bg= self.slot4_og_clr, command=lambda: self.slot_rotor(4,3))
+        self.slt4_3 = Button(self.rotors_frame, text="3", bg= self.slot3_sel_clr, command=lambda: self.slot_rotor(4,3))
         self.slt4_3.place(relx= 0.55, rely= 0.7, width= alt, height= alt)
 
-        self.slt4_4 = Button(self.rotors_frame, text="4", bg= self.slot4_og_clr, command=lambda: self.slot_rotor(4,4))
+        self.slt4_4 = Button(self.rotors_frame, text="4", bg= self.slot4_sel_clr, command=lambda: self.slot_rotor(4,4))
         self.slt4_4.place(relx= 0.64, rely= 0.7, width= alt, height= alt)
 
-        self.slt4_5 = Button(self.rotors_frame, text="5", bg= self.slot4_og_clr, command=lambda: self.slot_rotor(4,5))
+        self.slt4_5 = Button(self.rotors_frame, text="5", bg= self.slot5_sel_clr, command=lambda: self.slot_rotor(4,5))
         self.slt4_5.place(relx= 0.73, rely= 0.7, width= alt, height= alt)
 
         self.slt4_6 = Button(self.rotors_frame, text="6", bg= self.slot4_og_clr, command=lambda: self.slot_rotor(4,6))
@@ -753,19 +812,19 @@ class interface():
 
 
         #Slot 5
-        self.slt5_1 = Button(self.rotors_frame, text="1", bg= self.slot5_og_clr, command=lambda: self.slot_rotor(5,1))
+        self.slt5_1 = Button(self.rotors_frame, text="1", bg= self.slot1_sel_clr, command=lambda: self.slot_rotor(5,1))
         self.slt5_1.place(relx= 0.37, rely= 0.85, width= alt, height= alt)
 
-        self.slt5_2 = Button(self.rotors_frame, text="2", bg= self.slot5_og_clr, command=lambda: self.slot_rotor(5,2))
+        self.slt5_2 = Button(self.rotors_frame, text="2", bg= self.slot2_sel_clr, command=lambda: self.slot_rotor(5,2))
         self.slt5_2.place(relx= 0.46, rely= 0.85, width= alt, height= alt)
 
-        self.slt5_3 = Button(self.rotors_frame, text="3", bg= self.slot5_og_clr, command=lambda: self.slot_rotor(5,3))
+        self.slt5_3 = Button(self.rotors_frame, text="3", bg= self.slot3_sel_clr, command=lambda: self.slot_rotor(5,3))
         self.slt5_3.place(relx= 0.55, rely= 0.85, width= alt, height= alt)
 
-        self.slt5_4 = Button(self.rotors_frame, text="4", bg= self.slot5_og_clr, command=lambda: self.slot_rotor(5,4))
+        self.slt5_4 = Button(self.rotors_frame, text="4", bg= self.slot4_sel_clr, command=lambda: self.slot_rotor(5,4))
         self.slt5_4.place(relx= 0.64, rely= 0.85, width= alt, height= alt)
 
-        self.slt5_5 = Button(self.rotors_frame, text="5", bg= self.slot5_og_clr, command=lambda: self.slot_rotor(5,5))
+        self.slt5_5 = Button(self.rotors_frame, text="5", bg= self.slot5_sel_clr, command=lambda: self.slot_rotor(5,5))
         self.slt5_5.place(relx= 0.73, rely= 0.85, width= alt, height= alt)
 
         self.slt5_6 = Button(self.rotors_frame, text="6", bg= self.slot5_og_clr, command=lambda: self.slot_rotor(5,6))
@@ -776,7 +835,6 @@ class interface():
 
 
         # Criação do sistema de seleção
-
         self.rotor_state = {r: 0 for r in range(1, 8)}
         self.slot_state = {s: 0 for s in range(1, 6)}
 
@@ -798,15 +856,15 @@ class interface():
         self.ukw_sel_clr = "#F85B5B"
 
         self.ukw_a_og_clr = "#3CA1DB"
-        self.ukw_a = Button(self.ukw_frame, text="A", bg=self.ukw_a_og_clr, command=self.ukw_as)
+        self.ukw_a = Button(self.ukw_frame, text="A", bg=self.ukw_sel_clr, command=lambda: self.ukw_selector(0))
         self.ukw_a.place(relx= 0.1, rely=0.4, width=30, height=30)
 
         self.ukw_b_og_clr = "#3ADA2C"
-        self.ukw_b = Button(self.ukw_frame, text="B", bg=self.ukw_b_og_clr, command=self.ukw_bs)
+        self.ukw_b = Button(self.ukw_frame, text="B", bg=self.ukw_b_og_clr, command=lambda: self.ukw_selector(1))
         self.ukw_b.place(relx= 0.4, rely=0.4, width=30, height=30)
                          
         self.ukw_c_og_clr = "#C9B6E7"
-        self.ukw_c = Button(self.ukw_frame, text="C", bg=self.ukw_c_og_clr, command=self.ukw_cs)
+        self.ukw_c = Button(self.ukw_frame, text="C", bg=self.ukw_c_og_clr, command=lambda: self.ukw_selector(2))
         self.ukw_c.place(relx= 0.7, rely=0.4, width=30, height=30)
 
 
@@ -824,10 +882,10 @@ class interface():
 
         self.btns_lbl = Label(self.volume_frame, text= "Buttons/Typing")
         self.btns_lbl.place(relx= 0.08, rely= 0.45, width=100, heigh= 20)
-        self.btns_on = Button(self.volume_frame, text= "On ", bg= self.on_clr, command=lambda: self.audio_control(2,1))
-        self.btns_on.place(relx = 0.2, rely = 0.56, width = vlmsize, height = vlmsize)
-        self.btns_off = Button(self.volume_frame, text= "Off ", bg= self.off_clr, command=lambda: self.audio_control(2,0))
-        self.btns_off.place(relx = 0.6, rely = 0.56, width = vlmsize, height = vlmsize)
+        self.btns_sound_on = Button(self.volume_frame, text= "On ", bg= self.on_clr, command=lambda: self.audio_control(2,1))
+        self.btns_sound_on.place(relx = 0.2, rely = 0.56, width = vlmsize, height = vlmsize)
+        self.btns_sound_off = Button(self.volume_frame, text= "Off ", bg= self.off_clr, command=lambda: self.audio_control(2,0))
+        self.btns_sound_off.place(relx = 0.6, rely = 0.56, width = vlmsize, height = vlmsize)
 
         self.setm_lbl = Label(self.volume_frame, text= "Music")
         self.setm_lbl.place(relx= 0.08, rely= 0.7, width=100, heigh= 20)
@@ -840,11 +898,11 @@ class interface():
         self.mode_sel_clr = "#FFFFFF"
 
         self.classic_mode_og_clr = "#F8F674"
-        self.classic_mode_btn = Button(self.modes_frame, text="CLASSIC", bg= self.classic_mode_og_clr, command=self.classic_md)
+        self.classic_mode_btn = Button(self.modes_frame, text="CLASSIC", bg= self.mode_sel_clr, command=lambda: self.modes_selection(1))
         self.classic_mode_btn.place(relx = 0.05, rely = 0.47, width=50, height=20)
 
         self.digital_mode_og_clr = "#958AF8"
-        self.digital_mode_btn = Button(self.modes_frame, text="DIGITAL", bg= self.digital_mode_og_clr, command=self.digital_md)
+        self.digital_mode_btn = Button(self.modes_frame, text="DIGITAL", bg= self.digital_mode_og_clr, command=lambda: self.modes_selection(2))
         self.digital_mode_btn.place(relx = 0.55, rely = 0.47, width=50, height=20)
 
 
@@ -864,50 +922,53 @@ class interface():
         self.back_from_sound.play()
         self.settings.destroy()
 
-
     #UKW selection
-    def ukw_as(self):
-        ukw_selection = 0
-        self.ukw_a.config(bg=self.ukw_sel_clr)
-        self.ukw_b.config(bg=self.ukw_b_og_clr)
-        self.ukw_c.config(bg=self.ukw_c_og_clr)
-        self.ukw_badge.config(text=pinoIndex[0])
+    def ukw_selector(self, md):
 
-        print("UKW:", ukw_selection)
-        refletor(0)
+        if md == 0:
+        
+            self.ukw_a.config(bg=self.ukw_sel_clr)
+            self.ukw_b.config(bg=self.ukw_b_og_clr)
+            self.ukw_c.config(bg=self.ukw_c_og_clr)
+            self.ukw_badge.config(text=pinoIndex[0])
+            self.ukw_selection = 0
+            print("UKW:", self.ukw_selection)
+            refletor(0)
+        
+        if md == 1:
+            
+            self.ukw_a.config(bg=self.ukw_a_og_clr)
+            self.ukw_b.config(bg=self.ukw_sel_clr)
+            self.ukw_c.config(bg=self.ukw_c_og_clr)
+            self.ukw_badge.config(text=pinoIndex[1])
+            self.ukw_selection = 1
+            print("UKW:", self.ukw_selection)
+            refletor(1)
 
-    def ukw_bs(self):
-        ukw_selection = 1
-        self.ukw_a.config(bg=self.ukw_a_og_clr)
-        self.ukw_b.config(bg=self.ukw_sel_clr)
-        self.ukw_c.config(bg=self.ukw_c_og_clr)
-        self.ukw_badge.config(text=pinoIndex[1])
-        print("UKW:", ukw_selection)
-        refletor(1)
-
-    def ukw_cs(self):
-        ukw_selection = 2
-        self.ukw_a.config(bg=self.ukw_a_og_clr)
-        self.ukw_b.config(bg=self.ukw_b_og_clr)
-        self.ukw_c.config(bg=self.ukw_sel_clr)
-        self.ukw_badge.config(text=pinoIndex[2])
-        print("UKW:", ukw_selection)
-        refletor(2)
-
+        if md == 2:
+            
+            self.ukw_a.config(bg=self.ukw_a_og_clr)
+            self.ukw_b.config(bg=self.ukw_b_og_clr)
+            self.ukw_c.config(bg=self.ukw_sel_clr)
+            self.ukw_badge.config(text=pinoIndex[2])
+            print("UKW:", self.ukw_selection)
+            self.ukw_selection = 2
+            refletor(2)
 
     #Modes selection
+    def modes_selection(self, mode):
+        
+        if mode == 1:
+            self.md_selection = 1
+            self.classic_mode_btn.config(bg=self.mode_sel_clr)
+            self.digital_mode_btn.config(bg=self.digital_mode_og_clr)
+            print("MD:", self.md_selection)
 
-    def classic_md(self):
-        md_selection = 1
-        self.classic_mode_btn.config(bg=self.mode_sel_clr)
-        self.digital_mode_btn.config(bg=self.digital_mode_og_clr)
-        print("MD:", md_selection)
-
-    def digital_md(self):
-        md_selection = 2
-        self.classic_mode_btn.config(bg=self.classic_mode_og_clr)
-        self.digital_mode_btn.config(bg=self.mode_sel_clr)
-        print("MD:", md_selection)
+        if mode == 2:
+            self.md_selection = 2
+            self.classic_mode_btn.config(bg=self.classic_mode_og_clr)
+            self.digital_mode_btn.config(bg=self.mode_sel_clr)
+            print("MD:", self.md_selection)
 
     #INTERAÇAO CODIGO CRIPTO
     def input_texto(self):
@@ -918,7 +979,6 @@ class interface():
         self.lb_r3.config(text=pinoIndex[disco[2].idex])
         self.lb_r2.config(text=pinoIndex[disco[3].idex])
         self.lb_r1.config(text=pinoIndex[disco[4].idex])
-
 
     def manualRotor(self, pos, metodo):
 
@@ -964,6 +1024,9 @@ class interface():
             
             print(disco[pos].idex)
             print(disco[pos].codex)
+
+
+        self.rotor_change.play()
 
         self.lb_r5.config(text=pinoIndex[disco[0].idex])
         self.lb_r4.config(text=pinoIndex[disco[1].idex])
@@ -1164,11 +1227,53 @@ class interface():
                    
                     button.config(bg=cor_original_do_slot)
 
-     #Audio Menu
+#Faz com que os menus continuem acesos caso entre e saia da settings
+    def menu_still(self):
+        if self.ukw_selection == 0:
+            self.ukw_a.config(bg=self.ukw_sel_clr)
+            self.ukw_b.config(bg=self.ukw_b_og_clr)
+            self.ukw_c.config(bg=self.ukw_c_og_clr)
+        if self.ukw_selection == 1:
+            self.ukw_a.config(bg=self.ukw_a_og_clr)
+            self.ukw_b.config(bg=self.ukw_sel_clr)
+            self.ukw_c.config(bg=self.ukw_c_og_clr)
+        if self.ukw_selection == 2:
+            self.ukw_a.config(bg=self.ukw_a_og_clr)
+            self.ukw_b.config(bg=self.ukw_b_og_clr)
+            self.ukw_c.config(bg=self.ukw_sel_clr)
+        if self.md_selection == 1:
+            self.classic_mode_btn.config(bg=self.mode_sel_clr)
+            self.digital_mode_btn.config(bg=self.digital_mode_og_clr)
+        if self.md_selection == 2:
+            self.classic_mode_btn.config(bg=self.classic_mode_og_clr)
+            self.digital_mode_btn.config(bg=self.mode_sel_clr)
+        if self.sttp_m == 1:
+            self.startup_on.config(bg=self.on_clr)
+            self.startup_off.config(bg=self.off_clr)
+        if self.sttp_m == 0:
+            self.startup_on.config(bg=self.off_clr)
+            self.startup_off.config(bg=self.on_clr)
+        if self.btns_sound == 1:
+            self.btns_sound_on.config(bg=self.on_clr)
+            self.btns_sound_off.config(bg=self.off_clr)
+        if self.btns_sound == 0:
+            self.btns_sound_on.config(bg=self.off_clr)
+            self.btns_sound_off.config(bg=self.on_clr)
+        if self.settings_music_m == 1:
+            self.setm_on.config(bg=self.on_clr)
+            self.setm_off.config(bg=self.off_clr)
+        if self.settings_music_m == 0:
+            self.setm_on.config(bg=self.off_clr)
+            self.setm_off.config(bg=self.on_clr)
+
+        
+        
+
 
 
     #Audio
 
+    #Inicia os players
     def audio(self):
 
         #Startup
@@ -1181,7 +1286,7 @@ class interface():
         self.tiping = mixer.Sound("Enigma_Cipher\sounds\Typewriter.mp3")
 
         #Changing Rotor Position
-        self.rotot_change = mixer.Sound("Enigma_Cipher\sounds\Ding.mp3")
+        self.rotor_change = mixer.Sound("Enigma_Cipher\sounds\Ding.mp3")
 
         #Settings Button
         self.settings_sound = mixer.Sound("Enigma_Cipher\sounds\Piston Out.mp3")
@@ -1189,53 +1294,63 @@ class interface():
         #Settings Out
         self.back_from_sound = mixer.Sound("Enigma_Cipher\sounds\Piston In.mp3")
 
-
+        #Settings Music
+        mixer.music.load("Enigma_Cipher\sounds\Portal Radio.mp3")
+    
     def audio_control(self,btn,state):
-        
-        if btn == 1 and state == 1:
+
+        if  btn == 1 and state == 1:
             self.startup_sound.set_volume(1)
             self.enigma_op.set_volume(1)
             self.startup_on.config(bg=self.on_clr)
             self.startup_off.config(bg=self.off_clr)
+            self.sttp_m = 1
             print(state)
-        if btn == 1 and state == 0:
+
+        if  btn == 1 and state == 0:
             self.startup_sound.set_volume(0)
             self.enigma_op.set_volume(0)
             self.startup_on.config(bg=self.off_clr)
             self.startup_off.config(bg=self.on_clr)
+            self.sttp_m= 0
             print(state)
 
         if btn == 2 and state == 1:
             self.tiping.set_volume(1)
             self.settings_sound.set_volume(1)
             self.back_from_sound.set_volume(1)
-            self.btns_on.config(bg=self.on_clr)
-            self.btns_off.config(bg=self.off_clr)
+            self.rotor_change.set_volume(1)
+            self.btns_sound_on.config(bg=self.on_clr)
+            self.btns_sound_off.config(bg=self.off_clr)
+            self.btns_sound = 1
             print(state)
 
         if btn == 2 and state == 0:
             self.tiping.set_volume(0)
             self.settings_sound.set_volume(0)
             self.back_from_sound.set_volume(0)
-            self.btns_on.config(bg=self.off_clr)
-            self.btns_off.config(bg=self.on_clr)
+            self.rotor_change.set_volume(0)
+            self.btns_sound_on.config(bg=self.off_clr)
+            self.btns_sound_off.config(bg=self.on_clr)
+            self.btns_sound = 0
             print(state)
 
         if btn == 3 and state == 1:
-            self.settings_sound.set_volume(1)
-            self.btns_on.config(bg=self.on_clr)
-            self.btns_off.config(bg=self.off_clr)
+            mixer.music.play(-1)
+            self.setm_on.config(bg=self.on_clr)
+            self.setm_off.config(bg=self.off_clr)
+            self.settings_music_m = 1
             
             print(state)
         if btn == 3 and state == 0:
-            self.settings_sound.set_volume(0)
-            self.btns_on.config(bg=self.off_clr)
-            self.btns_off.config(bg=self.on_clr)
+            mixer.music.stop()
+            self.setm_on.config(bg=self.off_clr)
+            self.setm_off.config(bg=self.on_clr)
+            self.settings_music_m = 0
+
             
             print(state)
-
-    
-
+        
 
     #Letters
 
@@ -1368,7 +1483,7 @@ class interface():
         self.a_label = Label(self.enigma, image=self.a_photo)
         self.a_place_args = {'relx': 0.131, 'rely': 0.531, 'relwidth': 0.065, 'relheight': 0.058}
         
-    def toggle_a(self):
+    def toggle_a(self,event):
         if self.a_visivel:
             self.a_label.place_forget()
             self.a_visivel = False
